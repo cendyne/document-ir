@@ -226,6 +226,8 @@ export interface CardHeader {
   backgroundBlurhash?: string
   title: string
   url?: string
+  username?: string
+  usernameDomain?: string
 }
 export interface CardMedia {
   type: 'card-media'
