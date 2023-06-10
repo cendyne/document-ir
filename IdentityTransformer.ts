@@ -1,4 +1,4 @@
-import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode } from './types';
+import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode, BlockNode } from './types';
 
 export class IdentityTransformer {
   protected async beforeBlock() : Promise<void> {
@@ -22,6 +22,15 @@ export class IdentityTransformer {
       }
     }
     return children;
+  }
+  protected async block(node: BlockNode): Promise<Node | null> {
+    await this.beforeBlock();
+    const content = await this.chooseChildren(node.content);
+    await this.afterBlock();
+    return {
+      type: "block",
+      content
+    };
   }
   protected async blockQuote(node: BlockQuoteNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -505,6 +514,7 @@ export class IdentityTransformer {
     }
     try {
       switch (node.type) {
+        case 'block': return await this.block(node);
         case 'block-quote': return await this.blockQuote(node);
         case 'bold': return await this.bold(node);
         case 'break': return await this.break_(node);

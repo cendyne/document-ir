@@ -545,6 +545,15 @@ export const ExampleDocument : DocumentNode = {
           {
             type: 'text',
             text: 'Example text'
+          },
+          {
+            type: 'block',
+            content: [
+              {
+                type: 'text',
+                text: 'Text in block'
+              }
+            ]
           }
         ]
       }
