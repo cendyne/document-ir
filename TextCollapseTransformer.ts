@@ -1,0 +1,36 @@
+import { IdentityTransformer } from "./IdentityTransformer";
+import { Node } from "./types";
+
+export class TextCollapseTransformer extends IdentityTransformer {
+  protected async chooseChildren(nodes: Node[]): Promise<Node[]> {
+    const children = await super.chooseChildren(nodes);
+    const results : Node[] = [];
+    let lastText : null | string = null;
+    for (let child of children) {
+      if (child.type == 'text') {
+        if (lastText != null) {
+          lastText = `${lastText}${child.text}`;
+        } else {
+          lastText = child.text;
+        }
+      } else {
+        if (lastText != null) {
+          results.push({
+            type: 'text',
+            text: lastText
+          })
+          lastText = null;
+        }
+        results.push(child);
+      }
+    }
+    if (lastText != null) {
+      results.push({
+        type: 'text',
+        text: lastText
+      })
+      lastText = null;
+    }
+    return results;
+  }
+}
