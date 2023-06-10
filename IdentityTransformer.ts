@@ -1,4 +1,4 @@
-import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia } from './types';
+import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode } from './types';
 
 export class IdentityTransformer {
   protected async beforeBlock() : Promise<void> {
@@ -129,6 +129,13 @@ export class IdentityTransformer {
         abbreviation: node.definition.abbreviation
       },
       content: await this.chooseChildren(node.content)
+    }
+  }
+  protected async emoji(node: EmojiNode): Promise<Node | null> {
+    return {
+      type: 'emoji',
+      url: node.url,
+      alt: node.alt
     }
   }
   protected async figure(node: FigureNode): Promise<Node | null> {
@@ -502,12 +509,14 @@ export class IdentityTransformer {
         case 'bold': return await this.bold(node);
         case 'break': return await this.break_(node);
         case 'bubble': return await this.bubble(node);
+        case 'card': return await this.card(node);
         case 'center': return await this.center(node);
         case 'code': return await this.code(node);
         case 'columns': return await this.columns(node);
         case 'definition': return await this.definition(node);
         case 'definition-list': return await this.definitionList(node);
         case 'definition-reference': return await this.definitionReference(node);
+        case 'emoji': return await this.emoji(node);
         case 'figure': return await this.figure(node);
         case 'figure-caption': return await this.figureCaption(node);
         case 'figure-image': return await this.figureImage(node);
@@ -540,7 +549,6 @@ export class IdentityTransformer {
         case 'underline': return await this.underline(node);
         case 'video': return await this.video(node);
         case 'warning': return await this.warning(node);
-        case 'card': return await this.card(node);
       }
     } catch (e) {
       console.log(`Got exception while processing node: ${JSON.stringify(node)}`);

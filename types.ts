@@ -48,6 +48,11 @@ export interface DefinitionReferenceNode {
   }
   content: Node[]
 }
+export interface EmojiNode {
+  type: "emoji"
+  url: string
+  alt: string
+}
 export interface FigureNode {
   type: "figure"
   content: Node[]
@@ -103,7 +108,12 @@ export interface LinkNode {
   type: "link"
   content: Node[],
   url: string,
-  title?: string
+  title?: string,
+  target?: '_blank' | '_self' | '_top'
+  userGeneratedContent?: true
+  noReferrer?: true
+  noFollow?: true
+  noOpener?: true
 }
 export interface ListNode {
   type: "list"
@@ -253,7 +263,7 @@ export interface CardNode {
   attribution?: CardAttribution
 }
 
-export type Node = ArrayNode | BlockQuoteNode | BoldNode | BreakNode | BubbleNode | CenterNode | CodeNode | ColumnsNode | DefinitionNode | DefinitionListNode | DefinitionReferenceNode | FigureNode | FigureCaptionNode | FigureImageNode | FormattedTextNode | HeaderNode | HighTechAlertNode | HorizontalRuleNode | ImageNode | ItalicNode | LinkNode | ListNode | NoteNode | ParagraphNode | QuoteNode | RedactedNode | RegionNode | ScriptNode | SecretNode | SmallerNode | StickerNode | StrikeThroughNode | TextNode | TableNode | SocialNode | UnderlineNode | VideoNode | WarningNode | CardNode
+export type Node = ArrayNode | BlockQuoteNode | BoldNode | BreakNode | BubbleNode | CardNode | CenterNode | CodeNode | ColumnsNode | DefinitionNode | DefinitionListNode | DefinitionReferenceNode | EmojiNode | FigureNode | FigureCaptionNode | FigureImageNode | FormattedTextNode | HeaderNode | HighTechAlertNode | HorizontalRuleNode | ImageNode | ItalicNode | LinkNode | ListNode | NoteNode | ParagraphNode | QuoteNode | RedactedNode | RegionNode | ScriptNode | SecretNode | SmallerNode | StickerNode | StrikeThroughNode | TextNode | TableNode | SocialNode | UnderlineNode | VideoNode | WarningNode
 
 export interface DocumentNode {
   type: "document"

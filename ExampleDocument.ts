@@ -40,6 +40,11 @@ export const ExampleDocument : DocumentNode = {
         {
           type: 'text',
           text: 'society.'
+        },
+        {
+          type: 'emoji',
+          url: 'https://c.cdyn.dev/YzU3qe7R',
+          alt: 'flan_ooh'
         }
       ]
     },
