@@ -520,11 +520,12 @@ export const ExampleDocument : DocumentNode = {
     {
       type: 'card',
       header: {
-        title: 'Example'
+        type: 'card-header',
+        title: [{type: 'text', text: 'Example'}]
       },
       attribution: {
         type: 'card-attribution',
-        title: 'Example'
+        title: [{type: 'text', text: 'Example'}]
       },
       media: {
         type: 'card-media',

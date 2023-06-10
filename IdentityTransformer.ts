@@ -1,4 +1,4 @@
-import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode, BlockNode } from './types';
+import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode, BlockNode, CardAttribution, CardHeader } from './types';
 
 export class IdentityTransformer {
   protected async beforeBlock() : Promise<void> {
@@ -226,7 +226,7 @@ export class IdentityTransformer {
     return {
       type: "image",
       alt: node.alt || '',
-      blurhash: node.blurhash || '',
+      blurhash: node.blurhash,
       height: node.height,
       width: node.width,
       image: node.image,
@@ -477,8 +477,38 @@ export class IdentityTransformer {
       }
       await this.afterBlock();
     }
-    const attribution = node.attribution;
-    const header = node.header;
+    let attribution : CardAttribution | undefined;
+    if (node.attribution) {
+      attribution = {
+        type: 'card-attribution',
+        archiveUrl: node.attribution.archiveUrl,
+        date: node.attribution.date,
+        url: node.attribution.url
+      };
+      if (node.attribution.title) {
+        await this.beforeBlock();
+        const title = await this.chooseChildren(node.attribution.title);
+        await this.afterBlock();
+        attribution.title = title;
+      }
+    };
+    let header : CardHeader | undefined;
+    if (node.header) {
+      await this.beforeBlock();
+      const title = await this.chooseChildren(node.header.title);
+      await this.afterBlock();
+      header = {
+        type: 'card-header',
+        title,
+        backgroundBlurhash: node.header.backgroundBlurhash,
+        backgroundColor: node.header.backgroundColor,
+        backgroundImage: node.header.backgroundImage,
+        imageUrl: node.header.imageUrl,
+        url: node.header.url,
+        username: node.header.username,
+        usernameDomain: node.header.usernameDomain
+      }
+    }
     let media : CardMedia | undefined;
     if (node.media) {
       let mediaContent : (VideoNode | ImageNode)[] = []

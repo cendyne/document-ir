@@ -70,9 +70,9 @@ export interface FigureImageNode {
   content: Node[]
   width: number
   height: number
-  blurhash: string
+  blurhash?: string
   url: string
-  image: string
+  image?: string
   alt: string
   hero?: true
 }
@@ -96,12 +96,12 @@ export interface HorizontalRuleNode {
 }
 export interface ImageNode {
   type: "image"
-  width: number
-  height: number
-  blurhash: string
   url: string
-  image?: string
   alt: string
+  width?: number
+  height?: number
+  blurhash?: string
+  image?: string
   hero?: true
 }
 export interface ItalicNode {
@@ -200,11 +200,11 @@ export interface UnderlineNode {
 export interface VideoNode {
   type: "video"
   poster: string
-  width?: number
-  mp4: string
-  webm?: string
   alt: string
-  blurhash: string
+  mp4: string
+  width?: number
+  webm?: string
+  blurhash?: string
   height?: number
   muted?: true
   autoplay?: true
@@ -234,11 +234,12 @@ export interface YoutubeNode {
 }
 export type SocialNode = TweetNode | TootNode | VimeoNode | YoutubeNode
 export interface CardHeader {
-  image?: string
+  type: 'card-header'
+  imageUrl?: string
   backgroundImage?: string
   backgroundColor?: string
   backgroundBlurhash?: string
-  title: string
+  title: Node[]
   url?: string
   username?: string
   usernameDomain?: string
@@ -249,7 +250,7 @@ export interface CardMedia {
 }
 export interface CardAttribution {
   type: 'card-attribution'
-  title?: string
+  title?: Node[]
   url?: string
   date?: string
   archiveUrl?: string
