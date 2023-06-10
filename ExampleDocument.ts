@@ -562,6 +562,19 @@ export const ExampleDocument : DocumentNode = {
       }
     },
     {
+      type: 'embed',
+      content: {
+        type: 'youtube',
+        id: 'AbSehcT19u0',
+        imagePreview: {
+          url: 'https://c.cdyn.dev/MD0AxBQq',
+          blurhash: 'L6E1%J0y00IU00o}^,}sxts.-VoL',
+          width: 480,
+          height: 360
+        }
+      }
+    },
+    {
       type: 'region',
       mode: 'allow',
       regions: 'WI',

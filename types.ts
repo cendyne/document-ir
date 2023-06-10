@@ -52,6 +52,21 @@ export interface DefinitionReferenceNode {
   }
   content: Node[]
 }
+export interface EmbedImagePreview {
+  url: string
+  blurhash: string
+  width: number
+  height: number
+}
+export interface YoutubeEmbed {
+  type: "youtube"
+  id: string
+  imagePreview?: EmbedImagePreview
+}
+export interface EmbedNode {
+  type: "embed"
+  content: YoutubeEmbed // more later
+}
 export interface EmojiNode {
   type: "emoji"
   url: string
@@ -269,7 +284,7 @@ export interface CardNode {
   attribution?: CardAttribution
 }
 
-export type Node = ArrayNode | BlockNode | BlockQuoteNode | BoldNode | BreakNode | BubbleNode | CardNode | CenterNode | CodeNode | ColumnsNode | DefinitionNode | DefinitionListNode | DefinitionReferenceNode | EmojiNode | FigureNode | FigureCaptionNode | FigureImageNode | FormattedTextNode | HeaderNode | HighTechAlertNode | HorizontalRuleNode | ImageNode | ItalicNode | LinkNode | ListNode | NoteNode | ParagraphNode | QuoteNode | RedactedNode | RegionNode | ScriptNode | SecretNode | SmallerNode | StickerNode | StrikeThroughNode | TextNode | TableNode | SocialNode | UnderlineNode | VideoNode | WarningNode
+export type Node = ArrayNode | BlockNode | BlockQuoteNode | BoldNode | BreakNode | BubbleNode | CardNode | CenterNode | CodeNode | ColumnsNode | DefinitionNode | DefinitionListNode | DefinitionReferenceNode | EmbedNode | EmojiNode | FigureNode | FigureCaptionNode | FigureImageNode | FormattedTextNode | HeaderNode | HighTechAlertNode | HorizontalRuleNode | ImageNode | ItalicNode | LinkNode | ListNode | NoteNode | ParagraphNode | QuoteNode | RedactedNode | RegionNode | ScriptNode | SecretNode | SmallerNode | StickerNode | StrikeThroughNode | TextNode | TableNode | SocialNode | UnderlineNode | VideoNode | WarningNode
 
 export interface DocumentNode {
   type: "document"

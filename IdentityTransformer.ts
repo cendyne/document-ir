@@ -1,4 +1,4 @@
-import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode, BlockNode, CardAttribution, CardHeader } from './types';
+import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode, BlockNode, CardAttribution, CardHeader, EmbedNode } from './types';
 
 export class IdentityTransformer {
   protected async beforeBlock() : Promise<void> {
@@ -138,6 +138,14 @@ export class IdentityTransformer {
         abbreviation: node.definition.abbreviation
       },
       content: await this.chooseChildren(node.content)
+    }
+  }
+  protected async embed(node: EmbedNode): Promise<Node | null> {
+    return {
+      type: 'embed',
+      content: {
+        ...node.content
+      }
     }
   }
   protected async emoji(node: EmojiNode): Promise<Node | null> {
@@ -557,6 +565,7 @@ export class IdentityTransformer {
         case 'definition': return await this.definition(node);
         case 'definition-list': return await this.definitionList(node);
         case 'definition-reference': return await this.definitionReference(node);
+        case 'embed': return await this.embed(node);
         case 'emoji': return await this.emoji(node);
         case 'figure': return await this.figure(node);
         case 'figure-caption': return await this.figureCaption(node);
