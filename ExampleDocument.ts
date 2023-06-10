@@ -521,7 +521,9 @@ export const ExampleDocument : DocumentNode = {
       type: 'card',
       header: {
         type: 'card-header',
-        title: [{type: 'text', text: 'Example'}]
+        title: [{type: 'text', text: 'Example'}],
+        imageUrl: 'https://c.cdyn.dev/b2FeAuU-',
+        imageBlurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1'
       },
       attribution: {
         type: 'card-attribution',

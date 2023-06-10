@@ -504,6 +504,7 @@ export class IdentityTransformer {
         backgroundColor: node.header.backgroundColor,
         backgroundImage: node.header.backgroundImage,
         imageUrl: node.header.imageUrl,
+        imageBlurhash: node.header.imageBlurhash,
         url: node.header.url,
         username: node.header.username,
         usernameDomain: node.header.usernameDomain

@@ -236,6 +236,7 @@ export type SocialNode = TweetNode | TootNode | VimeoNode | YoutubeNode
 export interface CardHeader {
   type: 'card-header'
   imageUrl?: string
+  imageBlurhash?: string
   backgroundImage?: string
   backgroundColor?: string
   backgroundBlurhash?: string
