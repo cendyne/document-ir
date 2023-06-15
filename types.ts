@@ -40,6 +40,7 @@ export interface DefinitionNode {
   content: Node[]
   title: Node[]
   abbreviation: Node[]
+  key: string
 }
 export interface DefinitionListNode {
   type: "definition-list"
@@ -48,7 +49,8 @@ export interface DefinitionListNode {
 export interface DefinitionReferenceNode {
   type: "definition-reference"
   definition: {
-    abbreviation: string
+    abbreviation: Node[]
+    key: string
   }
   content: Node[]
 }
@@ -262,7 +264,7 @@ export interface CardHeader {
 }
 export interface CardMedia {
   type: 'card-media'
-  content: (ImageNode | VideoNode)[]
+  content: (ImageNode | VideoNode | EmbedNode)[]
 }
 export interface CardAttribution {
   type: 'card-attribution'
@@ -299,4 +301,5 @@ export interface DocumentNode {
   "pub-date"?: number
   date?: string
   url: string
+  definitions?: DefinitionNode[]
 }

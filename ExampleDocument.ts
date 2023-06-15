@@ -114,7 +114,8 @@ export const ExampleDocument : DocumentNode = {
               {
                 type: 'definition-reference',
                 definition: {
-                  abbreviation: 'TODO'
+                  abbreviation: [{type: 'text', text: 'TODO'}],
+                  key: 'TODO'
                 },
                 content: [
                   {
@@ -134,6 +135,7 @@ export const ExampleDocument : DocumentNode = {
       content: [
         {
           type: 'definition',
+          key: 'TODO',
           abbreviation: [
             {
               type: 'text',
@@ -623,4 +625,14 @@ export const ExampleDocument : DocumentNode = {
       ]
     }
   ],
+  definitions: [{
+    type: 'definition',
+    key: 'TODO',
+    abbreviation: [{type: 'text', text: 'TODO'}],
+    title: [{type: 'text', text: 'TO DO'}],
+    content: [{
+      type: 'text',
+      text: 'A thing to do.'
+    }]
+  }]
 };

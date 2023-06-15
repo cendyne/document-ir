@@ -114,6 +114,7 @@ export class IdentityTransformer {
       abbreviation,
       title,
       content,
+      key: node.key
     }
   }
   protected async definitionList(node: DefinitionListNode): Promise<Node | null> {
@@ -132,10 +133,14 @@ export class IdentityTransformer {
     }
   }
   protected async definitionReference(node: DefinitionReferenceNode): Promise<Node | null> {
+    await this.beforeInline();
+    const abbreviation = await this.chooseChildren(node.definition.abbreviation);
+    await this.afterInline();
     return {
       type: "definition-reference",
       definition: {
-        abbreviation: node.definition.abbreviation
+        abbreviation,
+        key: node.definition.key
       },
       content: await this.chooseChildren(node.content)
     }
@@ -612,6 +617,9 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
+    await this.beforeBlock();
+    const definitions = node.definitions && ((await this.chooseChildren(node.definitions)).filter(x => x.type == 'definition') as DefinitionNode[]);
+    await this.afterBlock();
     const result : DocumentNode = {
       type: "document",
       title: node.title,
@@ -625,6 +633,7 @@ export class IdentityTransformer {
       "pub-date": node['pub-date'],
       date: node.date,
       url: node.url,
+      definitions
     }
     return result;
   }
