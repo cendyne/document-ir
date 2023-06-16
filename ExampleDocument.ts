@@ -608,7 +608,7 @@ export const ExampleDocument : DocumentNode = {
       content: [
         {
           type: 'text',
-          text: 'A note here'
+          text: 'A note here \uD83C\uDF4A'
         }
       ]
     },

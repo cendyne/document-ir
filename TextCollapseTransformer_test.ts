@@ -37,6 +37,10 @@ const InputDocument : DocumentNode = {
           type: 'text',
           text: 'B'
         },
+        {
+          type: 'text',
+          text: '\uD83C\uDF4A'
+        }
       ]
     }
   ]
@@ -54,7 +58,7 @@ const ExpectedDocument : DocumentNode = {
       content: [
         {
           type: 'text',
-          text: 'AB'
+          text: 'AB\uD83C\uDF4A'
         }
       ]
     }

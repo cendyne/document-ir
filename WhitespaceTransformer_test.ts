@@ -19,7 +19,7 @@ const InputDocument : DocumentNode = {
       content: [
         {
           type: 'text',
-          text: ' world! '
+          text: ' \uD83C\uDF4A world! '
         }
       ]
     },
@@ -69,7 +69,7 @@ const ExpectedDocument : DocumentNode = {
       content: [
         {
           type: 'text',
-          text: 'world!'
+          text: '\uD83C\uDF4A world!'
         }
       ]
     },
