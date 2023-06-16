@@ -289,18 +289,22 @@ export interface CardNode {
 
 export type Node = ArrayNode | BlockNode | BlockQuoteNode | BoldNode | BreakNode | BubbleNode | CardNode | CenterNode | CodeNode | ColumnsNode | DefinitionNode | DefinitionListNode | DefinitionReferenceNode | EmbedNode | EmojiNode | FigureNode | FigureCaptionNode | FigureImageNode | FormattedTextNode | HeaderNode | HighTechAlertNode | HorizontalRuleNode | ImageNode | ItalicNode | LinkNode | ListNode | NoteNode | ParagraphNode | QuoteNode | RedactedNode | RegionNode | ScriptNode | SecretNode | SmallerNode | StickerNode | StrikeThroughNode | TextNode | TableNode | SocialNode | UnderlineNode | VideoNode | WarningNode
 
-export interface DocumentNode {
-  type: "document"
+export interface DocumentMeta {
   hidden?: boolean
   noindex?: boolean
   title: string
-  author: string
+  author?: string
   description?: string
   image?: string
-  content: Node[]
   guid?: string
   "pub-date"?: number
   date?: string
   url: string
+  contentHash?: string
+}
+
+export interface DocumentNode extends DocumentMeta {
+  type: "document"
+  content: Node[]
   definitions?: DefinitionNode[]
 }
