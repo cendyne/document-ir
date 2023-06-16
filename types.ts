@@ -300,7 +300,7 @@ export interface DocumentMeta {
   "pub-date"?: number
   date?: string
   url: string
-  contentHash?: string
+  contentDigest?: string
 }
 
 export interface DocumentNode extends DocumentMeta {
