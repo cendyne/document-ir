@@ -320,6 +320,7 @@ export class IdentityTransformer {
       name: node.name,
       content,
       url: node.url,
+      orientation: node.orientation,
     }
   }
   protected async redacted(node: RedactedNode): Promise<Node | null> {

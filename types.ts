@@ -158,6 +158,7 @@ export interface QuoteNode {
   name: string
   icon: string
   url?: string
+  orientation?: 'left' | 'right'
   content: Node[]
 }
 export interface RedactedNode {
