@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
-import { ExampleDocument } from "./ExampleDocument";
-import { DocumentNode } from "./types";
-import { TextCollapseTransformer } from "./TextCollapseTransformer";
+import { ExampleDocument } from "./ExampleDocument.ts";
+import { DocumentNode } from "./types.ts";
+import { TextCollapseTransformer } from "./TextCollapseTransformer.ts";
 
 test("Text collapse transformer changes something", async () => {
   expect(await new TextCollapseTransformer().transform(ExampleDocument)).not.toEqual(ExampleDocument);

@@ -1,5 +1,5 @@
-import { EmojiNode, FigureImageNode, ImageNode, TextNode, VideoNode } from ".";
-import { NodeVisitor } from "./NodeVisitor";
+import { EmojiNode, FigureImageNode, ImageNode, TextNode, VideoNode } from "./types.ts";
+import { NodeVisitor } from "./NodeVisitor.ts";
 
 export class TextVisitor extends NodeVisitor {
   private textList : string[];

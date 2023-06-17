@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
-import { TextVisitor } from "./TextVisitor";
-import { ExampleDocument } from "./ExampleDocument";
+import { TextVisitor } from "./TextVisitor.ts";
+import { ExampleDocument } from "./ExampleDocument.ts";
 
 test("Text visitor collects text", async () => {
   const visitor = new TextVisitor();

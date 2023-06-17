@@ -1,5 +1,5 @@
-import { IdentityTransformer } from "./IdentityTransformer";
-import { Node } from "./types";
+import { IdentityTransformer } from "./IdentityTransformer.ts";
+import { Node } from "./types.ts";
 
 export class TextCollapseTransformer extends IdentityTransformer {
   protected async chooseChildren(nodes: Node[]): Promise<Node[]> {

@@ -1,5 +1,5 @@
-import { IdentityTransformer } from "./IdentityTransformer";
-import { DocumentNode, Node, TextNode } from "./types";
+import { IdentityTransformer } from "./IdentityTransformer.ts";
+import { DocumentNode, Node, TextNode } from "./types.ts";
 
 class RemoveEmptyTextTransformer extends IdentityTransformer {
   protected async text(node: TextNode): Promise<Node | null> {

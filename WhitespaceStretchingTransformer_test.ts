@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
-import { ExampleDocument } from "./ExampleDocument";
-import { DocumentNode } from "./types";
-import { WhitespaceStretchingTransformer } from "./WhitespaceStretchingTransformer";
+import { ExampleDocument } from "./ExampleDocument.ts";
+import { DocumentNode } from "./types.ts";
+import { WhitespaceStretchingTransformer } from "./WhitespaceStretchingTransformer.ts";
 
 test("Whitespace stretching transformer changes something", async () => {
   expect(await new WhitespaceStretchingTransformer().transform(ExampleDocument)).not.toEqual(ExampleDocument);
