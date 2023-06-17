@@ -552,7 +552,8 @@ export class IdentityTransformer {
       content,
       attribution,
       header,
-      media
+      media,
+      original: node.original
     }
   }
   protected async choose(node: Node): Promise<Node | null> {

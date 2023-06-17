@@ -285,6 +285,7 @@ export interface CardNode {
   content?: CardContent
   media?: CardMedia
   attribution?: CardAttribution
+  original?: Node
 }
 
 export type Node = ArrayNode | BlockNode | BlockQuoteNode | BoldNode | BreakNode | BubbleNode | CardNode | CenterNode | CodeNode | ColumnsNode | DefinitionNode | DefinitionListNode | DefinitionReferenceNode | EmbedNode | EmojiNode | FigureNode | FigureCaptionNode | FigureImageNode | FormattedTextNode | HeaderNode | HighTechAlertNode | HorizontalRuleNode | ImageNode | ItalicNode | LinkNode | ListNode | NoteNode | ParagraphNode | QuoteNode | RedactedNode | RegionNode | ScriptNode | SecretNode | SmallerNode | StickerNode | StrikeThroughNode | TextNode | TableNode | SocialNode | UnderlineNode | VideoNode | WarningNode

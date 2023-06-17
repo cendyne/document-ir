@@ -571,6 +571,10 @@ export const ExampleDocument : DocumentNode = {
             ]
           }
         ]
+      },
+      original: {
+        type: 'youtube',
+        id: 'abcdef'
       }
     },
     {
