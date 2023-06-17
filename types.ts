@@ -191,7 +191,7 @@ export interface StrikeThroughNode {
 }
 export interface StickerNode {
   type: "sticker"
-  size: number
+  size?: number
   orientation: "center" | "left" | "right"
   character: string
   content: Node[]
