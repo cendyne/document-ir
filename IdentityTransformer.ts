@@ -526,12 +526,14 @@ export class IdentityTransformer {
     }
     let media : CardMedia | undefined;
     if (node.media) {
-      let mediaContent : (VideoNode | ImageNode)[] = []
+      let mediaContent : (VideoNode | ImageNode | EmbedNode)[] = []
       for (let mediaNode of node.media.content) {
         await this.beforeBlock();
         const transformedNode = await this.choose(mediaNode);
         if (transformedNode) {
-          if (transformedNode.type == 'image' || transformedNode.type == 'video') {
+          if (transformedNode.type == 'image'
+          || transformedNode.type == 'video'
+          || transformedNode.type == 'embed') {
             mediaContent.push(transformedNode);
           }
         }

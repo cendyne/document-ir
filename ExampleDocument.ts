@@ -525,7 +525,10 @@ export const ExampleDocument : DocumentNode = {
         type: 'card-header',
         title: [{type: 'text', text: 'Example'}],
         imageUrl: 'https://c.cdyn.dev/b2FeAuU-',
-        imageBlurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1'
+        imageBlurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1',
+        backgroundColor: 'FFFFFF',
+        backgroundBlurhash: 'MbRymP?ct8bHW=xujZWBj]of_ND%Rjs:oJ',
+        backgroundImage: 'https://c.cdyn.dev/Buov2-Ce'
       },
       attribution: {
         type: 'card-attribution',
@@ -541,6 +544,13 @@ export const ExampleDocument : DocumentNode = {
             height: 1080,
             url: 'https://c.cdyn.dev/b2FeAuU-',
             blurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1'
+          },
+          {
+            type: 'embed',
+            content: {
+              type: 'youtube',
+              id: 'todo'
+            }
           }
         ]
       },
