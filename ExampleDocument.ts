@@ -217,7 +217,7 @@ export const ExampleDocument: DocumentNode = {
           url: "https://c.cdyn.dev/pr45JDDH",
           width: 1600,
           height: 737,
-          hero: undefined
+          hero: undefined,
         },
         {
           type: "figure-caption",
@@ -536,7 +536,7 @@ export const ExampleDocument: DocumentNode = {
         backgroundImage: "https://c.cdyn.dev/Buov2-Ce",
         url: undefined,
         username: undefined,
-        usernameDomain: undefined
+        usernameDomain: undefined,
       },
       attribution: {
         type: "card-attribution",
@@ -650,7 +650,7 @@ export const ExampleDocument: DocumentNode = {
           text: "A thing",
         },
       ],
-      orientation: undefined
+      orientation: undefined,
     },
   ],
   definitions: [{

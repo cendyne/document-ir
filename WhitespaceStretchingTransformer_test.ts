@@ -1,4 +1,7 @@
-import { assertEquals, assertNotEquals } from "https://deno.land/std@0.192.0/testing/asserts.ts";
+import {
+  assertEquals,
+  assertNotEquals,
+} from "https://deno.land/std@0.192.0/testing/asserts.ts";
 import { ExampleDocument } from "./ExampleDocument.ts";
 import { DocumentNode } from "./types.ts";
 import { WhitespaceStretchingTransformer } from "./WhitespaceStretchingTransformer.ts";
@@ -6,123 +9,131 @@ import { WhitespaceStretchingTransformer } from "./WhitespaceStretchingTransform
 Deno.test({
   name: "Whitespace stretching transformer changes something",
   async fn() {
-    assertNotEquals(await new WhitespaceStretchingTransformer().transform(ExampleDocument), ExampleDocument);
-  }
-})
+    assertNotEquals(
+      await new WhitespaceStretchingTransformer().transform(ExampleDocument),
+      ExampleDocument,
+    );
+  },
+});
 
-const InputDocument : DocumentNode = {
+const InputDocument: DocumentNode = {
   ...ExampleDocument,
   content: [
     {
-      type: 'text',
-      text: 'hello'
+      type: "text",
+      text: "hello",
     },
     {
-      type: 'bold',
+      type: "bold",
       content: [
         {
-          type: 'text',
-          text: ' \uD83C\uDF4A world! '
-        }
-      ]
+          type: "text",
+          text: " \uD83C\uDF4A world! ",
+        },
+      ],
     },
     {
-      type: 'text',
-      text: 'What\'s up?'
+      type: "text",
+      text: "What's up?",
     },
     {
-      type: 'paragraph',
+      type: "paragraph",
       content: [
         {
-          type: 'bold',
+          type: "bold",
           content: [
             {
-              type: 'italic',
+              type: "italic",
               content: [
                 {
-                  type: 'text',
-                  text: 'Henlo '
-                }
-              ]
+                  type: "text",
+                  text: "Henlo ",
+                },
+              ],
             },
             {
-              type: 'text',
-              text: 'world'
-            }
-          ]
+              type: "text",
+              text: "world",
+            },
+          ],
         },
         {
-          type: 'text',
-          text: '.'
-        }
-      ]
+          type: "text",
+          text: ".",
+        },
+      ],
     },
     {
-      type: 'text',
-      text: ' Aha! '
-    }
-  ]
-}
+      type: "text",
+      text: " Aha! ",
+    },
+  ],
+};
 
-const ExpectedDocument : DocumentNode = {
+const ExpectedDocument: DocumentNode = {
   ...ExampleDocument,
   content: [
     {
-      type: 'text',
-      text: 'hello '
+      type: "text",
+      text: "hello ",
     },
     {
-      type: 'bold',
+      type: "bold",
       content: [
         {
-          type: 'text',
-          text: '\uD83C\uDF4A world!'
-        }
-      ]
+          type: "text",
+          text: "\uD83C\uDF4A world!",
+        },
+      ],
     },
     {
-      type: 'text',
-      text: ' What\'s up?'
+      type: "text",
+      text: " What's up?",
     },
     {
-      type: 'paragraph',
+      type: "paragraph",
       content: [
         {
-          type: 'bold',
+          type: "bold",
           content: [
             {
-              type: 'italic',
+              type: "italic",
               content: [
                 {
-                  type: 'text',
-                  text: 'Henlo'
-                }
-              ]
+                  type: "text",
+                  text: "Henlo",
+                },
+              ],
             },
             {
-              type: 'text',
-              text: ' world'
-            }
-          ]
+              type: "text",
+              text: " world",
+            },
+          ],
         },
         {
-          type: 'text',
-          text: '.'
-        }
-      ]
+          type: "text",
+          text: ".",
+        },
+      ],
     },
     {
-      type: 'text',
-      text: ' Aha! '
-    }
-  ]
-}
+      type: "text",
+      text: " Aha! ",
+    },
+  ],
+};
 
 Deno.test({
   name: "Whitespace stretching transformer works as expected",
   async fn() {
-    assertEquals(await new WhitespaceStretchingTransformer().transform(InputDocument), ExpectedDocument);
-    assertEquals(await new WhitespaceStretchingTransformer().transform(ExpectedDocument), ExpectedDocument);
-  }
-})
-
+    assertEquals(
+      await new WhitespaceStretchingTransformer().transform(InputDocument),
+      ExpectedDocument,
+    );
+    assertEquals(
+      await new WhitespaceStretchingTransformer().transform(ExpectedDocument),
+      ExpectedDocument,
+    );
+  },
+});

@@ -6,10 +6,13 @@ import { assertNotEquals } from "https://deno.land/std@0.192.0/testing/asserts.t
 
 Deno.test({
   name: "Text collapse transformer changes something",
-  async fn(){
-    assertNotEquals(await new TextCollapseTransformer().transform(ExampleDocument), ExampleDocument)
-  }
-})
+  async fn() {
+    assertNotEquals(
+      await new TextCollapseTransformer().transform(ExampleDocument),
+      ExampleDocument,
+    );
+  },
+});
 
 const InputDocument: DocumentNode = {
   ...ExampleDocument,
@@ -71,8 +74,13 @@ const ExpectedDocument: DocumentNode = {
 Deno.test({
   name: "Text collapse transformer works as expected",
   async fn() {
-    assertEquals(await new TextCollapseTransformer().transform(InputDocument), ExpectedDocument);
-    assertEquals(await new TextCollapseTransformer().transform(ExpectedDocument), ExpectedDocument);
-  }
-})
-
+    assertEquals(
+      await new TextCollapseTransformer().transform(InputDocument),
+      ExpectedDocument,
+    );
+    assertEquals(
+      await new TextCollapseTransformer().transform(ExpectedDocument),
+      ExpectedDocument,
+    );
+  },
+});

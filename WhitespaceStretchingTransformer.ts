@@ -2,43 +2,43 @@ import { IdentityTransformer } from "./IdentityTransformer.ts";
 import { DocumentNode, Node, TextNode } from "./types.ts";
 
 interface BlockInfo {
-  type: '_block'
-  content: WhiteSpaceContainer[]
-  parent: BlockInfo | InlineInfo | null
+  type: "_block";
+  content: WhiteSpaceContainer[];
+  parent: BlockInfo | InlineInfo | null;
 }
 
 interface InlineInfo {
-  type: '_inline'
-  content: WhiteSpaceContainer[]
-  parent: BlockInfo | InlineInfo | null
+  type: "_inline";
+  content: WhiteSpaceContainer[];
+  parent: BlockInfo | InlineInfo | null;
 }
 
-type WhiteSpaceContainer = BlockInfo | InlineInfo | TextNode
+type WhiteSpaceContainer = BlockInfo | InlineInfo | TextNode;
 
 interface TextLevel {
-  node: TextNode | null
-  level: number
+  node: TextNode | null;
+  level: number;
 }
 
 export class WhitespaceStretchingTransformer extends IdentityTransformer {
-  private root : BlockInfo;
-  private cursor : BlockInfo | InlineInfo
+  private root: BlockInfo;
+  private cursor: BlockInfo | InlineInfo;
   constructor() {
     super();
     this.root = {
-      type: '_block',
+      type: "_block",
       content: [],
-      parent: null
-    }
+      parent: null,
+    };
     this.cursor = this.root;
   }
   // deno-lint-ignore require-await
   protected async beforeBlock(): Promise<void> {
     const parent = this.cursor;
-    const block : BlockInfo = {
-      type: '_block',
+    const block: BlockInfo = {
+      type: "_block",
       content: [],
-      parent
+      parent,
     };
     parent.content.push(block);
     this.cursor = block;
@@ -52,10 +52,10 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
   // deno-lint-ignore require-await
   protected async beforeInline(): Promise<void> {
     const parent = this.cursor;
-    const inline : InlineInfo = {
-      type: '_inline',
+    const inline: InlineInfo = {
+      type: "_inline",
       content: [],
-      parent
+      parent,
     };
     parent.content.push(inline);
     this.cursor = inline;
@@ -66,17 +66,17 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
       this.cursor = this.cursor.parent;
     }
   }
-  protected reviewBlock(block : BlockInfo) {
-    const nodes : TextLevel[] = [];
-    const visit = (r : WhiteSpaceContainer, level : number) => {
-      if (r.type == 'text') {
+  protected reviewBlock(block: BlockInfo) {
+    const nodes: TextLevel[] = [];
+    const visit = (r: WhiteSpaceContainer, level: number) => {
+      if (r.type == "text") {
         nodes.push({
           node: r,
-          level
+          level,
         });
-      } else if (r.type == '_block') {
+      } else if (r.type == "_block") {
         this.reviewBlock(r);
-        nodes.push({node: null, level});
+        nodes.push({ node: null, level });
       } else {
         for (const node of r.content) {
           visit(node, level + 1);
@@ -88,7 +88,9 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
     }
     for (let i = 0; i < nodes.length; i++) {
       const first = nodes[i];
-      const second = i + 1 < nodes.length ? nodes[i + 1] : {node: null, level : 0};
+      const second = i + 1 < nodes.length
+        ? nodes[i + 1]
+        : { node: null, level: 0 };
       // No use acting on a dead node
       if (!first.node || !second.node) {
         continue;
@@ -98,12 +100,12 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
         continue;
       }
       if (first.level < second.level) {
-        if (second.node.text.startsWith(' ')) {
+        if (second.node.text.startsWith(" ")) {
           second.node.text = second.node.text.slice(1);
-          first.node.text += ' ';
+          first.node.text += " ";
         }
       } else if (first.level > second.level) {
-        if (first.node.text.endsWith(' ')) {
+        if (first.node.text.endsWith(" ")) {
           first.node.text = first.node.text.slice(0, -1);
           second.node.text = ` ${second.node.text}`;
         }
@@ -112,10 +114,10 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
   }
   // deno-lint-ignore require-await
   protected async text(node: TextNode): Promise<Node | null> {
-    const replacement : TextNode = {
-      type: 'text',
-      text: `${node.text}`
-    }
+    const replacement: TextNode = {
+      type: "text",
+      text: `${node.text}`,
+    };
     this.cursor.content.push(replacement);
     return replacement;
   }
