@@ -4,10 +4,10 @@ import { Node } from "./types.ts";
 export class TextCollapseTransformer extends IdentityTransformer {
   protected async chooseChildren(nodes: Node[]): Promise<Node[]> {
     const children = await super.chooseChildren(nodes);
-    const results : Node[] = [];
-    let lastText : null | string = null;
-    for (let child of children) {
-      if (child.type == 'text') {
+    const results: Node[] = [];
+    let lastText: null | string = null;
+    for (const child of children) {
+      if (child.type == "text") {
         if (lastText != null) {
           lastText = `${lastText}${child.text}`;
         } else {
@@ -16,9 +16,9 @@ export class TextCollapseTransformer extends IdentityTransformer {
       } else {
         if (lastText != null) {
           results.push({
-            type: 'text',
-            text: lastText
-          })
+            type: "text",
+            text: lastText,
+          });
           lastText = null;
         }
         results.push(child);
@@ -26,9 +26,9 @@ export class TextCollapseTransformer extends IdentityTransformer {
     }
     if (lastText != null) {
       results.push({
-        type: 'text',
-        text: lastText
-      })
+        type: "text",
+        text: lastText,
+      });
       lastText = null;
     }
     return results;

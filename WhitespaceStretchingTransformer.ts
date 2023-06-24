@@ -32,6 +32,7 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
     }
     this.cursor = this.root;
   }
+  // deno-lint-ignore require-await
   protected async beforeBlock(): Promise<void> {
     const parent = this.cursor;
     const block : BlockInfo = {
@@ -42,11 +43,13 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
     parent.content.push(block);
     this.cursor = block;
   }
+  // deno-lint-ignore require-await
   protected async afterBlock(): Promise<void> {
     if (this.cursor.parent) {
       this.cursor = this.cursor.parent;
     }
   }
+  // deno-lint-ignore require-await
   protected async beforeInline(): Promise<void> {
     const parent = this.cursor;
     const inline : InlineInfo = {
@@ -57,14 +60,15 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
     parent.content.push(inline);
     this.cursor = inline;
   }
+  // deno-lint-ignore require-await
   protected async afterInline(): Promise<void> {
     if (this.cursor.parent) {
       this.cursor = this.cursor.parent;
     }
   }
   protected reviewBlock(block : BlockInfo) {
-    let nodes : TextLevel[] = [];
-    let visit = (r : WhiteSpaceContainer, level : number) => {
+    const nodes : TextLevel[] = [];
+    const visit = (r : WhiteSpaceContainer, level : number) => {
       if (r.type == 'text') {
         nodes.push({
           node: r,
@@ -74,17 +78,17 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
         this.reviewBlock(r);
         nodes.push({node: null, level});
       } else {
-        for (let node of r.content) {
+        for (const node of r.content) {
           visit(node, level + 1);
         }
       }
     };
-    for (let node of block.content) {
+    for (const node of block.content) {
       visit(node, 0);
     }
     for (let i = 0; i < nodes.length; i++) {
-      let first = nodes[i];
-      let second = i + 1 < nodes.length ? nodes[i + 1] : {node: null, level : 0};
+      const first = nodes[i];
+      const second = i + 1 < nodes.length ? nodes[i + 1] : {node: null, level : 0};
       // No use acting on a dead node
       if (!first.node || !second.node) {
         continue;
@@ -106,6 +110,7 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
       }
     }
   }
+  // deno-lint-ignore require-await
   protected async text(node: TextNode): Promise<Node | null> {
     const replacement : TextNode = {
       type: 'text',

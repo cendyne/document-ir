@@ -1,21 +1,68 @@
-import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListItem, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableCellNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, CardContent, CardMedia, EmojiNode, BlockNode, CardAttribution, CardHeader, EmbedNode } from './types.ts';
+import {
+  ArrayNode,
+  BlockNode,
+  BlockQuoteNode,
+  BoldNode,
+  BreakNode,
+  BubbleNode,
+  CardAttribution,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  CardNode,
+  CenterNode,
+  CodeNode,
+  ColumnsNode,
+  DefinitionListNode,
+  DefinitionNode,
+  DefinitionReferenceNode,
+  DocumentNode,
+  EmbedNode,
+  EmojiNode,
+  FigureCaptionNode,
+  FigureImageNode,
+  FigureNode,
+  FormattedTextNode,
+  HeaderNode,
+  HighTechAlertNode,
+  HorizontalRuleNode,
+  ImageNode,
+  ItalicNode,
+  LinkNode,
+  ListItem,
+  ListNode,
+  Node,
+  NoteNode,
+  ParagraphNode,
+  QuoteNode,
+  RedactedNode,
+  RegionNode,
+  ScriptNode,
+  SecretNode,
+  SmallerNode,
+  SocialNode,
+  StickerNode,
+  StrikeThroughNode,
+  TableCellNode,
+  TableNode,
+  TextNode,
+  UnderlineNode,
+  VideoNode,
+  WarningNode,
+} from "./types.ts";
 
 export class IdentityTransformer {
-  protected async beforeBlock() : Promise<void> {
-
+  protected async beforeBlock(): Promise<void> {
   }
-  protected async afterBlock() : Promise<void> {
-
+  protected async afterBlock(): Promise<void> {
   }
-  protected async beforeInline() : Promise<void> {
-
+  protected async beforeInline(): Promise<void> {
   }
-  protected async afterInline() : Promise<void> {
-
+  protected async afterInline(): Promise<void> {
   }
   protected async chooseChildren(nodes: Node[]): Promise<Node[]> {
-    const children : Node[] = [];
-    for (let child of nodes) {
+    const children: Node[] = [];
+    for (const child of nodes) {
       const resultNode = await this.choose(child);
       if (resultNode) {
         children.push(resultNode);
@@ -29,7 +76,7 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "block",
-      content
+      content,
     };
   }
   protected async blockQuote(node: BlockQuoteNode): Promise<Node | null> {
@@ -38,7 +85,7 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "block-quote",
-      content
+      content,
     };
   }
   protected async bold(node: BoldNode): Promise<Node | null> {
@@ -47,15 +94,15 @@ export class IdentityTransformer {
     await this.afterInline();
     return {
       type: "bold",
-      content
+      content,
     };
   }
-  protected async break_(node: BreakNode): Promise<Node | null> {
+  protected async break_(_node: BreakNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
     return {
-      type: "break"
-    }
+      type: "break",
+    };
   }
   protected async bubble(node: BubbleNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -63,9 +110,9 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "bubble",
-      orientation: node.orientation || 'left',
-      content
-    }
+      orientation: node.orientation || "left",
+      content,
+    };
   }
   protected async center(node: CenterNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -73,8 +120,8 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "center",
-      content
-    }
+      content,
+    };
   }
   protected async code(node: CodeNode): Promise<Node | null> {
     await this.beforeInline();
@@ -82,12 +129,12 @@ export class IdentityTransformer {
     await this.afterInline();
     return {
       type: "code",
-      content
-    }
+      content,
+    };
   }
   protected async columns(node: ColumnsNode): Promise<Node | null> {
-    let columns: Node[][] = [];
-    for (let column of node.columns) {
+    const columns: Node[][] = [];
+    for (const column of node.columns) {
       await this.beforeBlock();
       columns.push(await this.chooseChildren(column));
       await this.afterBlock();
@@ -96,10 +143,12 @@ export class IdentityTransformer {
     return {
       type: "columns",
       columns,
-      "column-count": node['column-count']
-    }
+      "column-count": node["column-count"],
+    };
   }
-  protected async definition(node: DefinitionNode): Promise<DefinitionNode | null> {
+  protected async definition(
+    node: DefinitionNode,
+  ): Promise<DefinitionNode | null> {
     await this.beforeBlock();
     const abbreviation = await this.chooseChildren(node.abbreviation);
     await this.afterBlock();
@@ -114,13 +163,15 @@ export class IdentityTransformer {
       abbreviation,
       title,
       content,
-      key: node.key
-    }
+      key: node.key,
+    };
   }
-  protected async definitionList(node: DefinitionListNode): Promise<Node | null> {
+  protected async definitionList(
+    node: DefinitionListNode,
+  ): Promise<Node | null> {
     await this.beforeBlock();
-    const children : DefinitionNode[] = [];
-    for (let child of node.content) {
+    const children: DefinitionNode[] = [];
+    for (const child of node.content) {
       const resultNode = await this.definition(child);
       if (resultNode) {
         children.push(resultNode);
@@ -129,36 +180,42 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "definition-list",
-      content: children
-    }
+      content: children,
+    };
   }
-  protected async definitionReference(node: DefinitionReferenceNode): Promise<Node | null> {
+  protected async definitionReference(
+    node: DefinitionReferenceNode,
+  ): Promise<Node | null> {
     await this.beforeInline();
-    const abbreviation = await this.chooseChildren(node.definition.abbreviation);
+    const abbreviation = await this.chooseChildren(
+      node.definition.abbreviation,
+    );
     await this.afterInline();
     return {
       type: "definition-reference",
       definition: {
         abbreviation,
-        key: node.definition.key
+        key: node.definition.key,
       },
-      content: await this.chooseChildren(node.content)
-    }
+      content: await this.chooseChildren(node.content),
+    };
   }
+  // deno-lint-ignore require-await
   protected async embed(node: EmbedNode): Promise<Node | null> {
     return {
-      type: 'embed',
+      type: "embed",
       content: {
-        ...node.content
-      }
-    }
+        ...node.content,
+      },
+    };
   }
+  // deno-lint-ignore require-await
   protected async emoji(node: EmojiNode): Promise<Node | null> {
     return {
-      type: 'emoji',
+      type: "emoji",
       url: node.url,
-      alt: node.alt
-    }
+      alt: node.alt,
+    };
   }
   protected async figure(node: FigureNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -166,8 +223,8 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "figure",
-      content
-    }
+      content,
+    };
   }
   protected async figureCaption(node: FigureCaptionNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -175,8 +232,8 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "figure-caption",
-      content
-    }
+      content,
+    };
   }
   protected async figureImage(node: FigureImageNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -184,24 +241,24 @@ export class IdentityTransformer {
     await this.afterBlock();
     return {
       type: "figure-image",
-      alt: node.alt || '',
-      blurhash: node.blurhash || '',
+      alt: node.alt || "",
+      blurhash: node.blurhash || "",
       height: node.height,
       width: node.width,
       image: node.image,
       url: node.url,
       content,
-      hero: node.hero
-    }
+      hero: node.hero,
+    };
   }
   protected async formattedText(node: FormattedTextNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
     return {
       type: "formatted-text",
-      text: node.text || '',
-      language: node.language
-    }
+      text: node.text || "",
+      language: node.language,
+    };
   }
   protected async header(node: HeaderNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -210,8 +267,8 @@ export class IdentityTransformer {
     return {
       type: "header",
       content,
-      level: node.level || 2
-    }
+      level: node.level || 2,
+    };
   }
   protected async highTechAlert(node: HighTechAlertNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -223,29 +280,32 @@ export class IdentityTransformer {
     return {
       type: "high-tech-alert",
       content,
-      warning
-    }
+      warning,
+    };
   }
-  protected async horizontalRule(node: HorizontalRuleNode): Promise<Node | null> {
+
+  protected async horizontalRule(
+    _node: HorizontalRuleNode,
+  ): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
     return {
-      type: "horizontal-rule"
-    }
+      type: "horizontal-rule",
+    };
   }
   protected async image(node: ImageNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
     return {
       type: "image",
-      alt: node.alt || '',
+      alt: node.alt || "",
       blurhash: node.blurhash,
       height: node.height,
       width: node.width,
       image: node.image,
       url: node.url,
-      hero: node.hero
-    }
+      hero: node.hero,
+    };
   }
   protected async italic(node: ItalicNode): Promise<Node | null> {
     await this.beforeInline();
@@ -253,8 +313,8 @@ export class IdentityTransformer {
     await this.afterInline();
     return {
       type: "italic",
-      content
-    }
+      content,
+    };
   }
   protected async link(node: LinkNode): Promise<Node | null> {
     await this.beforeInline();
@@ -264,14 +324,14 @@ export class IdentityTransformer {
       type: "link",
       content,
       url: node.url,
-      title: node.title
-    }
+      title: node.title,
+    };
   }
   protected async array(node: ArrayNode): Promise<Node | null> {
     return {
       type: "array",
       content: await this.chooseChildren(node.content),
-    }
+    };
   }
   protected async note(node: NoteNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -280,26 +340,27 @@ export class IdentityTransformer {
     return {
       type: "note",
       content,
-    }
+    };
   }
+
   protected async list(node: ListNode): Promise<Node | null> {
-    let content : ListItem[] = [];
-    for (let item of node.content) {
+    const content: ListItem[] = [];
+    for (const item of node.content) {
       await this.beforeBlock();
       const children = await this.chooseChildren(item.content);
       await this.afterBlock();
       if (children && children.length > 0) {
         content.push({
-          type: 'list-item',
-          content: children
-        })
+          type: "list-item",
+          content: children,
+        });
       }
     }
     return {
       type: "list",
-      style: node.style || 'unordered',
+      style: node.style || "unordered",
       content,
-    }
+    };
   }
   protected async paragraph(node: ParagraphNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -308,7 +369,7 @@ export class IdentityTransformer {
     return {
       type: "paragraph",
       content,
-    }
+    };
   }
   protected async quote(node: QuoteNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -321,16 +382,16 @@ export class IdentityTransformer {
       content,
       url: node.url,
       orientation: node.orientation,
-    }
+    };
   }
   protected async redacted(node: RedactedNode): Promise<Node | null> {
-    if (node.style == 'block') {
+    if (node.style == "block") {
       await this.beforeBlock();
     } else {
       await this.beforeInline();
     }
     const content = await this.chooseChildren(node.content);
-    if (node.style == 'block') {
+    if (node.style == "block") {
       await this.afterBlock();
     } else {
       await this.afterInline();
@@ -339,7 +400,7 @@ export class IdentityTransformer {
       type: "redacted",
       style: node.style,
       content,
-    }
+    };
   }
   protected async region(node: RegionNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -350,14 +411,15 @@ export class IdentityTransformer {
       mode: node.mode,
       regions: node.regions,
       content,
-    }
+    };
   }
+  // deno-lint-ignore require-await
   protected async script(node: ScriptNode): Promise<Node | null> {
     return {
       type: "script",
-      "mime-type": node['mime-type'] || 'text/javascript',
-      source: node.source
-    }
+      "mime-type": node["mime-type"] || "text/javascript",
+      source: node.source,
+    };
   }
   protected async secret(node: SecretNode): Promise<Node | null> {
     await this.beforeInline();
@@ -366,7 +428,7 @@ export class IdentityTransformer {
     return {
       type: "secret",
       content,
-    }
+    };
   }
   protected async smaller(node: SmallerNode): Promise<Node | null> {
     await this.beforeInline();
@@ -375,7 +437,7 @@ export class IdentityTransformer {
     return {
       type: "smaller",
       content,
-    }
+    };
   }
   protected async sticker(node: StickerNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -387,8 +449,8 @@ export class IdentityTransformer {
       character: node.character,
       name: node.name,
       size: node.size,
-      content
-    }
+      content,
+    };
   }
   protected async strikeThrough(node: StrikeThroughNode): Promise<Node | null> {
     await this.beforeInline();
@@ -397,32 +459,34 @@ export class IdentityTransformer {
     return {
       type: "strike-through",
       content,
-    }
+    };
   }
+  // deno-lint-ignore require-await
   protected async text(node: TextNode): Promise<Node | null> {
     return {
       type: "text",
       text: node.text,
-    }
+    };
   }
+
   protected async table(node: TableNode): Promise<Node | null> {
-    let content : TableCellNode[][] = [];
-    for (let row of node.content) {
-      let cells: TableCellNode[] = [];
+    const content: TableCellNode[][] = [];
+    for (const row of node.content) {
+      const cells: TableCellNode[] = [];
       let emptyCount = 0;
-      for (let cell of row) {
-          await this.beforeBlock();
-          let children = await this.chooseChildren(cell.content)
-          await this.afterBlock();
-          if (children && children.length == 0) {
-            emptyCount++;
-          }
-          cells.push({
-            type: 'table-cell',
-            header: cell.header,
-            span: [cell.span[0] || 1, cell.span[1] || 1],
-            content: children,
-          })
+      for (const cell of row) {
+        await this.beforeBlock();
+        const children = await this.chooseChildren(cell.content);
+        await this.afterBlock();
+        if (children && children.length == 0) {
+          emptyCount++;
+        }
+        cells.push({
+          type: "table-cell",
+          header: cell.header,
+          span: [cell.span[0] || 1, cell.span[1] || 1],
+          content: children,
+        });
       }
       if (cells.length > 0 && emptyCount != cells.length) {
         content.push(cells);
@@ -430,8 +494,8 @@ export class IdentityTransformer {
     }
     return {
       type: "table",
-      content
-    }
+      content,
+    };
   }
   protected async social(node: SocialNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -439,7 +503,7 @@ export class IdentityTransformer {
     return {
       type: node.type,
       id: node.id,
-    }
+    };
   }
   protected async underline(node: UnderlineNode): Promise<Node | null> {
     await this.beforeInline();
@@ -448,7 +512,7 @@ export class IdentityTransformer {
     return {
       type: "underline",
       content,
-    }
+    };
   }
   protected async video(node: VideoNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -466,8 +530,8 @@ export class IdentityTransformer {
       loop: node.loop,
       muted: node.muted,
       webm: node.webm,
-      width: node.width
-    }
+      width: node.width,
+    };
   }
   protected async warning(node: WarningNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -476,28 +540,28 @@ export class IdentityTransformer {
     return {
       type: "warning",
       content,
-    }
+    };
   }
   protected async card(node: CardNode): Promise<Node | null> {
-    let content : CardContent | undefined;
+    let content: CardContent | undefined;
     if (node.content) {
       await this.beforeBlock();
       const cardContent = await this.chooseChildren(node.content.content);
       if (cardContent && cardContent.length > 0) {
         content = {
-          type: 'card-content',
-          content: cardContent
-        }
+          type: "card-content",
+          content: cardContent,
+        };
       }
       await this.afterBlock();
     }
-    let attribution : CardAttribution | undefined;
+    let attribution: CardAttribution | undefined;
     if (node.attribution) {
       attribution = {
-        type: 'card-attribution',
+        type: "card-attribution",
         archiveUrl: node.attribution.archiveUrl,
         date: node.attribution.date,
-        url: node.attribution.url
+        url: node.attribution.url,
       };
       if (node.attribution.title) {
         await this.beforeBlock();
@@ -505,14 +569,14 @@ export class IdentityTransformer {
         await this.afterBlock();
         attribution.title = title;
       }
-    };
-    let header : CardHeader | undefined;
+    }
+    let header: CardHeader | undefined;
     if (node.header) {
       await this.beforeBlock();
       const title = await this.chooseChildren(node.header.title);
       await this.afterBlock();
       header = {
-        type: 'card-header',
+        type: "card-header",
         title,
         backgroundBlurhash: node.header.backgroundBlurhash,
         backgroundColor: node.header.backgroundColor,
@@ -521,19 +585,21 @@ export class IdentityTransformer {
         imageBlurhash: node.header.imageBlurhash,
         url: node.header.url,
         username: node.header.username,
-        usernameDomain: node.header.usernameDomain
-      }
+        usernameDomain: node.header.usernameDomain,
+      };
     }
-    let media : CardMedia | undefined;
+    let media: CardMedia | undefined;
     if (node.media) {
-      let mediaContent : (VideoNode | ImageNode | EmbedNode)[] = []
-      for (let mediaNode of node.media.content) {
+      const mediaContent: (VideoNode | ImageNode | EmbedNode)[] = [];
+      for (const mediaNode of node.media.content) {
         await this.beforeBlock();
         const transformedNode = await this.choose(mediaNode);
         if (transformedNode) {
-          if (transformedNode.type == 'image'
-          || transformedNode.type == 'video'
-          || transformedNode.type == 'embed') {
+          if (
+            transformedNode.type == "image" ||
+            transformedNode.type == "video" ||
+            transformedNode.type == "embed"
+          ) {
             mediaContent.push(transformedNode);
           }
         }
@@ -541,20 +607,20 @@ export class IdentityTransformer {
       }
       if (mediaContent.length > 0) {
         media = {
-          type: 'card-media',
-          content: mediaContent
-        }
+          type: "card-media",
+          content: mediaContent,
+        };
       }
     }
 
     return {
-      type: 'card',
+      type: "card",
       content,
       attribution,
       header,
       media,
-      original: node.original
-    }
+      original: node.original,
+    };
   }
   protected async choose(node: Node): Promise<Node | null> {
     if (!node || !node.type) {
@@ -562,59 +628,102 @@ export class IdentityTransformer {
     }
     try {
       switch (node.type) {
-        case 'block': return await this.block(node);
-        case 'block-quote': return await this.blockQuote(node);
-        case 'bold': return await this.bold(node);
-        case 'break': return await this.break_(node);
-        case 'bubble': return await this.bubble(node);
-        case 'card': return await this.card(node);
-        case 'center': return await this.center(node);
-        case 'code': return await this.code(node);
-        case 'columns': return await this.columns(node);
-        case 'definition': return await this.definition(node);
-        case 'definition-list': return await this.definitionList(node);
-        case 'definition-reference': return await this.definitionReference(node);
-        case 'embed': return await this.embed(node);
-        case 'emoji': return await this.emoji(node);
-        case 'figure': return await this.figure(node);
-        case 'figure-caption': return await this.figureCaption(node);
-        case 'figure-image': return await this.figureImage(node);
-        case 'formatted-text': return await this.formattedText(node);
-        case 'header': return await this.header(node);
-        case 'high-tech-alert': return await this.highTechAlert(node);
-        case 'horizontal-rule': return await this.horizontalRule(node);
-        case 'image': return await this.image(node);
-        case 'italic': return await this.italic(node);
-        case 'link': return await this.link(node);
-        case 'array': return await this.array(node);
-        case 'note': return await this.note(node);
-        case 'list': return await this.list(node);
-        case 'paragraph': return await this.paragraph(node);
-        case 'quote': return await this.quote(node);
-        case 'redacted': return await this.redacted(node);
-        case 'region': return await this.region(node);
-        case 'script': return await this.script(node);
-        case 'secret': return await this.secret(node);
-        case 'smaller': return await this.smaller(node);
-        case 'sticker': return await this.sticker(node);
-        case 'strike-through': return await this.strikeThrough(node);
-        case 'table': return await this.table(node);
-        case 'text': return await this.text(node);
-        case 'toot':
-        case 'tweet':
-        case 'vimeo':
-        case 'youtube':
+        case "block":
+          return await this.block(node);
+        case "block-quote":
+          return await this.blockQuote(node);
+        case "bold":
+          return await this.bold(node);
+        case "break":
+          return await this.break_(node);
+        case "bubble":
+          return await this.bubble(node);
+        case "card":
+          return await this.card(node);
+        case "center":
+          return await this.center(node);
+        case "code":
+          return await this.code(node);
+        case "columns":
+          return await this.columns(node);
+        case "definition":
+          return await this.definition(node);
+        case "definition-list":
+          return await this.definitionList(node);
+        case "definition-reference":
+          return await this.definitionReference(node);
+        case "embed":
+          return await this.embed(node);
+        case "emoji":
+          return await this.emoji(node);
+        case "figure":
+          return await this.figure(node);
+        case "figure-caption":
+          return await this.figureCaption(node);
+        case "figure-image":
+          return await this.figureImage(node);
+        case "formatted-text":
+          return await this.formattedText(node);
+        case "header":
+          return await this.header(node);
+        case "high-tech-alert":
+          return await this.highTechAlert(node);
+        case "horizontal-rule":
+          return await this.horizontalRule(node);
+        case "image":
+          return await this.image(node);
+        case "italic":
+          return await this.italic(node);
+        case "link":
+          return await this.link(node);
+        case "array":
+          return await this.array(node);
+        case "note":
+          return await this.note(node);
+        case "list":
+          return await this.list(node);
+        case "paragraph":
+          return await this.paragraph(node);
+        case "quote":
+          return await this.quote(node);
+        case "redacted":
+          return await this.redacted(node);
+        case "region":
+          return await this.region(node);
+        case "script":
+          return await this.script(node);
+        case "secret":
+          return await this.secret(node);
+        case "smaller":
+          return await this.smaller(node);
+        case "sticker":
+          return await this.sticker(node);
+        case "strike-through":
+          return await this.strikeThrough(node);
+        case "table":
+          return await this.table(node);
+        case "text":
+          return await this.text(node);
+        case "toot":
+        case "tweet":
+        case "vimeo":
+        case "youtube":
           return await this.social(node);
-        case 'underline': return await this.underline(node);
-        case 'video': return await this.video(node);
-        case 'warning': return await this.warning(node);
+        case "underline":
+          return await this.underline(node);
+        case "video":
+          return await this.video(node);
+        case "warning":
+          return await this.warning(node);
       }
     } catch (e) {
-      console.log(`Got exception while processing node: ${JSON.stringify(node)}`);
+      console.log(
+        `Got exception while processing node: ${JSON.stringify(node)}`,
+      );
       throw e;
     }
-    //@ts-ignore
-    console.error(`Unsupported type ${node.type}`)
+    //@ts-ignore fall through
+    console.error(`Unsupported type ${node.type}`);
     return null;
   }
   protected async document(node: DocumentNode): Promise<DocumentNode> {
@@ -622,9 +731,12 @@ export class IdentityTransformer {
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
     await this.beforeBlock();
-    const definitions = node.definitions && ((await this.chooseChildren(node.definitions)).filter(x => x.type == 'definition') as DefinitionNode[]);
+    const definitions = node.definitions &&
+      ((await this.chooseChildren(node.definitions)).filter((x) =>
+        x.type == "definition"
+      ) as DefinitionNode[]);
     await this.afterBlock();
-    const result : DocumentNode = {
+    const result: DocumentNode = {
       type: "document",
       title: node.title,
       author: node.author,
@@ -634,11 +746,11 @@ export class IdentityTransformer {
       description: node.description,
       image: node.image,
       guid: node.guid,
-      "pub-date": node['pub-date'],
+      "pub-date": node["pub-date"],
       date: node.date,
       url: node.url,
-      definitions
-    }
+      definitions,
+    };
     return result;
   }
   async transform(node: DocumentNode): Promise<DocumentNode> {

@@ -1,11 +1,14 @@
-import { expect, test } from "bun:test";
+import { assertEquals, assertNotEquals } from "https://deno.land/std@0.192.0/testing/asserts.ts";
 import { ExampleDocument } from "./ExampleDocument.ts";
 import { DocumentNode } from "./types.ts";
 import { WhitespaceStretchingTransformer } from "./WhitespaceStretchingTransformer.ts";
 
-test("Whitespace stretching transformer changes something", async () => {
-  expect(await new WhitespaceStretchingTransformer().transform(ExampleDocument)).not.toEqual(ExampleDocument);
-});
+Deno.test({
+  name: "Whitespace stretching transformer changes something",
+  async fn() {
+    assertNotEquals(await new WhitespaceStretchingTransformer().transform(ExampleDocument), ExampleDocument);
+  }
+})
 
 const InputDocument : DocumentNode = {
   ...ExampleDocument,
@@ -115,7 +118,11 @@ const ExpectedDocument : DocumentNode = {
   ]
 }
 
-test("Whitespace stretching transformer works as expected", async () => {
-  expect(await new WhitespaceStretchingTransformer().transform(InputDocument)).toEqual(ExpectedDocument);
-  expect(await new WhitespaceStretchingTransformer().transform(ExpectedDocument)).toEqual(ExpectedDocument);
-});
+Deno.test({
+  name: "Whitespace stretching transformer works as expected",
+  async fn() {
+    assertEquals(await new WhitespaceStretchingTransformer().transform(InputDocument), ExpectedDocument);
+    assertEquals(await new WhitespaceStretchingTransformer().transform(ExpectedDocument), ExpectedDocument);
+  }
+})
+

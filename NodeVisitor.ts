@@ -1,21 +1,62 @@
-import { BlockQuoteNode, BoldNode, BreakNode, BubbleNode, CenterNode, CodeNode, ColumnsNode, DefinitionListNode, DefinitionNode, DefinitionReferenceNode, DocumentNode, FigureCaptionNode, FigureImageNode, FigureNode, FormattedTextNode, HeaderNode, HighTechAlertNode, HorizontalRuleNode, ImageNode, ItalicNode, LinkNode, ListNode, NoteNode, ParagraphNode, QuoteNode, RedactedNode, RegionNode, ScriptNode, SecretNode, SmallerNode, SocialNode, StickerNode, StrikeThroughNode, TableNode, TextNode, UnderlineNode, WarningNode, Node, ArrayNode, VideoNode, CardNode, EmojiNode, BlockNode, EmbedNode } from './types.ts';
+import {
+  ArrayNode,
+  BlockNode,
+  BlockQuoteNode,
+  BoldNode,
+  BreakNode,
+  BubbleNode,
+  CardNode,
+  CenterNode,
+  CodeNode,
+  ColumnsNode,
+  DefinitionListNode,
+  DefinitionNode,
+  DefinitionReferenceNode,
+  DocumentNode,
+  EmbedNode,
+  EmojiNode,
+  FigureCaptionNode,
+  FigureImageNode,
+  FigureNode,
+  FormattedTextNode,
+  HeaderNode,
+  HighTechAlertNode,
+  HorizontalRuleNode,
+  ImageNode,
+  ItalicNode,
+  LinkNode,
+  ListNode,
+  Node,
+  NoteNode,
+  ParagraphNode,
+  QuoteNode,
+  RedactedNode,
+  RegionNode,
+  ScriptNode,
+  SecretNode,
+  SmallerNode,
+  SocialNode,
+  StickerNode,
+  StrikeThroughNode,
+  TableNode,
+  TextNode,
+  UnderlineNode,
+  VideoNode,
+  WarningNode,
+} from "./types.ts";
 
 export class NodeVisitor {
-  protected beforeBlock() : void {
-
+  protected beforeBlock(): void {
   }
-  protected afterBlock() : void {
-
+  protected afterBlock(): void {
   }
-  protected beforeInline() : void {
-
+  protected beforeInline(): void {
   }
-  protected afterInline() : void {
-
+  protected afterInline(): void {
   }
   protected chooseChildren(nodes: Node[]): void {
-    for (let child of nodes) {
-      this.choose(child)
+    for (const child of nodes) {
+      this.choose(child);
     }
   }
   protected block(node: BlockNode): void {
@@ -33,7 +74,7 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterInline();
   }
-  protected break_(node: BreakNode): void {
+  protected break_(_node: BreakNode): void {
     this.beforeBlock();
     this.afterBlock();
   }
@@ -53,7 +94,7 @@ export class NodeVisitor {
     this.afterInline();
   }
   protected columns(node: ColumnsNode): void {
-    for (let column of node.columns) {
+    for (const column of node.columns) {
       this.beforeBlock();
       this.chooseChildren(column);
       this.afterBlock();
@@ -72,8 +113,7 @@ export class NodeVisitor {
   }
   protected definitionList(node: DefinitionListNode): void {
     this.beforeBlock();
-    const children : DefinitionNode[] = [];
-    for (let child of node.content) {
+    for (const child of node.content) {
       this.definition(child);
     }
     this.afterBlock();
@@ -82,13 +122,11 @@ export class NodeVisitor {
     this.beforeInline();
     this.chooseChildren(node.definition.abbreviation);
     this.afterInline();
-    this.chooseChildren(node.content)
+    this.chooseChildren(node.content);
   }
-  protected embed(node: EmbedNode): void {
-
+  protected embed(_node: EmbedNode): void {
   }
-  protected emoji(node: EmojiNode): void {
-
+  protected emoji(_node: EmojiNode): void {
   }
   protected figure(node: FigureNode): void {
     this.beforeBlock();
@@ -105,8 +143,7 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterBlock();
   }
-  protected formattedText(node: FormattedTextNode): void {
-
+  protected formattedText(_node: FormattedTextNode): void {
   }
   protected header(node: HeaderNode): void {
     this.beforeBlock();
@@ -121,10 +158,9 @@ export class NodeVisitor {
     this.chooseChildren(node.warning);
     this.afterBlock();
   }
-  protected horizontalRule(node: HorizontalRuleNode): void {
+  protected horizontalRule(_node: HorizontalRuleNode): void {
   }
-  protected image(node: ImageNode): void {
-
+  protected image(_node: ImageNode): void {
   }
   protected italic(node: ItalicNode): void {
     this.beforeInline();
@@ -137,7 +173,7 @@ export class NodeVisitor {
     this.afterInline();
   }
   protected array(node: ArrayNode): void {
-    this.chooseChildren(node.content)
+    this.chooseChildren(node.content);
   }
   protected note(node: NoteNode): void {
     this.beforeBlock();
@@ -145,7 +181,7 @@ export class NodeVisitor {
     this.afterBlock();
   }
   protected list(node: ListNode): void {
-    for (let item of node.content) {
+    for (const item of node.content) {
       this.beforeBlock();
       this.chooseChildren(item.content);
       this.afterBlock();
@@ -162,13 +198,13 @@ export class NodeVisitor {
     this.afterBlock();
   }
   protected redacted(node: RedactedNode): void {
-    if (node.style == 'block') {
+    if (node.style == "block") {
       this.beforeBlock();
     } else {
       this.beforeInline();
     }
     this.chooseChildren(node.content);
-    if (node.style == 'block') {
+    if (node.style == "block") {
       this.afterBlock();
     } else {
       this.afterInline();
@@ -179,7 +215,7 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterBlock();
   }
-  protected script(node: ScriptNode): void {
+  protected script(_node: ScriptNode): void {
   }
   protected secret(node: SecretNode): void {
     this.beforeInline();
@@ -201,18 +237,18 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterInline();
   }
-  protected text(node: TextNode): void {
+  protected text(_node: TextNode): void {
   }
   protected table(node: TableNode): void {
-    for (let row of node.content) {
-      for (let cell of row) {
-          this.beforeBlock();
-          this.chooseChildren(cell.content)
-          this.afterBlock();
+    for (const row of node.content) {
+      for (const cell of row) {
+        this.beforeBlock();
+        this.chooseChildren(cell.content);
+        this.afterBlock();
       }
     }
   }
-  protected social(node: SocialNode): void {
+  protected social(_node: SocialNode): void {
   }
   protected underline(node: UnderlineNode): void {
     this.beforeInline();
@@ -238,17 +274,17 @@ export class NodeVisitor {
     if (node.attribution) {
       if (node.attribution.title) {
         this.beforeBlock();
-        const title = this.chooseChildren(node.attribution.title);
+        const _title = this.chooseChildren(node.attribution.title);
         this.afterBlock();
       }
-    };
+    }
     if (node.header) {
       this.beforeBlock();
       this.chooseChildren(node.header.title);
       this.afterBlock();
     }
     if (node.media) {
-      for (let mediaNode of node.media.content) {
+      for (const mediaNode of node.media.content) {
         this.beforeBlock();
         this.choose(mediaNode);
         this.afterBlock();
@@ -261,59 +297,102 @@ export class NodeVisitor {
     }
     try {
       switch (node.type) {
-        case 'block': return this.block(node);
-        case 'block-quote': return this.blockQuote(node);
-        case 'bold': return this.bold(node);
-        case 'break': return this.break_(node);
-        case 'bubble': return this.bubble(node);
-        case 'card': return this.card(node);
-        case 'center': return this.center(node);
-        case 'code': return this.code(node);
-        case 'columns': return this.columns(node);
-        case 'definition': return this.definition(node);
-        case 'definition-list': return this.definitionList(node);
-        case 'definition-reference': return this.definitionReference(node);
-        case 'embed': return this.embed(node);
-        case 'emoji': return this.emoji(node);
-        case 'figure': return this.figure(node);
-        case 'figure-caption': return this.figureCaption(node);
-        case 'figure-image': return this.figureImage(node);
-        case 'formatted-text': return this.formattedText(node);
-        case 'header': return this.header(node);
-        case 'high-tech-alert': return this.highTechAlert(node);
-        case 'horizontal-rule': return this.horizontalRule(node);
-        case 'image': return this.image(node);
-        case 'italic': return this.italic(node);
-        case 'link': return this.link(node);
-        case 'array': return this.array(node);
-        case 'note': return this.note(node);
-        case 'list': return this.list(node);
-        case 'paragraph': return this.paragraph(node);
-        case 'quote': return this.quote(node);
-        case 'redacted': return this.redacted(node);
-        case 'region': return this.region(node);
-        case 'script': return this.script(node);
-        case 'secret': return this.secret(node);
-        case 'smaller': return this.smaller(node);
-        case 'sticker': return this.sticker(node);
-        case 'strike-through': return this.strikeThrough(node);
-        case 'table': return this.table(node);
-        case 'text': return this.text(node);
-        case 'toot':
-        case 'tweet':
-        case 'vimeo':
-        case 'youtube':
+        case "block":
+          return this.block(node);
+        case "block-quote":
+          return this.blockQuote(node);
+        case "bold":
+          return this.bold(node);
+        case "break":
+          return this.break_(node);
+        case "bubble":
+          return this.bubble(node);
+        case "card":
+          return this.card(node);
+        case "center":
+          return this.center(node);
+        case "code":
+          return this.code(node);
+        case "columns":
+          return this.columns(node);
+        case "definition":
+          return this.definition(node);
+        case "definition-list":
+          return this.definitionList(node);
+        case "definition-reference":
+          return this.definitionReference(node);
+        case "embed":
+          return this.embed(node);
+        case "emoji":
+          return this.emoji(node);
+        case "figure":
+          return this.figure(node);
+        case "figure-caption":
+          return this.figureCaption(node);
+        case "figure-image":
+          return this.figureImage(node);
+        case "formatted-text":
+          return this.formattedText(node);
+        case "header":
+          return this.header(node);
+        case "high-tech-alert":
+          return this.highTechAlert(node);
+        case "horizontal-rule":
+          return this.horizontalRule(node);
+        case "image":
+          return this.image(node);
+        case "italic":
+          return this.italic(node);
+        case "link":
+          return this.link(node);
+        case "array":
+          return this.array(node);
+        case "note":
+          return this.note(node);
+        case "list":
+          return this.list(node);
+        case "paragraph":
+          return this.paragraph(node);
+        case "quote":
+          return this.quote(node);
+        case "redacted":
+          return this.redacted(node);
+        case "region":
+          return this.region(node);
+        case "script":
+          return this.script(node);
+        case "secret":
+          return this.secret(node);
+        case "smaller":
+          return this.smaller(node);
+        case "sticker":
+          return this.sticker(node);
+        case "strike-through":
+          return this.strikeThrough(node);
+        case "table":
+          return this.table(node);
+        case "text":
+          return this.text(node);
+        case "toot":
+        case "tweet":
+        case "vimeo":
+        case "youtube":
           return this.social(node);
-        case 'underline': return this.underline(node);
-        case 'video': return this.video(node);
-        case 'warning': return this.warning(node);
+        case "underline":
+          return this.underline(node);
+        case "video":
+          return this.video(node);
+        case "warning":
+          return this.warning(node);
       }
     } catch (e) {
-      console.log(`Got exception while processing node: ${JSON.stringify(node)}`);
+      console.log(
+        `Got exception while processing node: ${JSON.stringify(node)}`,
+      );
       throw e;
     }
-    //@ts-ignore
-    console.error(`Unsupported type ${node.type}`)
+    //@ts-ignore Fall through
+    console.error(`Unsupported type ${node.type}`);
   }
   protected document(node: DocumentNode) {
     this.beforeBlock();
@@ -326,7 +405,7 @@ export class NodeVisitor {
     this.afterBlock();
   }
   visit(node: DocumentNode | Node) {
-    if (node.type == 'document') {
+    if (node.type == "document") {
       this.document(node);
     } else {
       this.choose(node);

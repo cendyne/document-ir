@@ -1,11 +1,17 @@
-import { EmojiNode, FigureImageNode, ImageNode, TextNode, VideoNode } from "./types.ts";
+import {
+  EmojiNode,
+  FigureImageNode,
+  ImageNode,
+  TextNode,
+  VideoNode,
+} from "./types.ts";
 import { NodeVisitor } from "./NodeVisitor.ts";
 
 export class TextVisitor extends NodeVisitor {
-  private textList : string[];
-  constructor(){
+  private textList: string[];
+  constructor() {
     super();
-    this.textList = []
+    this.textList = [];
   }
   protected text(node: TextNode) {
     this.textList.push(node.text);
@@ -27,7 +33,7 @@ export class TextVisitor extends NodeVisitor {
     this.textList.push(node.alt);
     super.figureImage(node);
   }
-  getText() : string {
-    return this.textList.join('');
+  getText(): string {
+    return this.textList.join("");
   }
 }

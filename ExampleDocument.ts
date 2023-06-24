@@ -1,6 +1,6 @@
 import { DocumentNode } from "./types.ts";
 
-export const ExampleDocument : DocumentNode = {
+export const ExampleDocument: DocumentNode = {
   type: "document",
   author: "TODO",
   title: "TEST",
@@ -15,638 +15,652 @@ export const ExampleDocument : DocumentNode = {
   content: [
     {
       type: "text",
-      text: "hello "
+      text: "hello ",
     },
     {
       type: "array",
       content: [
         {
           type: "text",
-          text: "\n world"
+          text: "\n world",
         },
         {
           type: "text",
-          text: "."
-        }
-      ]
+          text: ".",
+        },
+      ],
     },
     {
-      type: 'block-quote',
+      type: "block-quote",
       content: [
         {
-          type: 'text',
-          text: 'We live in a '
+          type: "text",
+          text: "We live in a ",
         },
         {
-          type: 'text',
-          text: 'society.'
+          type: "text",
+          text: "society.",
         },
         {
-          type: 'emoji',
-          url: 'https://c.cdyn.dev/YzU3qe7R',
-          alt: 'flan_ooh'
-        }
-      ]
+          type: "emoji",
+          url: "https://c.cdyn.dev/YzU3qe7R",
+          alt: "flan_ooh",
+        },
+      ],
     },
     {
-      type: 'paragraph',
+      type: "paragraph",
       content: [
         {
-          type: 'text',
-          text: 'Thankfully '
+          type: "text",
+          text: "Thankfully ",
         },
         {
-          type: 'bold',
+          type: "bold",
           content: [
             {
-              type: 'text',
-              text: ' we '
+              type: "text",
+              text: " we ",
             },
             {
-              type: 'text',
-              text: ' can rest easy.'
+              type: "text",
+              text: " can rest easy.",
             },
             {
-              type: 'break'
+              type: "break",
             },
             {
-              type: 'text',
-              text: 'Really.'
-            }
-          ]
-        }
-      ]
+              type: "text",
+              text: "Really.",
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'horizontal-rule'
+      type: "horizontal-rule",
     },
     {
-      type: 'center',
+      type: "center",
       content: [
         {
-          type: 'text',
-          text: 'centered'
-        }
-      ]
+          type: "text",
+          text: "centered",
+        },
+      ],
     },
     {
-      type: 'columns',
+      type: "columns",
       columns: [
         [
           {
-            type: 'paragraph',
+            type: "paragraph",
             content: [
               {
-                type: 'text',
-                text: 'Left side'
-              }
-            ]
-          }
+                type: "text",
+                text: "Left side",
+              },
+            ],
+          },
         ],
         [
           {
-            type: 'paragraph',
+            type: "paragraph",
             content: [
               {
-                type: 'text',
-                text: 'Right side '
+                type: "text",
+                text: "Right side ",
               },
               {
-                type: 'definition-reference',
+                type: "definition-reference",
                 definition: {
-                  abbreviation: [{type: 'text', text: 'TODO'}],
-                  key: 'TODO'
+                  abbreviation: [{ type: "text", text: "TODO" }],
+                  key: "TODO",
                 },
                 content: [
                   {
-                    type: 'text',
-                    text: 'TODO'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+                    type: "text",
+                    text: "TODO",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       ],
-      "column-count": 2
+      "column-count": 2,
     },
     {
-      type: 'definition-list',
+      type: "definition-list",
       content: [
         {
-          type: 'definition',
-          key: 'TODO',
+          type: "definition",
+          key: "TODO",
           abbreviation: [
             {
-              type: 'text',
-              text: 'TODO'
-            }
+              type: "text",
+              text: "TODO",
+            },
           ],
           content: [
             {
-              type: 'text',
-              text: 'An interesting thing to do'
-            }
+              type: "text",
+              text: "An interesting thing to do",
+            },
           ],
           title: [
             {
-              type: 'text',
-              text: 'Something to do'
-            }
-          ]
-        }
-      ]
+              type: "text",
+              text: "Something to do",
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'warning',
+      type: "warning",
       content: [
         {
-          type: 'text',
-          text: 'A warning message'
-        }
-      ]
+          type: "text",
+          text: "A warning message",
+        },
+      ],
     },
     {
-      type: 'bubble',
-      orientation: 'left',
+      type: "bubble",
+      orientation: "left",
       content: [
         {
-          type: 'text',
-          text: 'A message'
-        }
-      ]
+          type: "text",
+          text: "A message",
+        },
+      ],
     },
     {
-      type: 'bubble',
-      orientation: 'right',
+      type: "bubble",
+      orientation: "right",
       content: [
         {
-          type: 'text',
-          text: 'Another message'
-        }
-      ]
+          type: "text",
+          text: "Another message",
+        },
+      ],
     },
     {
-      type: 'header',
+      type: "header",
       level: 2,
       content: [
         {
-          type: 'text',
-          text: 'Header here'
-        }
-      ]
+          type: "text",
+          text: "Header here",
+        },
+      ],
     },
     {
-      type: 'image',
-      alt: 'Nothing important',
-      image: 'nothing/important',
-      blurhash: 'E9C[4yH^nlo{RRtP.hRnM}j[oeV]',
-      url: 'https://c.cdyn.dev/pr45JDDH',
+      type: "image",
+      alt: "Nothing important",
+      image: "nothing/important",
+      blurhash: "E9C[4yH^nlo{RRtP.hRnM}j[oeV]",
+      url: "https://c.cdyn.dev/pr45JDDH",
       width: 1600,
       height: 737,
-      hero: true
+      hero: true,
     },
     {
-      type: 'figure',
+      type: "figure",
       content: [
         {
-          type: 'image',
-          alt: 'Nothing important',
-          image: 'nothing/important',
-          blurhash: 'E9C[4yH^nlo{RRtP.hRnM}j[oeV]',
-          url: 'https://c.cdyn.dev/pr45JDDH',
+          type: "image",
+          alt: "Nothing important",
+          image: "nothing/important",
+          blurhash: "E9C[4yH^nlo{RRtP.hRnM}j[oeV]",
+          url: "https://c.cdyn.dev/pr45JDDH",
           width: 1600,
-          height: 737
+          height: 737,
+          hero: undefined
         },
         {
-          type: 'figure-caption',
+          type: "figure-caption",
           content: [
             {
-              type: 'text',
-              text: 'Figure '
+              type: "text",
+              text: "Figure ",
             },
             {
-              type: 'code',
+              type: "code",
               content: [
                 {
-                  type: 'text',
-                  text: 'caption'
-                }
-              ]
+                  type: "text",
+                  text: "caption",
+                },
+              ],
             },
             {
-              type: 'italic',
+              type: "italic",
               content: [
                 {
-                  type: 'text',
-                  text: 'it'
-                }
-              ]
+                  type: "text",
+                  text: "it",
+                },
+              ],
             },
             {
-              type: 'underline',
+              type: "underline",
               content: [
                 {
-                  type: 'text',
-                  text: 'un'
-                }
-              ]
+                  type: "text",
+                  text: "un",
+                },
+              ],
             },
             {
-              type: 'strike-through',
+              type: "strike-through",
               content: [
                 {
-                  type: 'text',
-                  text: 'un'
-                }
-              ]
+                  type: "text",
+                  text: "un",
+                },
+              ],
             },
             {
-              type: 'text',
-              text: 'nospacehere.'
+              type: "text",
+              text: "nospacehere.",
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
-      type: 'sticker',
-      orientation: 'left',
-      character: 'cendyne',
-      name: 'naga-approved',
+      type: "sticker",
+      orientation: "left",
+      character: "cendyne",
+      name: "naga-approved",
       size: 512,
       content: [
         {
-          type: 'text',
-          text: 'Approved'
+          type: "text",
+          text: "Approved",
         },
-      ]
+      ],
     },
     {
-      type: 'sticker',
-      orientation: 'right',
-      character: 'cendyne',
-      name: 'naga-approved',
+      type: "sticker",
+      orientation: "right",
+      character: "cendyne",
+      name: "naga-approved",
       size: 512,
       content: [
         {
-          type: 'text',
-          text: 'Approved'
+          type: "text",
+          text: "Approved",
         },
-      ]
+      ],
     },
     {
-      type: 'sticker',
-      orientation: 'left',
-      character: 'cendyne',
-      name: 'naga-disapproved',
+      type: "sticker",
+      orientation: "left",
+      character: "cendyne",
+      name: "naga-disapproved",
       size: 512,
       content: [
         {
-          type: 'text',
-          text: 'Disapproved'
+          type: "text",
+          text: "Disapproved",
         },
-      ]
+      ],
     },
     {
-      type: 'sticker',
-      orientation: 'center',
-      character: 'cendyne',
-      name: 'naga-disapproved',
+      type: "sticker",
+      orientation: "center",
+      character: "cendyne",
+      name: "naga-disapproved",
       size: 512,
-      content: []
+      content: [],
     },
     {
-      type: 'figure-image',
-      alt: 'Nothing important',
-      image: 'nothing/important',
-      blurhash: 'E9C[4yH^nlo{RRtP.hRnM}j[oeV]',
-      url: 'https://c.cdyn.dev/pr45JDDH',
+      type: "figure-image",
+      alt: "Nothing important",
+      image: "nothing/important",
+      blurhash: "E9C[4yH^nlo{RRtP.hRnM}j[oeV]",
+      url: "https://c.cdyn.dev/pr45JDDH",
       width: 1600,
       height: 737,
       hero: true,
       content: [
         {
-          type: 'text',
-          text: 'Some description'
+          type: "text",
+          text: "Some description",
         },
-      ]
+      ],
     },
     {
-      type: 'table',
+      type: "table",
       content: [
         [
           {
-            type: 'table-cell',
+            type: "table-cell",
             header: true,
             span: [1, 1],
             content: [
               {
-                type: 'text',
-                text: 'A'
-              }
-            ]
+                type: "text",
+                text: "A",
+              },
+            ],
           },
           {
-            type: 'table-cell',
+            type: "table-cell",
             header: true,
             span: [1, 1],
             content: [
               {
-                type: 'text',
-                text: 'B'
-              }
-            ]
+                type: "text",
+                text: "B",
+              },
+            ],
           },
         ],
         [
           {
-            type: 'table-cell',
+            type: "table-cell",
             span: [1, 1],
+            header: undefined,
             content: [
               {
-                type: 'text',
-                text: '1'
-              }
-            ]
+                type: "text",
+                text: "1",
+              },
+            ],
           },
           {
-            type: 'table-cell',
+            type: "table-cell",
             span: [1, 1],
+            header: undefined,
             content: [
               {
-                type: 'text',
-                text: '2'
-              }
-            ]
+                type: "text",
+                text: "2",
+              },
+            ],
           },
         ],
         [
           {
-            type: 'table-cell',
+            type: "table-cell",
             span: [2, 1],
+            header: undefined,
             content: [
               {
-                type: 'text',
-                text: 'Double wide'
-              }
-            ]
-          }
-        ]
-      ]
+                type: "text",
+                text: "Double wide",
+              },
+            ],
+          },
+        ],
+      ],
     },
     {
-      type: 'list',
-      style: 'unordered',
+      type: "list",
+      style: "unordered",
       content: [
         {
-          type: 'list-item',
+          type: "list-item",
           content: [
             {
-              type: 'text',
-              text: 'A thing'
-            }
-          ]
+              type: "text",
+              text: "A thing",
+            },
+          ],
         },
         {
-          type: 'list-item',
+          type: "list-item",
           content: [
             {
-              type: 'text',
-              text: 'Another thing'
-            }
-          ]
-        }
-      ]
+              type: "text",
+              text: "Another thing",
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'list',
-      style: 'ordered',
+      type: "list",
+      style: "ordered",
       content: [
         {
-          type: 'list-item',
+          type: "list-item",
           content: [
             {
-              type: 'text',
-              text: 'First thing'
-            }
-          ]
+              type: "text",
+              text: "First thing",
+            },
+          ],
         },
         {
-          type: 'list-item',
+          type: "list-item",
           content: [
             {
-              type: 'text',
-              text: 'Second thing'
-            }
-          ]
-        }
-      ]
+              type: "text",
+              text: "Second thing",
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'tweet',
-      id: '503994351844728833'
+      type: "tweet",
+      id: "503994351844728833",
     },
     {
-      type: 'toot',
-      id: '109597685236238071'
+      type: "toot",
+      id: "109597685236238071",
     },
     {
-      type: 'youtube',
-      id: 'AbSehcT19u0'
+      type: "youtube",
+      id: "AbSehcT19u0",
     },
     {
-      type: 'vimeo',
-      id: '162704765'
+      type: "vimeo",
+      id: "162704765",
     },
     {
-      type: 'secret',
+      type: "secret",
       content: [
         {
-          type: 'text',
-          text: 'America! The secret text here...'
-        }
-      ]
+          type: "text",
+          text: "America! The secret text here...",
+        },
+      ],
     },
     {
-      type: 'high-tech-alert',
+      type: "high-tech-alert",
       warning: [
         {
-          type: 'text',
-          text: 'Jimmy Johns'
-        }
+          type: "text",
+          text: "Jimmy Johns",
+        },
       ],
       content: [
         {
-          type: 'paragraph',
+          type: "paragraph",
           content: [
             {
-              type: 'text',
-              text: 'oh yeah.'
+              type: "text",
+              text: "oh yeah.",
             },
             {
-              type: 'italic',
+              type: "italic",
               content: [
                 {
-                  type: 'text',
-                  text: ' He '
-                }
-              ]
+                  type: "text",
+                  text: " He ",
+                },
+              ],
             },
             {
-              type: 'text',
-              text: 'was special.'
-            }
-          ]
-        }
-      ]
+              type: "text",
+              text: "was special.",
+            },
+          ],
+        },
+      ],
     },
     {
-      type: 'video',
-      alt: 'Takt Time in 2 minutes',
+      type: "video",
+      alt: "Takt Time in 2 minutes",
       width: 1920,
       height: 1080,
-      poster: 'https://c.cdyn.dev/b2FeAuU-',
-      mp4: 'https://c.cdyn.dev/vPRK5O4U',
-      blurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1',
+      poster: "https://c.cdyn.dev/b2FeAuU-",
+      mp4: "https://c.cdyn.dev/vPRK5O4U",
+      webm: undefined,
+      blurhash: "MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1",
       muted: true,
       autoplay: true,
       loop: true,
       content: [
         {
-          type: 'text',
-          text: 'Unsupported video / gif'
-        }
-      ]
+          type: "text",
+          text: "Unsupported video / gif",
+        },
+      ],
     },
     {
-      type: 'card',
+      type: "card",
       header: {
-        type: 'card-header',
-        title: [{type: 'text', text: 'Example'}],
-        imageUrl: 'https://c.cdyn.dev/b2FeAuU-',
-        imageBlurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1',
-        backgroundColor: 'FFFFFF',
-        backgroundBlurhash: 'MbRymP?ct8bHW=xujZWBj]of_ND%Rjs:oJ',
-        backgroundImage: 'https://c.cdyn.dev/Buov2-Ce'
+        type: "card-header",
+        title: [{ type: "text", text: "Example" }],
+        imageUrl: "https://c.cdyn.dev/b2FeAuU-",
+        imageBlurhash: "MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1",
+        backgroundColor: "FFFFFF",
+        backgroundBlurhash: "MbRymP?ct8bHW=xujZWBj]of_ND%Rjs:oJ",
+        backgroundImage: "https://c.cdyn.dev/Buov2-Ce",
+        url: undefined,
+        username: undefined,
+        usernameDomain: undefined
       },
       attribution: {
-        type: 'card-attribution',
-        title: [{type: 'text', text: 'Example'}]
+        type: "card-attribution",
+        title: [{ type: "text", text: "Example" }],
+        date: undefined,
+        archiveUrl: undefined,
+        url: undefined,
       },
       media: {
-        type: 'card-media',
+        type: "card-media",
         content: [
           {
-            type: 'image',
-            alt: 'Henlo',
+            type: "image",
+            alt: "Henlo",
             width: 1920,
             height: 1080,
-            url: 'https://c.cdyn.dev/b2FeAuU-',
-            blurhash: 'MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1'
+            url: "https://c.cdyn.dev/b2FeAuU-",
+            blurhash: "MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1",
+            hero: undefined,
+            image: undefined,
           },
           {
-            type: 'embed',
+            type: "embed",
             content: {
-              type: 'youtube',
-              id: 'todo'
-            }
-          }
-        ]
+              type: "youtube",
+              id: "todo",
+            },
+          },
+        ],
       },
       content: {
-        type: 'card-content',
+        type: "card-content",
         content: [
           {
-            type: 'text',
-            text: 'Example text'
+            type: "text",
+            text: "Example text",
           },
           {
-            type: 'block',
+            type: "block",
             content: [
               {
-                type: 'text',
-                text: 'Text in block'
-              }
-            ]
-          }
-        ]
+                type: "text",
+                text: "Text in block",
+              },
+            ],
+          },
+        ],
       },
       original: {
-        type: 'youtube',
-        id: 'abcdef'
-      }
+        type: "youtube",
+        id: "abcdef",
+      },
     },
     {
-      type: 'embed',
+      type: "embed",
       content: {
-        type: 'youtube',
-        id: 'AbSehcT19u0',
+        type: "youtube",
+        id: "AbSehcT19u0",
         imagePreview: {
-          url: 'https://c.cdyn.dev/MD0AxBQq',
-          blurhash: 'L6E1%J0y00IU00o}^,}sxts.-VoL',
+          url: "https://c.cdyn.dev/MD0AxBQq",
+          blurhash: "L6E1%J0y00IU00o}^,}sxts.-VoL",
           width: 480,
-          height: 360
-        }
-      }
+          height: 360,
+        },
+      },
     },
     {
-      type: 'region',
-      mode: 'allow',
-      regions: 'WI',
+      type: "region",
+      mode: "allow",
+      regions: "WI",
       content: [
         {
-          type: 'text',
-          text: 'Allowed in wisconsin'
-        }
-      ]
+          type: "text",
+          text: "Allowed in wisconsin",
+        },
+      ],
     },
     {
-      type: 'region',
-      mode: 'deny',
-      regions: 'WI',
+      type: "region",
+      mode: "deny",
+      regions: "WI",
       content: [
         {
-          type: 'text',
-          text: 'Denied in wisconsin'
-        }
-      ]
+          type: "text",
+          text: "Denied in wisconsin",
+        },
+      ],
     },
     {
-      type: 'formatted-text',
-      language: 'javascript',
-      text: '//hello javascript\nmain();'
+      type: "formatted-text",
+      language: "javascript",
+      text: "//hello javascript\nmain();",
     },
     {
-      type: 'note',
+      type: "note",
       content: [
         {
-          type: 'text',
-          text: 'A note here \uD83C\uDF4A'
-        }
-      ]
+          type: "text",
+          text: "A note here \uD83C\uDF4A",
+        },
+      ],
     },
     {
-      type: 'quote',
-      icon: 'https://c.cdyn.dev/JY6wB9Y9',
-      name: 'Cendyne',
-      url: 'https://cendyne.dev/',
+      type: "quote",
+      icon: "https://c.cdyn.dev/JY6wB9Y9",
+      name: "Cendyne",
+      url: "https://cendyne.dev/",
       content: [
         {
-          type: 'text',
-          text: 'A thing'
-        }
-      ]
-    }
+          type: "text",
+          text: "A thing",
+        },
+      ],
+      orientation: undefined
+    },
   ],
   definitions: [{
-    type: 'definition',
-    key: 'TODO',
-    abbreviation: [{type: 'text', text: 'TODO'}],
-    title: [{type: 'text', text: 'TO DO'}],
+    type: "definition",
+    key: "TODO",
+    abbreviation: [{ type: "text", text: "TODO" }],
+    title: [{ type: "text", text: "TO DO" }],
     content: [{
-      type: 'text',
-      text: 'A thing to do.'
-    }]
-  }]
+      type: "text",
+      text: "A thing to do.",
+    }],
+  }],
 };

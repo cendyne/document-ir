@@ -1,61 +1,79 @@
-import { expect, test } from "bun:test";
-import { ExampleDocument } from "./ExampleDocument";
-import { ArrayCollapseTransformer } from "./ArrayCollapseTransformer";
-import { DocumentNode } from "./types";
+import {
+  assertEquals,
+  assertNotEquals,
+} from "https://deno.land/std@0.192.0/testing/asserts.ts";
+import { ExampleDocument } from "./ExampleDocument.ts";
+import { ArrayCollapseTransformer } from "./ArrayCollapseTransformer.ts";
+import { DocumentNode } from "./types.ts";
 
-test("Array collapse transformer changes something", async () => {
-  expect(await new ArrayCollapseTransformer().transform(ExampleDocument)).not.toEqual(ExampleDocument);
+Deno.test({
+  name: "Array collapse transformer changes something",
+  async fn() {
+    assertNotEquals(
+      await new ArrayCollapseTransformer().transform(ExampleDocument),
+      ExampleDocument,
+    );
+  },
 });
 
-const ArrayCollapsingDocument : DocumentNode = {
+const ArrayCollapsingDocument: DocumentNode = {
   ...ExampleDocument,
   content: [
     {
-      type: 'text',
-      text: '1'
+      type: "text",
+      text: "1",
     },
     {
-      type: 'array',
+      type: "array",
       content: [
         {
-          type: 'text',
-          text: '2'
+          type: "text",
+          text: "2",
         },
         {
-          type: 'text',
-          text: '3'
+          type: "text",
+          text: "3",
         },
-      ]
+      ],
     },
     {
-      type: 'text',
-      text: '4'
+      type: "text",
+      text: "4",
     },
-  ]
-}
-const ExpectedDocument : DocumentNode = {
+  ],
+};
+const ExpectedDocument: DocumentNode = {
   ...ExampleDocument,
   content: [
     {
-      type: 'text',
-      text: '1'
+      type: "text",
+      text: "1",
     },
     {
-      type: 'text',
-      text: '2'
+      type: "text",
+      text: "2",
     },
     {
-      type: 'text',
-      text: '3'
+      type: "text",
+      text: "3",
     },
     {
-      type: 'text',
-      text: '4'
+      type: "text",
+      text: "4",
     },
-  ]
-}
+  ],
+};
 
-test("Array collapse transformer works as expected", async () => {
-  expect(await new ArrayCollapseTransformer().transform(ArrayCollapsingDocument)).toEqual(ExpectedDocument);
-  expect(await new ArrayCollapseTransformer().transform(ExpectedDocument)).toEqual(ExpectedDocument);
+Deno.test({
+  name: "Array collapse transformer works as expected",
+  async fn() {
+    assertEquals(
+      await new ArrayCollapseTransformer().transform(ArrayCollapsingDocument),
+      ExpectedDocument,
+    );
+    assertEquals(
+      await new ArrayCollapseTransformer().transform(ExpectedDocument),
+      ExpectedDocument,
+    );
+  },
 });
