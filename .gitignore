@@ -67,6 +67,9 @@ web_modules/
 
 .npm
 
+# deno to npm
+npm/
+
 # Optional eslint cache
 
 .eslintcache
