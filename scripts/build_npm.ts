@@ -10,6 +10,7 @@ await build({
     // see JS docs for overview and more options
     deno: true,
   },
+  test: false,
   package: {
     // package.json properties
     name: "document-ir",
