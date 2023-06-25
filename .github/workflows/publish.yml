@@ -13,6 +13,11 @@ jobs:
       - uses: denoland/setup-deno@v1.1.1
         with:
           deno-version: v1.x # Run with latest stable Deno.
+      # Ensure everything still checks out
+      - run: deno fmt --ignore=npm --check
+      - run: deno lint --ignore=npm
+      - run: deno test --ignore=npm
+      # Now publish it
       - name: Get tag version
         if: startsWith(github.ref, 'refs/tags/')
         id: get_tag_version
