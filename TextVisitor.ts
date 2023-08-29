@@ -1,9 +1,11 @@
 import {
+DefinitionReferenceNode,
   EmojiNode,
   FigureImageNode,
   ImageNode,
   TextNode,
   VideoNode,
+  DefinitionNode
 } from "./types.ts";
 import { NodeVisitor } from "./NodeVisitor.ts";
 
@@ -32,6 +34,16 @@ export class TextVisitor extends NodeVisitor {
   protected figureImage(node: FigureImageNode) {
     this.textList.push(node.alt);
     super.figureImage(node);
+  }
+  protected definitionReference(node: DefinitionReferenceNode): void {
+    this.chooseChildren(node.content);
+  }
+  protected definition(node: DefinitionNode): void {
+      this.chooseChildren(node.title)
+      this.textList.push(" (");
+      this.chooseChildren(node.abbreviation)
+      this.textList.push("): ");
+      this.chooseChildren(node.content)
   }
   getText(): string {
     return this.textList.join("");

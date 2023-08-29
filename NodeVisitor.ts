@@ -9,6 +9,8 @@ import {
   CenterNode,
   CodeNode,
   ColumnsNode,
+  DateNode,
+  DateTimeNode,
   DefinitionListNode,
   DefinitionNode,
   DefinitionReferenceNode,
@@ -38,8 +40,11 @@ import {
   SocialNode,
   StickerNode,
   StrikeThroughNode,
+  SubTextNode,
+  SuperTextNode,
   TableNode,
   TextNode,
+  TimeNode,
   UnderlineNode,
   VideoNode,
   WarningNode,
@@ -291,6 +296,34 @@ export class NodeVisitor {
       }
     }
   }
+  protected date(node: DateNode) : void {
+    this.text({
+      type: "text",
+      text: node.isoDate
+    });
+  }
+  protected time(node: TimeNode) : void {
+    this.text({
+      type: "text",
+      text: node.isoTime
+    });
+  }
+  protected datetime(node: DateTimeNode): void {
+    this.text({
+      type: "text",
+      text: node.iso8601
+    });
+  }
+  protected subText(node: SubTextNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
+  }
+  protected superText(node: SuperTextNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
+  }
   protected choose(node: Node): void {
     if (!node || !node.type) {
       throw new Error(`Unexpected node, no type: ${JSON.stringify(node)}`);
@@ -384,6 +417,16 @@ export class NodeVisitor {
           return this.video(node);
         case "warning":
           return this.warning(node);
+        case "date":
+          return this.date(node);
+        case "time":
+          return this.time(node);
+        case "datetime":
+          return this.datetime(node);
+        case "sub":
+          return this.subText(node);
+        case "super":
+          return this.superText(node);
       }
     } catch (e) {
       console.log(

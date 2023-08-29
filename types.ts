@@ -85,8 +85,8 @@ export interface FigureCaptionNode {
 export interface FigureImageNode {
   type: "figure-image";
   content: Node[];
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   blurhash?: string;
   url: string;
   image?: string;
@@ -102,6 +102,7 @@ export interface HeaderNode {
   type: "header";
   level: 1 | 2 | 3 | 4 | 5 | 6;
   content: Node[];
+  htmlId?: string;
 }
 export interface HighTechAlertNode {
   type: "high-tech-alert";
@@ -196,6 +197,8 @@ export interface StickerNode {
   character: string;
   content: Node[];
   name: string;
+  width?: number;
+  height?: number;
 }
 export interface TableNode {
   type: "table";
@@ -228,6 +231,7 @@ export interface VideoNode {
   autoplay?: true;
   loop?: true;
   content?: Node[];
+  controls?: true;
 }
 export interface WarningNode {
   type: "warning";
@@ -291,6 +295,26 @@ export interface CardNode {
   attribution?: CardAttribution;
   original?: Node;
 }
+export interface SuperTextNode {
+  type: "super";
+  content: Node[];
+}
+export interface SubTextNode {
+  type: "sub";
+  content: Node[];
+}
+export interface DateNode {
+  type: "date";
+  isoDate: string;
+}
+export interface TimeNode {
+  type: "time";
+  isoTime: string;
+}
+export interface DateTimeNode {
+  type: "datetime";
+  iso8601: string;
+}
 
 export type Node =
   | ArrayNode
@@ -334,6 +358,11 @@ export type Node =
   | SocialNode
   | UnderlineNode
   | VideoNode
+  | DateNode
+  | TimeNode
+  | DateTimeNode
+  | SuperTextNode
+  | SubTextNode
   | WarningNode;
 
 export interface DocumentMeta {
@@ -350,8 +379,17 @@ export interface DocumentMeta {
   contentDigest?: string;
 }
 
+export interface DocumentHierarchy {
+  headerText: string
+  headerId?: string
+  words: number
+  totalWords: number
+  children: DocumentHierarchy[]
+}
+
 export interface DocumentNode extends DocumentMeta {
   type: "document";
   content: Node[];
   definitions?: DefinitionNode[];
+  hierarchy?: DocumentHierarchy
 }

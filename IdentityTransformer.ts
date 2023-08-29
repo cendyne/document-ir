@@ -13,6 +13,8 @@ import {
   CenterNode,
   CodeNode,
   ColumnsNode,
+  DateNode,
+  DateTimeNode,
   DefinitionListNode,
   DefinitionNode,
   DefinitionReferenceNode,
@@ -43,9 +45,12 @@ import {
   SocialNode,
   StickerNode,
   StrikeThroughNode,
+  SubTextNode,
+  SuperTextNode,
   TableCellNode,
   TableNode,
   TextNode,
+  TimeNode,
   UnderlineNode,
   VideoNode,
   WarningNode,
@@ -239,17 +244,22 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result : FigureImageNode = {
       type: "figure-image",
       alt: node.alt || "",
       blurhash: node.blurhash || "",
       height: node.height,
       width: node.width,
-      image: node.image,
       url: node.url,
       content,
-      hero: node.hero,
     };
+    if (node.hero) {
+      result.hero = node.hero;
+    }
+    if (node.image) {
+      result.image = node.image;
+    }
+    return result;
   }
   protected async formattedText(node: FormattedTextNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -296,16 +306,27 @@ export class IdentityTransformer {
   protected async image(node: ImageNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
-    return {
+    const result : ImageNode = {
       type: "image",
       alt: node.alt || "",
-      blurhash: node.blurhash,
-      height: node.height,
-      width: node.width,
-      image: node.image,
-      url: node.url,
-      hero: node.hero,
+      url: node.url
     };
+    if (node.hero) {
+      result.hero = node.hero;
+    }
+    if (node.blurhash) {
+      result.blurhash = node.blurhash;
+    }
+    if (node.height) {
+      result.height = node.height;
+    }
+    if (node.width) {
+      result.width = node.width;
+    }
+    if (node.image) {
+      result.image = node.image;
+    }
+    return result;
   }
   protected async italic(node: ItalicNode): Promise<Node | null> {
     await this.beforeInline();
@@ -375,14 +396,17 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result : QuoteNode = {
       type: "quote",
       icon: node.icon,
       name: node.name,
       content,
       url: node.url,
-      orientation: node.orientation,
     };
+    if (node.orientation) {
+      result.orientation = node.orientation;
+    }
+    return result;
   }
   protected async redacted(node: RedactedNode): Promise<Node | null> {
     if (node.style == "block") {
@@ -443,14 +467,23 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result : StickerNode = {
       type: "sticker",
       orientation: node.orientation,
       character: node.character,
       name: node.name,
-      size: node.size,
       content,
     };
+    if (node.size) {
+      result.size = node.size;
+    }
+    if (node.width) {
+      result.width = node.width;
+    }
+    if (node.height) {
+      result.height = node.height;
+    }
+    return result;
   }
   protected async strikeThrough(node: StrikeThroughNode): Promise<Node | null> {
     await this.beforeInline();
@@ -481,12 +514,15 @@ export class IdentityTransformer {
         if (children && children.length == 0) {
           emptyCount++;
         }
-        cells.push({
+        const cellResult : TableCellNode = {
           type: "table-cell",
-          header: cell.header,
           span: [cell.span[0] || 1, cell.span[1] || 1],
           content: children,
-        });
+        };
+        if (cell.header) {
+          cellResult.header = cell.header;
+        }
+        cells.push(cellResult);
       }
       if (cells.length > 0 && emptyCount != cells.length) {
         content.push(cells);
@@ -518,20 +554,40 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result : VideoNode = {
       type: "video",
       alt: node.alt,
-      blurhash: node.blurhash,
       mp4: node.mp4,
-      poster: node.poster,
-      autoplay: node.autoplay,
-      content,
-      height: node.height,
-      loop: node.loop,
-      muted: node.muted,
-      webm: node.webm,
-      width: node.width,
+      poster: node.poster
     };
+    if (node.autoplay) {
+      result.autoplay = node.autoplay;
+    }
+    if (node.blurhash) {
+      result.blurhash = node.blurhash;
+    }
+    if (content) {
+      result.content = content;
+    }
+    if (node.controls) {
+      result.controls = node.controls;
+    }
+    if (node.height) {
+      result.height = node.height;
+    }
+    if (node.width) {
+      result.width = node.width;
+    }
+    if (node.loop) {
+      result.loop = node.loop;
+    }
+    if (node.muted) {
+      result.muted = node.muted;
+    }
+    if (node.webm) {
+      result.webm = node.webm;
+    }
+    return result;
   }
   protected async warning(node: WarningNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -559,10 +615,16 @@ export class IdentityTransformer {
     if (node.attribution) {
       attribution = {
         type: "card-attribution",
-        archiveUrl: node.attribution.archiveUrl,
-        date: node.attribution.date,
-        url: node.attribution.url,
       };
+      if (node.attribution.archiveUrl) {
+        attribution.archiveUrl = node.attribution.archiveUrl;
+      }
+      if (node.attribution.url) {
+        attribution.url = node.attribution.url;
+      }
+      if (node.attribution.date) {
+        attribution.date = node.attribution.date;
+      }
       if (node.attribution.title) {
         await this.beforeBlock();
         const title = await this.chooseChildren(node.attribution.title);
@@ -583,10 +645,16 @@ export class IdentityTransformer {
         backgroundImage: node.header.backgroundImage,
         imageUrl: node.header.imageUrl,
         imageBlurhash: node.header.imageBlurhash,
-        url: node.header.url,
-        username: node.header.username,
-        usernameDomain: node.header.usernameDomain,
       };
+      if (node.header.url) {
+        header.url = node.header.url;
+      }
+      if (node.header.username) {
+        header.username = node.header.username;
+      }
+      if (node.header.usernameDomain) {
+        header.usernameDomain = node.header.usernameDomain;
+      }
     }
     let media: CardMedia | undefined;
     if (node.media) {
@@ -620,6 +688,42 @@ export class IdentityTransformer {
       header,
       media,
       original: node.original,
+    };
+  }
+  protected async date(node: DateNode): Promise<Node | null> {
+    return {
+      type: "date",
+      isoDate: `${node.isoDate}`
+    };
+  }
+  protected async time(node: TimeNode): Promise<Node | null> {
+    return {
+      type: "time",
+      isoTime: `${node.isoTime}`
+    };
+  }
+  protected async datetime(node: DateTimeNode): Promise<Node | null> {
+    return {
+      type: "datetime",
+      iso8601: `${node.iso8601}`
+    };
+  }
+  protected async subText(node: SubTextNode): Promise<Node | null> {
+    await this.beforeInline();
+    const content = node.content && await this.chooseChildren(node.content);
+    await this.afterInline();
+    return {
+      type: "sub",
+      content
+    };
+  }
+  protected async superText(node: SuperTextNode): Promise<Node | null> {
+    await this.beforeInline();
+    const content = node.content && await this.chooseChildren(node.content);
+    await this.afterInline();
+    return {
+      type: "super",
+      content
     };
   }
   protected async choose(node: Node): Promise<Node | null> {
@@ -715,6 +819,16 @@ export class IdentityTransformer {
           return await this.video(node);
         case "warning":
           return await this.warning(node);
+        case "date":
+          return await this.date(node);
+        case "time":
+          return await this.time(node);
+        case "datetime":
+          return await this.datetime(node);
+        case "super":
+          return await this.superText(node);
+        case "sub":
+          return await this.subText(node);
       }
     } catch (e) {
       console.log(
@@ -735,22 +849,44 @@ export class IdentityTransformer {
       ((await this.chooseChildren(node.definitions)).filter((x) =>
         x.type == "definition"
       ) as DefinitionNode[]);
+    const hierarchy = node.hierarchy;
     await this.afterBlock();
     const result: DocumentNode = {
       type: "document",
       title: node.title,
-      author: node.author,
       content,
-      hidden: node.hidden,
-      noindex: node.noindex,
-      description: node.description,
-      image: node.image,
-      guid: node.guid,
-      "pub-date": node["pub-date"],
-      date: node.date,
       url: node.url,
-      definitions,
     };
+    if (node.image) {
+      result.image = node.image;
+    }
+    if (node.guid) {
+      result.guid = node.guid;
+    }
+    if (node["pub-date"]) {
+      result["pub-date"] = node["pub-date"];
+    }
+    if (node.description) {
+      result.description = node.description;
+    }
+    if (node.date) {
+      result.date = node.date;
+    }
+    if (hierarchy) {
+      result.hierarchy = hierarchy;
+    }
+    if (definitions) {
+      result.definitions = definitions;
+    }
+    if (node.noindex) {
+      result.noindex = node.noindex;
+    }
+    if (node.author) {
+      result.author = node.author;
+    }
+    if (node.hidden) {
+      result.hidden = node.hidden;
+    }
     return result;
   }
   async transform(node: DocumentNode): Promise<DocumentNode> {

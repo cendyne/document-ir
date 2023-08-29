@@ -124,6 +124,10 @@ export const ExampleDocument: DocumentNode = {
                   },
                 ],
               },
+              {
+                type: "text",
+                text: "...",
+              },
             ],
           },
         ],
@@ -217,7 +221,6 @@ export const ExampleDocument: DocumentNode = {
           url: "https://c.cdyn.dev/pr45JDDH",
           width: 1600,
           height: 737,
-          hero: undefined,
         },
         {
           type: "figure-caption",
@@ -276,6 +279,20 @@ export const ExampleDocument: DocumentNode = {
       character: "cendyne",
       name: "naga-approved",
       size: 512,
+      content: [
+        {
+          type: "text",
+          text: "Approved",
+        },
+      ],
+    },
+    {
+      type: "sticker",
+      orientation: "left",
+      character: "cendyne",
+      name: "naga-approved",
+      width: 512,
+      height: 200,
       content: [
         {
           type: "text",
@@ -364,7 +381,6 @@ export const ExampleDocument: DocumentNode = {
           {
             type: "table-cell",
             span: [1, 1],
-            header: undefined,
             content: [
               {
                 type: "text",
@@ -375,7 +391,6 @@ export const ExampleDocument: DocumentNode = {
           {
             type: "table-cell",
             span: [1, 1],
-            header: undefined,
             content: [
               {
                 type: "text",
@@ -388,7 +403,6 @@ export const ExampleDocument: DocumentNode = {
           {
             type: "table-cell",
             span: [2, 1],
-            header: undefined,
             content: [
               {
                 type: "text",
@@ -512,7 +526,6 @@ export const ExampleDocument: DocumentNode = {
       height: 1080,
       poster: "https://c.cdyn.dev/b2FeAuU-",
       mp4: "https://c.cdyn.dev/vPRK5O4U",
-      webm: undefined,
       blurhash: "MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1",
       muted: true,
       autoplay: true,
@@ -534,16 +547,10 @@ export const ExampleDocument: DocumentNode = {
         backgroundColor: "FFFFFF",
         backgroundBlurhash: "MbRymP?ct8bHW=xujZWBj]of_ND%Rjs:oJ",
         backgroundImage: "https://c.cdyn.dev/Buov2-Ce",
-        url: undefined,
-        username: undefined,
-        usernameDomain: undefined,
       },
       attribution: {
         type: "card-attribution",
         title: [{ type: "text", text: "Example" }],
-        date: undefined,
-        archiveUrl: undefined,
-        url: undefined,
       },
       media: {
         type: "card-media",
@@ -555,8 +562,6 @@ export const ExampleDocument: DocumentNode = {
             height: 1080,
             url: "https://c.cdyn.dev/b2FeAuU-",
             blurhash: "MVEEGl9b9F~U9tNyt6s.NGoL4.%L$*E1%1",
-            hero: undefined,
-            image: undefined,
           },
           {
             type: "embed",
@@ -650,7 +655,6 @@ export const ExampleDocument: DocumentNode = {
           text: "A thing",
         },
       ],
-      orientation: undefined,
     },
   ],
   definitions: [{
@@ -663,4 +667,17 @@ export const ExampleDocument: DocumentNode = {
       text: "A thing to do.",
     }],
   }],
+  hierarchy: {
+    headerId: "a1",
+    headerText: "aaa",
+    totalWords: 200,
+    words: 100,
+    children: [{
+      headerId: "a2",
+      headerText: "bbb",
+      totalWords: 100,
+      words: 100,
+      children: []
+    }]
+  }
 };
