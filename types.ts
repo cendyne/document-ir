@@ -380,16 +380,16 @@ export interface DocumentMeta {
 }
 
 export interface DocumentHierarchy {
-  headerText: string
-  headerId?: string
-  words: number
-  totalWords: number
-  children: DocumentHierarchy[]
+  headerText: string;
+  headerId?: string;
+  words: number;
+  totalWords: number;
+  children: DocumentHierarchy[];
 }
 
 export interface DocumentNode extends DocumentMeta {
   type: "document";
   content: Node[];
   definitions?: DefinitionNode[];
-  hierarchy?: DocumentHierarchy
+  hierarchy?: DocumentHierarchy;
 }

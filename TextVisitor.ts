@@ -1,11 +1,11 @@
 import {
-DefinitionReferenceNode,
+  DefinitionNode,
+  DefinitionReferenceNode,
   EmojiNode,
   FigureImageNode,
   ImageNode,
   TextNode,
   VideoNode,
-  DefinitionNode
 } from "./types.ts";
 import { NodeVisitor } from "./NodeVisitor.ts";
 
@@ -39,11 +39,11 @@ export class TextVisitor extends NodeVisitor {
     this.chooseChildren(node.content);
   }
   protected definition(node: DefinitionNode): void {
-      this.chooseChildren(node.title)
-      this.textList.push(" (");
-      this.chooseChildren(node.abbreviation)
-      this.textList.push("): ");
-      this.chooseChildren(node.content)
+    this.chooseChildren(node.title);
+    this.textList.push(" (");
+    this.chooseChildren(node.abbreviation);
+    this.textList.push("): ");
+    this.chooseChildren(node.content);
   }
   getText(): string {
     return this.textList.join("");

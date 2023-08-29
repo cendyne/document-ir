@@ -677,7 +677,7 @@ export const ExampleDocument: DocumentNode = {
       headerText: "bbb",
       totalWords: 100,
       words: 100,
-      children: []
-    }]
-  }
+      children: [],
+    }],
+  },
 };

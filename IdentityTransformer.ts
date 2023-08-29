@@ -244,7 +244,7 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    const result : FigureImageNode = {
+    const result: FigureImageNode = {
       type: "figure-image",
       alt: node.alt || "",
       blurhash: node.blurhash || "",
@@ -306,10 +306,10 @@ export class IdentityTransformer {
   protected async image(node: ImageNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
-    const result : ImageNode = {
+    const result: ImageNode = {
       type: "image",
       alt: node.alt || "",
-      url: node.url
+      url: node.url,
     };
     if (node.hero) {
       result.hero = node.hero;
@@ -396,7 +396,7 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    const result : QuoteNode = {
+    const result: QuoteNode = {
       type: "quote",
       icon: node.icon,
       name: node.name,
@@ -467,7 +467,7 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    const result : StickerNode = {
+    const result: StickerNode = {
       type: "sticker",
       orientation: node.orientation,
       character: node.character,
@@ -514,7 +514,7 @@ export class IdentityTransformer {
         if (children && children.length == 0) {
           emptyCount++;
         }
-        const cellResult : TableCellNode = {
+        const cellResult: TableCellNode = {
           type: "table-cell",
           span: [cell.span[0] || 1, cell.span[1] || 1],
           content: children,
@@ -554,11 +554,11 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterBlock();
-    const result : VideoNode = {
+    const result: VideoNode = {
       type: "video",
       alt: node.alt,
       mp4: node.mp4,
-      poster: node.poster
+      poster: node.poster,
     };
     if (node.autoplay) {
       result.autoplay = node.autoplay;
@@ -691,21 +691,27 @@ export class IdentityTransformer {
     };
   }
   protected async date(node: DateNode): Promise<Node | null> {
+    await this.beforeInline();
+    await this.afterInline();
     return {
       type: "date",
-      isoDate: `${node.isoDate}`
+      isoDate: `${node.isoDate}`,
     };
   }
   protected async time(node: TimeNode): Promise<Node | null> {
+    await this.beforeInline();
+    await this.afterInline();
     return {
       type: "time",
-      isoTime: `${node.isoTime}`
+      isoTime: `${node.isoTime}`,
     };
   }
   protected async datetime(node: DateTimeNode): Promise<Node | null> {
+    await this.beforeInline();
+    await this.afterInline();
     return {
       type: "datetime",
-      iso8601: `${node.iso8601}`
+      iso8601: `${node.iso8601}`,
     };
   }
   protected async subText(node: SubTextNode): Promise<Node | null> {
@@ -714,7 +720,7 @@ export class IdentityTransformer {
     await this.afterInline();
     return {
       type: "sub",
-      content
+      content,
     };
   }
   protected async superText(node: SuperTextNode): Promise<Node | null> {
@@ -723,7 +729,7 @@ export class IdentityTransformer {
     await this.afterInline();
     return {
       type: "super",
-      content
+      content,
     };
   }
   protected async choose(node: Node): Promise<Node | null> {

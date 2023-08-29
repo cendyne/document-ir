@@ -296,22 +296,22 @@ export class NodeVisitor {
       }
     }
   }
-  protected date(node: DateNode) : void {
+  protected date(node: DateNode): void {
     this.text({
       type: "text",
-      text: node.isoDate
+      text: node.isoDate,
     });
   }
-  protected time(node: TimeNode) : void {
+  protected time(node: TimeNode): void {
     this.text({
       type: "text",
-      text: node.isoTime
+      text: node.isoTime,
     });
   }
   protected datetime(node: DateTimeNode): void {
     this.text({
       type: "text",
-      text: node.iso8601
+      text: node.iso8601,
     });
   }
   protected subText(node: SubTextNode): void {
