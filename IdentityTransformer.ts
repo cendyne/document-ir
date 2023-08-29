@@ -274,11 +274,15 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: HeaderNode = {
       type: "header",
       content,
       level: node.level || 2,
     };
+    if (node.htmlId) {
+      result.htmlId = node.htmlId;
+    }
+    return result;
   }
   protected async highTechAlert(node: HighTechAlertNode): Promise<Node | null> {
     await this.beforeBlock();

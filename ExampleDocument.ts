@@ -193,6 +193,7 @@ export const ExampleDocument: DocumentNode = {
     {
       type: "header",
       level: 2,
+      htmlId: "h200",
       content: [
         {
           type: "text",
