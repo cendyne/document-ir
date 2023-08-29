@@ -6,3 +6,6 @@ export { WhitespaceTransformer } from "./WhitespaceTransformer.ts";
 export { WhitespaceStretchingTransformer } from "./WhitespaceStretchingTransformer.ts";
 export { NodeVisitor } from "./NodeVisitor.ts";
 export { TextVisitor } from "./TextVisitor.ts";
+export { WordCounterTransformer } from "./WordCountTransformer.ts";
+export { WordCounterVisitor } from "./WordCounterVisitor.ts";
+export { DocumentThinningTransformer } from "./DocumentThinningTransformer.ts";
