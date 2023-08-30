@@ -12,6 +12,7 @@ export const ExampleDocument: DocumentNode = {
   image: "https://c.cdyn.dev/JY6wB9Y9",
   hidden: true,
   noindex: true,
+  readingDifficultyMultiplier: 1.2,
   content: [
     {
       type: "text",
@@ -531,6 +532,7 @@ export const ExampleDocument: DocumentNode = {
       muted: true,
       autoplay: true,
       loop: true,
+      controls: true,
       content: [
         {
           type: "text",

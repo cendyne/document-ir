@@ -380,6 +380,7 @@ export interface DocumentMeta {
   date?: string;
   url: string;
   contentDigest?: string;
+  readingDifficultyMultiplier?: number;
 }
 
 export interface DocumentHierarchy {

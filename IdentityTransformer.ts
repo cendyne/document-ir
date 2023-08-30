@@ -903,6 +903,9 @@ export class IdentityTransformer {
     if (node.hidden) {
       result.hidden = node.hidden;
     }
+    if (node.readingDifficultyMultiplier) {
+      result.readingDifficultyMultiplier = node.readingDifficultyMultiplier;
+    }
     return result;
   }
   async transform(node: DocumentNode): Promise<DocumentNode> {
