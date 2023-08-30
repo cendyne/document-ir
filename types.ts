@@ -306,14 +306,17 @@ export interface SubTextNode {
 export interface DateNode {
   type: "date";
   isoDate: string;
+  content: Node[];
 }
 export interface TimeNode {
   type: "time";
   isoTime: string;
+  content: Node[];
 }
 export interface DateTimeNode {
   type: "datetime";
   iso8601: string;
+  content: Node[];
 }
 
 export type Node =

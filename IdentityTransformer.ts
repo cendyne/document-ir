@@ -696,26 +696,32 @@ export class IdentityTransformer {
   }
   protected async date(node: DateNode): Promise<Node | null> {
     await this.beforeInline();
+    const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
     return {
       type: "date",
-      isoDate: `${node.isoDate}`,
+      isoDate: node.isoDate,
+      content,
     };
   }
   protected async time(node: TimeNode): Promise<Node | null> {
     await this.beforeInline();
+    const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
     return {
       type: "time",
-      isoTime: `${node.isoTime}`,
+      isoTime: node.isoTime,
+      content,
     };
   }
   protected async datetime(node: DateTimeNode): Promise<Node | null> {
     await this.beforeInline();
+    const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
     return {
       type: "datetime",
-      iso8601: `${node.iso8601}`,
+      iso8601: node.iso8601,
+      content,
     };
   }
   protected async subText(node: SubTextNode): Promise<Node | null> {

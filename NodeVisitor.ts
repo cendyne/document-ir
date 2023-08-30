@@ -297,22 +297,19 @@ export class NodeVisitor {
     }
   }
   protected date(node: DateNode): void {
-    this.text({
-      type: "text",
-      text: node.isoDate,
-    });
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
   }
   protected time(node: TimeNode): void {
-    this.text({
-      type: "text",
-      text: node.isoTime,
-    });
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
   }
   protected datetime(node: DateTimeNode): void {
-    this.text({
-      type: "text",
-      text: node.iso8601,
-    });
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
   }
   protected subText(node: SubTextNode): void {
     this.beforeInline();
