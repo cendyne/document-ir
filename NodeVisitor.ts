@@ -43,11 +43,11 @@ import {
   SubTextNode,
   SuperTextNode,
   TableNode,
+  TableOfContentsNode,
   TextNode,
   TimeNode,
   UnderlineNode,
   VideoNode,
-  TableOfContentsNode,
   WarningNode,
 } from "./types.ts";
 

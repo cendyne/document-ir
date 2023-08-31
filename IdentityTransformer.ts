@@ -751,13 +751,18 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const mixedChildren = await this.chooseChildren(node.children);
     await this.afterBlock();
-    const children = mixedChildren.filter(x => x.type == "toc") as TableOfContentsNode[];
-    const result : TableOfContentsNode = {
+    const children = mixedChildren.filter((x) =>
+      x.type == "toc"
+    ) as TableOfContentsNode[];
+    const result: TableOfContentsNode = {
       type: "toc",
       content,
-      children
+      children,
     };
-    if (date && (date.type == "date" || date.type == "time" || date.type == "datetime")) {
+    if (
+      date &&
+      (date.type == "date" || date.type == "time" || date.type == "datetime")
+    ) {
       result.date = date;
     }
     if (node.href) {
@@ -872,7 +877,7 @@ export class IdentityTransformer {
         case "sub":
           return await this.subText(node);
         case "toc":
-            return await this.toc(node);
+          return await this.toc(node);
       }
     } catch (e) {
       console.log(

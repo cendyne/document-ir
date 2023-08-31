@@ -49,7 +49,7 @@ export class TextVisitor extends NodeVisitor {
   protected toc(node: TableOfContentsNode): void {
     if (node.date) {
       this.choose(node.date);
-      this.textList.push(' ');
+      this.textList.push(" ");
     }
     this.chooseChildren(node.content);
     this.textList.push("\n");

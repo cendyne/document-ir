@@ -25,7 +25,7 @@ export const ExampleDocument: DocumentNode = {
       date: {
         type: "date",
         isoDate: "2023-01-01",
-        content: [{type: "text", text: "January 1st"}]
+        content: [{ type: "text", text: "January 1st" }],
       },
       children: [
         {
