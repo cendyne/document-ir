@@ -4,6 +4,7 @@ import {
   EmojiNode,
   FigureImageNode,
   ImageNode,
+  TableOfContentsNode,
   TextNode,
   VideoNode,
 } from "./types.ts";
@@ -44,6 +45,15 @@ export class TextVisitor extends NodeVisitor {
     this.chooseChildren(node.abbreviation);
     this.textList.push("): ");
     this.chooseChildren(node.content);
+  }
+  protected toc(node: TableOfContentsNode): void {
+    if (node.date) {
+      this.choose(node.date);
+      this.textList.push(' ');
+    }
+    this.chooseChildren(node.content);
+    this.textList.push("\n");
+    this.chooseChildren(node.children);
   }
   getText(): string {
     return this.textList.join("");

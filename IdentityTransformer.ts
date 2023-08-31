@@ -49,6 +49,7 @@ import {
   SuperTextNode,
   TableCellNode,
   TableNode,
+  TableOfContentsNode,
   TextNode,
   TimeNode,
   UnderlineNode,
@@ -742,6 +743,31 @@ export class IdentityTransformer {
       content,
     };
   }
+  protected async toc(node: TableOfContentsNode): Promise<Node | null> {
+    await this.beforeBlock();
+    const content = await this.chooseChildren(node.content);
+    const date = node.date && await this.choose(node.date);
+    await this.afterBlock();
+    await this.beforeBlock();
+    const mixedChildren = await this.chooseChildren(node.children);
+    await this.afterBlock();
+    const children = mixedChildren.filter(x => x.type == "toc") as TableOfContentsNode[];
+    const result : TableOfContentsNode = {
+      type: "toc",
+      content,
+      children
+    };
+    if (date && (date.type == "date" || date.type == "time" || date.type == "datetime")) {
+      result.date = date;
+    }
+    if (node.href) {
+      result.href = node.href;
+    }
+    if (node.hrefHtmlId) {
+      result.hrefHtmlId = node.hrefHtmlId;
+    }
+    return result;
+  }
   protected async choose(node: Node): Promise<Node | null> {
     if (!node || !node.type) {
       throw new Error(`Unexpected node, no type: ${JSON.stringify(node)}`);
@@ -845,6 +871,8 @@ export class IdentityTransformer {
           return await this.superText(node);
         case "sub":
           return await this.subText(node);
+        case "toc":
+            return await this.toc(node);
       }
     } catch (e) {
       console.log(

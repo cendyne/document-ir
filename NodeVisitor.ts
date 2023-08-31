@@ -47,6 +47,7 @@ import {
   TimeNode,
   UnderlineNode,
   VideoNode,
+  TableOfContentsNode,
   WarningNode,
 } from "./types.ts";
 
@@ -321,6 +322,14 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterInline();
   }
+  protected toc(node: TableOfContentsNode): void {
+    this.beforeBlock();
+    this.chooseChildren(node.content);
+    this.afterBlock();
+    this.beforeBlock();
+    this.chooseChildren(node.children);
+    this.afterBlock();
+  }
   protected choose(node: Node): void {
     if (!node || !node.type) {
       throw new Error(`Unexpected node, no type: ${JSON.stringify(node)}`);
@@ -424,6 +433,8 @@ export class NodeVisitor {
           return this.subText(node);
         case "super":
           return this.superText(node);
+        case "toc":
+          return this.toc(node);
       }
     } catch (e) {
       console.log(

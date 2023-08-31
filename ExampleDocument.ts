@@ -19,6 +19,24 @@ export const ExampleDocument: DocumentNode = {
       text: "hello ",
     },
     {
+      type: "toc",
+      content: [{ type: "text", text: "Top Level Heading" }],
+      hrefHtmlId: "id-here",
+      date: {
+        type: "date",
+        isoDate: "2023-01-01",
+        content: [{type: "text", text: "January 1st"}]
+      },
+      children: [
+        {
+          type: "toc",
+          content: [{ type: "text", text: "Sub Heading" }],
+          href: "https://whatever.example/",
+          children: [],
+        },
+      ],
+    },
+    {
       type: "array",
       content: [
         {

@@ -319,6 +319,15 @@ export interface DateTimeNode {
   content: Node[];
 }
 
+export interface TableOfContentsNode {
+  type: "toc";
+  date?: DateTimeNode | DateNode | TimeNode;
+  href?: string;
+  hrefHtmlId?: string;
+  content: Node[];
+  children: TableOfContentsNode[];
+}
+
 export type Node =
   | ArrayNode
   | BlockNode
@@ -366,6 +375,7 @@ export type Node =
   | DateTimeNode
   | SuperTextNode
   | SubTextNode
+  | TableOfContentsNode
   | WarningNode;
 
 export interface DocumentMeta {
