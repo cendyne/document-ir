@@ -44,6 +44,7 @@ import type {
   SecretNode,
   SmallerNode,
   SocialNode,
+  StandardNode,
   StickerNode,
   StrikeThroughNode,
   SubTextNode,
@@ -521,6 +522,18 @@ export class IdentityTransformer {
       content,
     };
   }
+  protected async standard(node: StandardNode): Promise<Node | null> {
+    await this.beforeInline();
+    const content = await this.chooseChildren(node.content);
+    await this.afterInline();
+    return {
+      type: "standard",
+      standard: node.standard,
+      identifier: node.identifier,
+      url: node.url,
+      content,
+    };
+  }
   protected async text(node: TextNode): Promise<Node | null> {
     return {
       type: "text",
@@ -886,6 +899,8 @@ export class IdentityTransformer {
           return await this.smaller(node);
         case "sticker":
           return await this.sticker(node);
+        case "standard":
+          return await this.standard(node);
         case "strike-through":
           return await this.strikeThrough(node);
         case "table":

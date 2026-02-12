@@ -437,6 +437,26 @@ describe('IdentityTransformer', () => {
     expect(Object.keys(node).sort()).toEqual(["content", "notBefore", "type"]);
   });
 
+  test('preserves all standard attributes', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "standard",
+          standard: "rfc",
+          identifier: "2119",
+          url: "https://www.rfc-editor.org/rfc/rfc2119",
+          content: [{ type: "text", text: "RFC 2119" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
   test('does not add undefined optional attributes to figure-image', async () => {
     const doc: DocumentNode = {
       type: "document",

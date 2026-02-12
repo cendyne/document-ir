@@ -708,6 +708,27 @@ export const ExampleDocument: DocumentNode = {
         },
       ],
     },
+    {
+      type: "standard",
+      standard: "rfc",
+      identifier: "2119",
+      url: "https://www.rfc-editor.org/rfc/rfc2119",
+      content: [{ type: "text", text: "RFC 2119" }],
+    },
+    {
+      type: "standard",
+      standard: "oid",
+      identifier: "1.2.840.113549",
+      url: "https://oidref.com/1.2.840.113549",
+      content: [{ type: "text", text: "OID 1.2.840.113549" }],
+    },
+    {
+      type: "standard",
+      standard: "nist",
+      identifier: "SP 800-53",
+      url: "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final",
+      content: [{ type: "text", text: "NIST SP 800-53" }],
+    },
   ],
   definitions: [{
     type: "definition",

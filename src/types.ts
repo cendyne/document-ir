@@ -326,6 +326,14 @@ export interface TimeRangeNode {
   content: Node[];
 }
 
+export interface StandardNode {
+  type: "standard";
+  standard: string;
+  identifier: string;
+  url: string;
+  content: Node[];
+}
+
 export interface TableOfContentsNode {
   type: "toc";
   date?: DateTimeNode | DateNode | TimeNode;
@@ -384,6 +392,7 @@ export type Node =
   | SubTextNode
   | TableOfContentsNode
   | TimeRangeNode
+  | StandardNode
   | WarningNode;
 
 export interface DocumentMeta {

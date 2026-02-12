@@ -39,6 +39,7 @@ import type {
   SecretNode,
   SmallerNode,
   SocialNode,
+  StandardNode,
   StickerNode,
   StrikeThroughNode,
   SubTextNode,
@@ -244,6 +245,11 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterInline();
   }
+  protected standard(node: StandardNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
+  }
   protected text(_node: TextNode): void {
   }
   protected table(node: TableNode): void {
@@ -414,6 +420,8 @@ export class NodeVisitor {
           return this.smaller(node);
         case "sticker":
           return this.sticker(node);
+        case "standard":
+          return this.standard(node);
         case "strike-through":
           return this.strikeThrough(node);
         case "table":
