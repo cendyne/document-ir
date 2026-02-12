@@ -35,5 +35,3 @@ jobs:
         run: bun run build
       - name: Publish to NPM
         run: npm publish --provenance --access public
-      - name: Publish to JSR
-        run: bunx jsr publish --allow-dirty
