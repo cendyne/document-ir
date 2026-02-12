@@ -4,12 +4,12 @@ on: push
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: denoland/setup-deno@v1.1.1
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v1.x # Run with latest stable Deno.
-      - run: deno fmt --ignore=npm --check
-      - run: deno lint --ignore=npm
-      - run: deno test --ignore=npm
+          bun-version: latest
+      - run: bun install
+      - run: bun run type-check
+      - run: bun test

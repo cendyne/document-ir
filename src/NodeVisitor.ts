@@ -1,4 +1,4 @@
-import {
+import type {
   ArrayNode,
   BlockNode,
   BlockQuoteNode,
@@ -263,7 +263,9 @@ export class NodeVisitor {
   }
   protected video(node: VideoNode): void {
     this.beforeBlock();
-    node.content && this.chooseChildren(node.content);
+    if (node.content) {
+      this.chooseChildren(node.content);
+    }
     this.afterBlock();
   }
   protected warning(node: WarningNode): void {

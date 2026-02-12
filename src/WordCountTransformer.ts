@@ -1,7 +1,8 @@
 import { DocumentThinningTransformer } from "./DocumentThinningTransformer.ts";
 import { WordCounterVisitor } from "./WordCounterVisitor.ts";
-import { IdentityTransformer, TextVisitor } from "./index.ts";
-import { DocumentHierarchy, DocumentNode, Node } from "./types.ts";
+import { IdentityTransformer } from "./IdentityTransformer.ts";
+import { TextVisitor } from "./TextVisitor.ts";
+import type { DocumentHierarchy, DocumentNode, Node } from "./types.ts";
 
 interface Hierarchy {
   header: string;
@@ -41,7 +42,7 @@ export class WordCounterTransformer extends IdentityTransformer {
     super();
   }
 
-  async transform(node: DocumentNode): Promise<DocumentNode> {
+  override async transform(node: DocumentNode): Promise<DocumentNode> {
     // Isolate it
     const jsonNode = JSON.parse(JSON.stringify(node));
     const thinned = await new DocumentThinningTransformer().transform(jsonNode);
@@ -64,7 +65,7 @@ export class WordCounterTransformer extends IdentityTransformer {
           continue;
         } else if (node.level <= depth) {
           for (let i = stack.length - 1; i > 0; i--) {
-            if (stack[i].depth >= node.level) {
+            if (stack[i]!.depth >= node.level) {
               stack.pop();
             }
           }
@@ -80,11 +81,11 @@ export class WordCounterTransformer extends IdentityTransformer {
         if (node.htmlId) {
           h.headerId = node.htmlId;
         }
-        stack[stack.length - 1].children.push(h);
+        stack[stack.length - 1]!.children.push(h);
         stack.push(h);
         depth = node.level;
       } else {
-        stack[stack.length - 1].nodes.push(node);
+        stack[stack.length - 1]!.nodes.push(node);
       }
     }
 

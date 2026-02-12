@@ -1,8 +1,8 @@
 import { IdentityTransformer } from "./IdentityTransformer.ts";
-import { Node } from "./types.ts";
+import type { Node } from "./types.ts";
 
 export class ArrayCollapseTransformer extends IdentityTransformer {
-  protected async chooseChildren(nodes: Node[]): Promise<Node[]> {
+  protected override async chooseChildren(nodes: Node[]): Promise<Node[]> {
     const children = await super.chooseChildren(nodes);
     const results: Node[] = [];
     for (const child of children) {

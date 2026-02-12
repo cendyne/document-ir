@@ -67,8 +67,8 @@ web_modules/
 
 .npm
 
-# deno to npm
-npm/
+# Build output
+dist/
 
 # Optional eslint cache
 

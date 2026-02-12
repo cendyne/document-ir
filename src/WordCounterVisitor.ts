@@ -1,5 +1,5 @@
-import { NodeVisitor } from "./index.ts";
-import { DocumentNode, TextNode } from "./types.ts";
+import { NodeVisitor } from "./NodeVisitor.ts";
+import type { DocumentNode, TextNode } from "./types.ts";
 
 export class WordCounterVisitor extends NodeVisitor {
   private count: number;
@@ -15,16 +15,16 @@ export class WordCounterVisitor extends NodeVisitor {
       this.texts = [];
     }
   }
-  protected beforeBlock(): void {
+  protected override beforeBlock(): void {
     this.countText();
   }
-  protected afterBlock(): void {
+  protected override afterBlock(): void {
     this.countText();
   }
-  protected text(node: TextNode): void {
+  protected override text(node: TextNode): void {
     this.texts.push(node.text);
   }
-  protected document(node: DocumentNode): void {
+  protected override document(node: DocumentNode): void {
     super.document(node);
     this.countText();
   }

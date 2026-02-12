@@ -1,4 +1,4 @@
-import {
+import type {
   DefinitionNode,
   DefinitionReferenceNode,
   EmojiNode,
@@ -16,37 +16,37 @@ export class TextVisitor extends NodeVisitor {
     super();
     this.textList = [];
   }
-  protected text(node: TextNode) {
+  protected override text(node: TextNode) {
     this.textList.push(node.text);
     super.text(node);
   }
-  protected video(node: VideoNode) {
+  protected override video(node: VideoNode) {
     this.textList.push(node.alt);
     super.video(node);
   }
-  protected image(node: ImageNode) {
+  protected override image(node: ImageNode) {
     this.textList.push(node.alt);
     super.image(node);
   }
-  protected emoji(node: EmojiNode) {
+  protected override emoji(node: EmojiNode) {
     this.textList.push(node.alt);
     super.emoji(node);
   }
-  protected figureImage(node: FigureImageNode) {
+  protected override figureImage(node: FigureImageNode) {
     this.textList.push(node.alt);
     super.figureImage(node);
   }
-  protected definitionReference(node: DefinitionReferenceNode): void {
+  protected override definitionReference(node: DefinitionReferenceNode): void {
     this.chooseChildren(node.content);
   }
-  protected definition(node: DefinitionNode): void {
+  protected override definition(node: DefinitionNode): void {
     this.chooseChildren(node.title);
     this.textList.push(" (");
     this.chooseChildren(node.abbreviation);
     this.textList.push("): ");
     this.chooseChildren(node.content);
   }
-  protected toc(node: TableOfContentsNode): void {
+  protected override toc(node: TableOfContentsNode): void {
     if (node.date) {
       this.choose(node.date);
       this.textList.push(" ");

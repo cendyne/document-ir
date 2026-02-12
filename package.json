@@ -1,0 +1,53 @@
+{
+  "name": "document-ir",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cendyne/document-ir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cendyne/document-ir/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "document",
+    "ir",
+    "intermediate-representation",
+    "transformer"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "prepublishOnly": "bun run build",
+    "type-check": "bunx tsc --noEmit",
+    "test": "bun test",
+    "lint": "oxlint"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "oxlint": "^1.46.0",
+    "typescript": "^5.9.0",
+    "unplugin-dts": "^1.0.0-beta.6",
+    "vite": "^5.4.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

@@ -1,4 +1,4 @@
-import { DocumentNode } from "./types.ts";
+import type { DocumentNode } from "./types.ts";
 
 export const ExampleDocument: DocumentNode = {
   type: "document",

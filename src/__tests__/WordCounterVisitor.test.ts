@@ -1,9 +1,8 @@
-import { assertEquals } from "https://deno.land/std@0.192.0/testing/asserts.ts";
-import { WordCounterVisitor } from "./WordCounterVisitor.ts";
+import { test, expect, describe } from 'bun:test';
+import { WordCounterVisitor } from "../WordCounterVisitor.ts";
 
-Deno.test({
-  name: "Word count visitor counts paragraph",
-  fn() {
+describe('WordCounterVisitor', () => {
+  test('counts paragraph', () => {
     const visitor = new WordCounterVisitor();
     visitor.visit({
       type: "array",
@@ -12,13 +11,10 @@ Deno.test({
         content: [{ type: "text", text: "Hello world" }],
       }],
     });
-    assertEquals(visitor.getCount(), 2);
-  },
-});
+    expect(visitor.getCount()).toBe(2);
+  });
 
-Deno.test({
-  name: "Word count visitor counts adjacent paragraph",
-  fn() {
+  test('counts adjacent paragraph', () => {
     const visitor = new WordCounterVisitor();
     visitor.visit({
       type: "array",
@@ -30,13 +26,10 @@ Deno.test({
         content: [{ type: "text", text: "Hello world" }],
       }],
     });
-    assertEquals(visitor.getCount(), 4);
-  },
-});
+    expect(visitor.getCount()).toBe(4);
+  });
 
-Deno.test({
-  name: "Word count visitor counts paragraph followed by text",
-  fn() {
+  test('counts paragraph followed by text', () => {
     const visitor = new WordCounterVisitor();
     visitor.visit({
       type: "array",
@@ -48,12 +41,10 @@ Deno.test({
         text: "world",
       }],
     });
-    assertEquals(visitor.getCount(), 2);
-  },
-});
-Deno.test({
-  name: "Word count visitor counts paragraph followed by conjoined text",
-  fn() {
+    expect(visitor.getCount()).toBe(2);
+  });
+
+  test('counts paragraph followed by conjoined text', () => {
     const visitor = new WordCounterVisitor();
     visitor.visit({
       type: "array",
@@ -68,6 +59,6 @@ Deno.test({
         text: "world",
       }],
     });
-    assertEquals(visitor.getCount(), 2);
-  },
+    expect(visitor.getCount()).toBe(2);
+  });
 });

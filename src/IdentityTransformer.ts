@@ -1,4 +1,4 @@
-import {
+import type {
   ArrayNode,
   BlockNode,
   BlockQuoteNode,
@@ -206,7 +206,6 @@ export class IdentityTransformer {
       content: await this.chooseChildren(node.content),
     };
   }
-  // deno-lint-ignore require-await
   protected async embed(node: EmbedNode): Promise<Node | null> {
     return {
       type: "embed",
@@ -215,7 +214,6 @@ export class IdentityTransformer {
       },
     };
   }
-  // deno-lint-ignore require-await
   protected async emoji(node: EmojiNode): Promise<Node | null> {
     return {
       type: "emoji",
@@ -248,12 +246,18 @@ export class IdentityTransformer {
     const result: FigureImageNode = {
       type: "figure-image",
       alt: node.alt || "",
-      blurhash: node.blurhash || "",
-      height: node.height,
-      width: node.width,
       url: node.url,
       content,
     };
+    if (node.blurhash) {
+      result.blurhash = node.blurhash;
+    }
+    if (node.height) {
+      result.height = node.height;
+    }
+    if (node.width) {
+      result.width = node.width;
+    }
     if (node.hero) {
       result.hero = node.hero;
     }
@@ -346,12 +350,30 @@ export class IdentityTransformer {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: LinkNode = {
       type: "link",
       content,
       url: node.url,
-      title: node.title,
     };
+    if (node.title) {
+      result.title = node.title;
+    }
+    if (node.target) {
+      result.target = node.target;
+    }
+    if (node.userGeneratedContent) {
+      result.userGeneratedContent = node.userGeneratedContent;
+    }
+    if (node.noReferrer) {
+      result.noReferrer = node.noReferrer;
+    }
+    if (node.noFollow) {
+      result.noFollow = node.noFollow;
+    }
+    if (node.noOpener) {
+      result.noOpener = node.noOpener;
+    }
+    return result;
   }
   protected async array(node: ArrayNode): Promise<Node | null> {
     return {
@@ -442,7 +464,6 @@ export class IdentityTransformer {
       content,
     };
   }
-  // deno-lint-ignore require-await
   protected async script(node: ScriptNode): Promise<Node | null> {
     return {
       type: "script",
@@ -499,7 +520,6 @@ export class IdentityTransformer {
       content,
     };
   }
-  // deno-lint-ignore require-await
   protected async text(node: TextNode): Promise<Node | null> {
     return {
       type: "text",
@@ -938,6 +958,9 @@ export class IdentityTransformer {
     }
     if (node.readingDifficultyMultiplier) {
       result.readingDifficultyMultiplier = node.readingDifficultyMultiplier;
+    }
+    if (node.contentDigest) {
+      result.contentDigest = node.contentDigest;
     }
     return result;
   }

@@ -1,5 +1,5 @@
-import { ArrayCollapseTransformer } from "./index.ts";
-import {
+import { ArrayCollapseTransformer } from "./ArrayCollapseTransformer.ts";
+import type {
   BubbleNode,
   CardNode,
   ColumnsNode,
@@ -16,7 +16,7 @@ import {
 } from "./types.ts";
 
 export class DocumentThinningTransformer extends ArrayCollapseTransformer {
-  protected async sticker(node: StickerNode): Promise<Node | null> {
+  protected override async sticker(node: StickerNode): Promise<Node | null> {
     if (node.content.length == 0) {
       return null;
     }
@@ -29,7 +29,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       content,
     };
   }
-  protected async bubble(node: BubbleNode): Promise<Node | null> {
+  protected override async bubble(node: BubbleNode): Promise<Node | null> {
     if (node.content.length == 0) {
       return null;
     }
@@ -42,7 +42,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       content,
     };
   }
-  protected async highTechAlert(node: HighTechAlertNode): Promise<Node | null> {
+  protected override async highTechAlert(node: HighTechAlertNode): Promise<Node | null> {
     if (node.content.length == 0) {
       return null;
     }
@@ -55,7 +55,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       content,
     };
   }
-  protected async columns(node: ColumnsNode): Promise<Node | null> {
+  protected override async columns(node: ColumnsNode): Promise<Node | null> {
     const flattened = node.columns.flat();
     if (flattened.length == 0) {
       return null;
@@ -69,7 +69,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       content,
     };
   }
-  protected async quote(node: QuoteNode): Promise<Node | null> {
+  protected override async quote(node: QuoteNode): Promise<Node | null> {
     if (node.content.length == 0) {
       return null;
     }
@@ -82,7 +82,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       content,
     };
   }
-  protected image(node: ImageNode): Promise<Node | null> {
+  protected override image(node: ImageNode): Promise<Node | null> {
     return Promise.resolve({
       type: "paragraph",
       content: [{
@@ -94,7 +94,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       }],
     });
   }
-  protected async figureImage(node: FigureImageNode): Promise<Node | null> {
+  protected override async figureImage(node: FigureImageNode): Promise<Node | null> {
     const image: Node = {
       type: "paragraph",
       content: [{
@@ -118,7 +118,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       return image;
     }
   }
-  protected async video(node: VideoNode): Promise<Node | null> {
+  protected override async video(node: VideoNode): Promise<Node | null> {
     const video: Node = {
       type: "paragraph",
       content: [{
@@ -143,7 +143,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
     }
   }
 
-  protected async definitionList(
+  protected override async definitionList(
     node: DefinitionListNode,
   ): Promise<Node | null> {
     const content: Node[] = [];
@@ -162,7 +162,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
           defContent.push(n);
         }
       }
-      if (d.content.length > 0 && d.content[0].type != "paragraph") {
+      if (d.content.length > 0 && d.content[0]!.type != "paragraph") {
         defContent.push({ type: "text", text: " " });
         const def = await this.chooseChildren(d.content);
         if (def) {
@@ -176,7 +176,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
         content: defContent,
       });
 
-      if (d.content.length > 0 && d.content[0].type == "paragraph") {
+      if (d.content.length > 0 && d.content[0]!.type == "paragraph") {
         const def = await this.chooseChildren(d.content);
         if (def) {
           for (const n of def) {
@@ -190,12 +190,11 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       content,
     };
   }
-  // deno-lint-ignore require-await
-  protected async redacted(_node: RedactedNode): Promise<Node | null> {
+  protected override async redacted(_node: RedactedNode): Promise<Node | null> {
     return null;
   }
 
-  protected async note(node: NoteNode): Promise<Node | null> {
+  protected override async note(node: NoteNode): Promise<Node | null> {
     if (node.content.length == 0) {
       return null;
     }
@@ -211,7 +210,7 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
       ],
     };
   }
-  protected async card(node: CardNode): Promise<Node | null> {
+  protected override async card(node: CardNode): Promise<Node | null> {
     const content: Node[] = [];
 
     if (node.header) {
