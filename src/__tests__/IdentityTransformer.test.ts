@@ -457,6 +457,81 @@ describe('IdentityTransformer', () => {
     expect(result).toEqual(doc);
   });
 
+  test('preserves id on all node types through transformation', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "paragraph",
+          id: "p1",
+          content: [
+            { type: "text", id: "t1", text: "Hello " },
+            { type: "bold", id: "b1", content: [{ type: "text", id: "t2", text: "world" }] },
+            { type: "italic", id: "i1", content: [{ type: "text", text: "no id" }] },
+          ],
+        },
+        {
+          type: "header",
+          id: "h1",
+          level: 2,
+          htmlId: "greeting",
+          content: [{ type: "text", text: "Greeting" }],
+        },
+        {
+          type: "image",
+          id: "img1",
+          url: "https://example.com/img.png",
+          alt: "An image",
+        },
+        {
+          type: "list",
+          id: "l1",
+          style: "ordered",
+          content: [
+            { type: "list-item", id: "li1", content: [{ type: "text", text: "Item 1" }] },
+            { type: "list-item", content: [{ type: "text", text: "Item 2" }] },
+          ],
+        },
+        {
+          type: "table",
+          id: "tbl1",
+          content: [
+            [
+              { type: "table-cell", id: "tc1", span: [1, 1], content: [{ type: "text", text: "A" }] },
+              { type: "table-cell", span: [1, 1], content: [{ type: "text", text: "B" }] },
+            ],
+          ],
+        },
+        { type: "break", id: "br1" },
+        { type: "horizontal-rule", id: "hr1" },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add id when source node has no id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "paragraph",
+          content: [{ type: "text", text: "No ids here" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const para = result.content[0]!;
+    expect(para.type).toBe("paragraph");
+    expect("id" in para).toBe(false);
+  });
+
   test('does not add undefined optional attributes to figure-image', async () => {
     const doc: DocumentNode = {
       type: "document",

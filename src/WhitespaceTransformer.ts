@@ -38,6 +38,7 @@ export class WhitespaceTransformer extends IdentityTransformer {
       type: "text",
       text: result,
     };
+    if (node.id != null) {text.id = node.id;}
     this.lastText = text;
     return text;
   }

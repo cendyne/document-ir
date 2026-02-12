@@ -82,63 +82,77 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: BlockNode = {
       type: "block",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async blockQuote(node: BlockQuoteNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: BlockQuoteNode = {
       type: "block-quote",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async bold(node: BoldNode): Promise<Node | null> {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: BoldNode = {
       type: "bold",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
-  protected async break_(_node: BreakNode): Promise<Node | null> {
+  protected async break_(node: BreakNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
-    return {
+    const result: BreakNode = {
       type: "break",
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async bubble(node: BubbleNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: BubbleNode = {
       type: "bubble",
       orientation: node.orientation || "left",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async center(node: CenterNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: CenterNode = {
       type: "center",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async code(node: CodeNode): Promise<Node | null> {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: CodeNode = {
       type: "code",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async columns(node: ColumnsNode): Promise<Node | null> {
     const columns: Node[][] = [];
@@ -148,11 +162,13 @@ export class IdentityTransformer {
       await this.afterBlock();
     }
 
-    return {
+    const result: ColumnsNode = {
       type: "columns",
       columns,
       "column-count": node["column-count"],
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async definition(
     node: DefinitionNode,
@@ -166,13 +182,15 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: DefinitionNode = {
       type: "definition",
       abbreviation,
       title,
       content,
       key: node.key,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async definitionList(
     node: DefinitionListNode,
@@ -186,10 +204,12 @@ export class IdentityTransformer {
       }
     }
     await this.afterBlock();
-    return {
+    const result: DefinitionListNode = {
       type: "definition-list",
       content: children,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async definitionReference(
     node: DefinitionReferenceNode,
@@ -199,7 +219,7 @@ export class IdentityTransformer {
       node.definition.abbreviation,
     );
     await this.afterInline();
-    return {
+    const result: DefinitionReferenceNode = {
       type: "definition-reference",
       definition: {
         abbreviation,
@@ -207,39 +227,49 @@ export class IdentityTransformer {
       },
       content: await this.chooseChildren(node.content),
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async embed(node: EmbedNode): Promise<Node | null> {
-    return {
+    const result: EmbedNode = {
       type: "embed",
       content: {
         ...node.content,
       },
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async emoji(node: EmojiNode): Promise<Node | null> {
-    return {
+    const result: EmojiNode = {
       type: "emoji",
       url: node.url,
       alt: node.alt,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async figure(node: FigureNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: FigureNode = {
       type: "figure",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async figureCaption(node: FigureCaptionNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: FigureCaptionNode = {
       type: "figure-caption",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async figureImage(node: FigureImageNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -251,6 +281,7 @@ export class IdentityTransformer {
       url: node.url,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.blurhash) {
       result.blurhash = node.blurhash;
     }
@@ -271,11 +302,13 @@ export class IdentityTransformer {
   protected async formattedText(node: FormattedTextNode): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
-    return {
+    const result: FormattedTextNode = {
       type: "formatted-text",
       text: node.text || "",
       language: node.language,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async header(node: HeaderNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -286,6 +319,7 @@ export class IdentityTransformer {
       content,
       level: node.level || 2,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.htmlId) {
       result.htmlId = node.htmlId;
     }
@@ -298,21 +332,25 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const warning = await this.chooseChildren(node.warning);
     await this.afterBlock();
-    return {
+    const result: HighTechAlertNode = {
       type: "high-tech-alert",
       content,
       warning,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
 
   protected async horizontalRule(
-    _node: HorizontalRuleNode,
+    node: HorizontalRuleNode,
   ): Promise<Node | null> {
     await this.beforeBlock();
     await this.afterBlock();
-    return {
+    const result: HorizontalRuleNode = {
       type: "horizontal-rule",
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async image(node: ImageNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -322,6 +360,7 @@ export class IdentityTransformer {
       alt: node.alt || "",
       url: node.url,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.hero) {
       result.hero = node.hero;
     }
@@ -343,10 +382,12 @@ export class IdentityTransformer {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: ItalicNode = {
       type: "italic",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async link(node: LinkNode): Promise<Node | null> {
     await this.beforeInline();
@@ -357,6 +398,7 @@ export class IdentityTransformer {
       content,
       url: node.url,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.title) {
       result.title = node.title;
     }
@@ -378,19 +420,23 @@ export class IdentityTransformer {
     return result;
   }
   protected async array(node: ArrayNode): Promise<Node | null> {
-    return {
+    const result: ArrayNode = {
       type: "array",
       content: await this.chooseChildren(node.content),
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async note(node: NoteNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: NoteNode = {
       type: "note",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
 
   protected async list(node: ListNode): Promise<Node | null> {
@@ -400,26 +446,32 @@ export class IdentityTransformer {
       const children = await this.chooseChildren(item.content);
       await this.afterBlock();
       if (children && children.length > 0) {
-        content.push({
+        const listItem: ListItem = {
           type: "list-item",
           content: children,
-        });
+        };
+        if (item.id != null) {listItem.id = item.id;}
+        content.push(listItem);
       }
     }
-    return {
+    const result: ListNode = {
       type: "list",
       style: node.style || "unordered",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async paragraph(node: ParagraphNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: ParagraphNode = {
       type: "paragraph",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async quote(node: QuoteNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -432,6 +484,7 @@ export class IdentityTransformer {
       content,
       url: node.url,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.orientation) {
       result.orientation = node.orientation;
     }
@@ -449,47 +502,57 @@ export class IdentityTransformer {
     } else {
       await this.afterInline();
     }
-    return {
+    const result: RedactedNode = {
       type: "redacted",
       style: node.style,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async region(node: RegionNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: RegionNode = {
       type: "region",
       mode: node.mode,
       regions: node.regions,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async script(node: ScriptNode): Promise<Node | null> {
-    return {
+    const result: ScriptNode = {
       type: "script",
       "mime-type": node["mime-type"] || "text/javascript",
       source: node.source,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async secret(node: SecretNode): Promise<Node | null> {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: SecretNode = {
       type: "secret",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async smaller(node: SmallerNode): Promise<Node | null> {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: SmallerNode = {
       type: "smaller",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async sticker(node: StickerNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -502,6 +565,7 @@ export class IdentityTransformer {
       name: node.name,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.size) {
       result.size = node.size;
     }
@@ -517,28 +581,34 @@ export class IdentityTransformer {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: StrikeThroughNode = {
       type: "strike-through",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async standard(node: StandardNode): Promise<Node | null> {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: StandardNode = {
       type: "standard",
       standard: node.standard,
       identifier: node.identifier,
       url: node.url,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async text(node: TextNode): Promise<Node | null> {
-    return {
+    const result: TextNode = {
       type: "text",
       text: node.text,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
 
   protected async table(node: TableNode): Promise<Node | null> {
@@ -558,6 +628,7 @@ export class IdentityTransformer {
           span: [cell.span[0] || 1, cell.span[1] || 1],
           content: children,
         };
+        if (cell.id != null) {cellResult.id = cell.id;}
         if (cell.header) {
           cellResult.header = cell.header;
         }
@@ -567,10 +638,12 @@ export class IdentityTransformer {
         content.push(cells);
       }
     }
-    return {
+    const result: TableNode = {
       type: "table",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async social(node: SocialNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -584,10 +657,12 @@ export class IdentityTransformer {
     await this.beforeInline();
     const content = await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: UnderlineNode = {
       type: "underline",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async video(node: VideoNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -599,6 +674,7 @@ export class IdentityTransformer {
       mp4: node.mp4,
       poster: node.poster,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.autoplay) {
       result.autoplay = node.autoplay;
     }
@@ -632,10 +708,12 @@ export class IdentityTransformer {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
     await this.afterBlock();
-    return {
+    const result: WarningNode = {
       type: "warning",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async card(node: CardNode): Promise<Node | null> {
     let content: CardContent | undefined;
@@ -647,6 +725,7 @@ export class IdentityTransformer {
           type: "card-content",
           content: cardContent,
         };
+        if (node.content.id != null) {content.id = node.content.id;}
       }
       await this.afterBlock();
     }
@@ -655,6 +734,7 @@ export class IdentityTransformer {
       attribution = {
         type: "card-attribution",
       };
+      if (node.attribution.id != null) {attribution.id = node.attribution.id;}
       if (node.attribution.archiveUrl) {
         attribution.archiveUrl = node.attribution.archiveUrl;
       }
@@ -685,6 +765,7 @@ export class IdentityTransformer {
         imageUrl: node.header.imageUrl,
         imageBlurhash: node.header.imageBlurhash,
       };
+      if (node.header.id != null) {header.id = node.header.id;}
       if (node.header.url) {
         header.url = node.header.url;
       }
@@ -717,10 +798,11 @@ export class IdentityTransformer {
           type: "card-media",
           content: mediaContent,
         };
+        if (node.media.id != null) {media.id = node.media.id;}
       }
     }
 
-    return {
+    const result: CardNode = {
       type: "card",
       content,
       attribution,
@@ -728,54 +810,66 @@ export class IdentityTransformer {
       media,
       original: node.original,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async date(node: DateNode): Promise<Node | null> {
     await this.beforeInline();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: DateNode = {
       type: "date",
       isoDate: node.isoDate,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async time(node: TimeNode): Promise<Node | null> {
     await this.beforeInline();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: TimeNode = {
       type: "time",
       isoTime: node.isoTime,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async datetime(node: DateTimeNode): Promise<Node | null> {
     await this.beforeInline();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: DateTimeNode = {
       type: "datetime",
       iso8601: node.iso8601,
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async subText(node: SubTextNode): Promise<Node | null> {
     await this.beforeInline();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: SubTextNode = {
       type: "sub",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async superText(node: SuperTextNode): Promise<Node | null> {
     await this.beforeInline();
     const content = node.content && await this.chooseChildren(node.content);
     await this.afterInline();
-    return {
+    const result: SuperTextNode = {
       type: "super",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async toc(node: TableOfContentsNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -793,6 +887,7 @@ export class IdentityTransformer {
       content,
       children,
     };
+    if (node.id != null) {result.id = node.id;}
     if (
       date &&
       (date.type == "date" || date.type == "time" || date.type == "datetime")
@@ -815,6 +910,7 @@ export class IdentityTransformer {
       type: "time-range",
       content,
     };
+    if (node.id != null) {result.id = node.id;}
     if (node.notBefore) {
       result.notBefore = node.notBefore;
     }

@@ -1,52 +1,56 @@
-export interface ArrayNode {
+export interface NodeIdentity {
+  id?: string;
+}
+
+export interface ArrayNode extends NodeIdentity {
   type: "array";
   content: Node[];
 }
-export interface BlockNode {
+export interface BlockNode extends NodeIdentity {
   type: "block";
   content: Node[];
 }
-export interface BlockQuoteNode {
+export interface BlockQuoteNode extends NodeIdentity {
   type: "block-quote";
   content: Node[];
 }
-export interface BoldNode {
+export interface BoldNode extends NodeIdentity {
   type: "bold";
   content: Node[];
 }
-export interface BreakNode {
+export interface BreakNode extends NodeIdentity {
   type: "break";
 }
-export interface BubbleNode {
+export interface BubbleNode extends NodeIdentity {
   type: "bubble";
   orientation: "left" | "right";
   content: Node[];
 }
-export interface CenterNode {
+export interface CenterNode extends NodeIdentity {
   type: "center";
   content: Node[];
 }
-export interface CodeNode {
+export interface CodeNode extends NodeIdentity {
   type: "code";
   content: Node[];
 }
-export interface ColumnsNode {
+export interface ColumnsNode extends NodeIdentity {
   type: "columns";
   "column-count": 1 | 2 | 3 | 4;
   columns: Node[][];
 }
-export interface DefinitionNode {
+export interface DefinitionNode extends NodeIdentity {
   type: "definition";
   content: Node[];
   title: Node[];
   abbreviation: Node[];
   key: string;
 }
-export interface DefinitionListNode {
+export interface DefinitionListNode extends NodeIdentity {
   type: "definition-list";
   content: DefinitionNode[];
 }
-export interface DefinitionReferenceNode {
+export interface DefinitionReferenceNode extends NodeIdentity {
   type: "definition-reference";
   definition: {
     abbreviation: Node[];
@@ -65,24 +69,24 @@ export interface YoutubeEmbed {
   id: string;
   imagePreview?: EmbedImagePreview;
 }
-export interface EmbedNode {
+export interface EmbedNode extends NodeIdentity {
   type: "embed";
   content: YoutubeEmbed; // more later
 }
-export interface EmojiNode {
+export interface EmojiNode extends NodeIdentity {
   type: "emoji";
   url: string;
   alt: string;
 }
-export interface FigureNode {
+export interface FigureNode extends NodeIdentity {
   type: "figure";
   content: Node[];
 }
-export interface FigureCaptionNode {
+export interface FigureCaptionNode extends NodeIdentity {
   type: "figure-caption";
   content: Node[];
 }
-export interface FigureImageNode {
+export interface FigureImageNode extends NodeIdentity {
   type: "figure-image";
   content: Node[];
   width?: number;
@@ -93,26 +97,26 @@ export interface FigureImageNode {
   alt: string;
   hero?: true;
 }
-export interface FormattedTextNode {
+export interface FormattedTextNode extends NodeIdentity {
   type: "formatted-text";
   language?: string;
   text: string;
 }
-export interface HeaderNode {
+export interface HeaderNode extends NodeIdentity {
   type: "header";
   level: 1 | 2 | 3 | 4 | 5 | 6;
   content: Node[];
   htmlId?: string;
 }
-export interface HighTechAlertNode {
+export interface HighTechAlertNode extends NodeIdentity {
   type: "high-tech-alert";
   content: Node[];
   warning: Node[];
 }
-export interface HorizontalRuleNode {
+export interface HorizontalRuleNode extends NodeIdentity {
   type: "horizontal-rule";
 }
-export interface ImageNode {
+export interface ImageNode extends NodeIdentity {
   type: "image";
   url: string;
   alt: string;
@@ -122,11 +126,11 @@ export interface ImageNode {
   image?: string;
   hero?: true;
 }
-export interface ItalicNode {
+export interface ItalicNode extends NodeIdentity {
   type: "italic";
   content: Node[];
 }
-export interface LinkNode {
+export interface LinkNode extends NodeIdentity {
   type: "link";
   content: Node[];
   url: string;
@@ -137,24 +141,24 @@ export interface LinkNode {
   noFollow?: true;
   noOpener?: true;
 }
-export interface ListNode {
+export interface ListNode extends NodeIdentity {
   type: "list";
   style: "ordered" | "unordered";
   content: ListItem[];
 }
-export interface ListItem {
+export interface ListItem extends NodeIdentity {
   type: "list-item";
   content: Node[];
 }
-export interface NoteNode {
+export interface NoteNode extends NodeIdentity {
   type: "note";
   content: Node[];
 }
-export interface ParagraphNode {
+export interface ParagraphNode extends NodeIdentity {
   type: "paragraph";
   content: Node[];
 }
-export interface QuoteNode {
+export interface QuoteNode extends NodeIdentity {
   type: "quote";
   name: string;
   icon: string;
@@ -162,35 +166,35 @@ export interface QuoteNode {
   orientation?: "left" | "right";
   content: Node[];
 }
-export interface RedactedNode {
+export interface RedactedNode extends NodeIdentity {
   type: "redacted";
   style: "inline" | "block";
   content: Node[];
 }
-export interface RegionNode {
+export interface RegionNode extends NodeIdentity {
   type: "region";
   mode: "deny" | "allow";
   content: Node[];
   regions: string;
 }
-export interface ScriptNode {
+export interface ScriptNode extends NodeIdentity {
   type: "script";
   "mime-type": string;
   source: string;
 }
-export interface SecretNode {
+export interface SecretNode extends NodeIdentity {
   type: "secret";
   content: Node[];
 }
-export interface SmallerNode {
+export interface SmallerNode extends NodeIdentity {
   type: "smaller";
   content: Node[];
 }
-export interface StrikeThroughNode {
+export interface StrikeThroughNode extends NodeIdentity {
   type: "strike-through";
   content: Node[];
 }
-export interface StickerNode {
+export interface StickerNode extends NodeIdentity {
   type: "sticker";
   size?: number;
   orientation: "center" | "left" | "right";
@@ -200,25 +204,25 @@ export interface StickerNode {
   width?: number;
   height?: number;
 }
-export interface TableNode {
+export interface TableNode extends NodeIdentity {
   type: "table";
   content: TableCellNode[][];
 }
-export interface TableCellNode {
+export interface TableCellNode extends NodeIdentity {
   type: "table-cell";
   header?: true;
   span: [number, number];
   content: Node[];
 }
-export interface TextNode {
+export interface TextNode extends NodeIdentity {
   type: "text";
   text: string;
 }
-export interface UnderlineNode {
+export interface UnderlineNode extends NodeIdentity {
   type: "underline";
   content: Node[];
 }
-export interface VideoNode {
+export interface VideoNode extends NodeIdentity {
   type: "video";
   poster: string;
   alt: string;
@@ -233,29 +237,29 @@ export interface VideoNode {
   content?: Node[];
   controls?: true;
 }
-export interface WarningNode {
+export interface WarningNode extends NodeIdentity {
   type: "warning";
   content: Node[];
 }
 
-export interface TweetNode {
+export interface TweetNode extends NodeIdentity {
   type: "tweet";
   id: string;
 }
-export interface TootNode {
+export interface TootNode extends NodeIdentity {
   type: "toot";
   id: string;
 }
-export interface VimeoNode {
+export interface VimeoNode extends NodeIdentity {
   type: "vimeo";
   id: string;
 }
-export interface YoutubeNode {
+export interface YoutubeNode extends NodeIdentity {
   type: "youtube";
   id: string;
 }
 export type SocialNode = TweetNode | TootNode | VimeoNode | YoutubeNode;
-export interface CardHeader {
+export interface CardHeader extends NodeIdentity {
   type: "card-header";
   imageUrl?: string;
   imageBlurhash?: string;
@@ -267,18 +271,18 @@ export interface CardHeader {
   username?: string;
   usernameDomain?: string;
 }
-export interface CardMedia {
+export interface CardMedia extends NodeIdentity {
   type: "card-media";
   content: (ImageNode | VideoNode | EmbedNode)[];
 }
-export interface CardAttribution {
+export interface CardAttribution extends NodeIdentity {
   type: "card-attribution";
   title?: Node[];
   url?: string;
   date?: string;
   archiveUrl?: string;
 }
-export interface CardContent {
+export interface CardContent extends NodeIdentity {
   type: "card-content";
   content: Node[];
 }
@@ -287,7 +291,7 @@ export type CardContentNode =
   | CardContent
   | CardMedia
   | CardAttribution;
-export interface CardNode {
+export interface CardNode extends NodeIdentity {
   type: "card";
   header?: CardHeader;
   content?: CardContent;
@@ -295,38 +299,38 @@ export interface CardNode {
   attribution?: CardAttribution;
   original?: Node;
 }
-export interface SuperTextNode {
+export interface SuperTextNode extends NodeIdentity {
   type: "super";
   content: Node[];
 }
-export interface SubTextNode {
+export interface SubTextNode extends NodeIdentity {
   type: "sub";
   content: Node[];
 }
-export interface DateNode {
+export interface DateNode extends NodeIdentity {
   type: "date";
   isoDate: string;
   content: Node[];
 }
-export interface TimeNode {
+export interface TimeNode extends NodeIdentity {
   type: "time";
   isoTime: string;
   content: Node[];
 }
-export interface DateTimeNode {
+export interface DateTimeNode extends NodeIdentity {
   type: "datetime";
   iso8601: string;
   content: Node[];
 }
 
-export interface TimeRangeNode {
+export interface TimeRangeNode extends NodeIdentity {
   type: "time-range";
   notBefore?: string;
   notAfter?: string;
   content: Node[];
 }
 
-export interface StandardNode {
+export interface StandardNode extends NodeIdentity {
   type: "standard";
   standard: string;
   identifier: string;
@@ -334,7 +338,7 @@ export interface StandardNode {
   content: Node[];
 }
 
-export interface TableOfContentsNode {
+export interface TableOfContentsNode extends NodeIdentity {
   type: "toc";
   date?: DateTimeNode | DateNode | TimeNode;
   href?: string;

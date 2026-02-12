@@ -113,6 +113,7 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
       type: "text",
       text: `${node.text}`,
     };
+    if (node.id != null) {replacement.id = node.id;}
     this.cursor.content.push(replacement);
     return replacement;
   }
