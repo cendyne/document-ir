@@ -34,6 +34,16 @@ export interface CodeNode extends NodeIdentity {
   type: "code";
   content: Node[];
 }
+export interface CodeGroupTabNode extends NodeIdentity {
+  type: "code-group-tab";
+  header: Node[];
+  content: CodeNode;
+  copyable?: boolean;
+}
+export interface CodeGroupNode extends NodeIdentity {
+  type: "code-group";
+  tabs: CodeGroupTabNode[];
+}
 export interface ColumnsNode extends NodeIdentity {
   type: "columns";
   "column-count": 1 | 2 | 3 | 4;
@@ -181,6 +191,18 @@ export interface ScriptNode extends NodeIdentity {
   type: "script";
   "mime-type": string;
   source: string;
+  url?: string;
+}
+export interface StyleNode extends NodeIdentity {
+  type: "style";
+  source?: string;
+  url?: string;
+}
+export type PillColor = "neutral" | "blue" | "green" | "red" | "yellow" | "purple" | "gray" | "teal" | "orange";
+export interface PillNode extends NodeIdentity {
+  type: "pill";
+  color: PillColor;
+  content: Node[];
 }
 export interface SecretNode extends NodeIdentity {
   type: "secret";
@@ -357,6 +379,7 @@ export type Node =
   | CardNode
   | CenterNode
   | CodeNode
+  | CodeGroupNode
   | ColumnsNode
   | DefinitionNode
   | DefinitionListNode
@@ -376,11 +399,13 @@ export type Node =
   | ListNode
   | NoteNode
   | ParagraphNode
+  | PillNode
   | QuoteNode
   | RedactedNode
   | RegionNode
   | ScriptNode
   | SecretNode
+  | StyleNode
   | SmallerNode
   | StickerNode
   | StrikeThroughNode
@@ -412,6 +437,7 @@ export interface DocumentMeta {
   url: string;
   contentDigest?: string;
   readingDifficultyMultiplier?: number;
+  keywords?: string[];
 }
 
 export interface DocumentHierarchy {

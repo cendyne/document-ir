@@ -12,6 +12,8 @@ import type {
   CardNode,
   CenterNode,
   CodeNode,
+  CodeGroupNode,
+  CodeGroupTabNode,
   ColumnsNode,
   DateNode,
   DateTimeNode,
@@ -35,6 +37,7 @@ import type {
   ListNode,
   Node,
   NoteNode,
+  PillNode,
   TimeRangeNode,
   ParagraphNode,
   QuoteNode,
@@ -42,6 +45,7 @@ import type {
   RegionNode,
   ScriptNode,
   SecretNode,
+  StyleNode,
   SmallerNode,
   SocialNode,
   StandardNode,
@@ -150,6 +154,32 @@ export class IdentityTransformer {
     const result: CodeNode = {
       type: "code",
       content,
+    };
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async codeGroupTab(node: CodeGroupTabNode): Promise<CodeGroupTabNode> {
+    await this.beforeInline();
+    const header = await this.chooseChildren(node.header);
+    await this.afterInline();
+    const content = await this.code(node.content) as CodeNode;
+    const result: CodeGroupTabNode = {
+      type: "code-group-tab",
+      header,
+      content,
+    };
+    if (node.copyable != null) {result.copyable = node.copyable;}
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async codeGroup(node: CodeGroupNode): Promise<Node | null> {
+    const tabs: CodeGroupTabNode[] = [];
+    for (const tab of node.tabs) {
+      tabs.push(await this.codeGroupTab(tab));
+    }
+    const result: CodeGroupNode = {
+      type: "code-group",
+      tabs,
     };
     if (node.id != null) {result.id = node.id;}
     return result;
@@ -473,6 +503,18 @@ export class IdentityTransformer {
     if (node.id != null) {result.id = node.id;}
     return result;
   }
+  protected async pill(node: PillNode): Promise<Node | null> {
+    await this.beforeInline();
+    const content = await this.chooseChildren(node.content);
+    await this.afterInline();
+    const result: PillNode = {
+      type: "pill",
+      color: node.color,
+      content,
+    };
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
   protected async quote(node: QuoteNode): Promise<Node | null> {
     await this.beforeBlock();
     const content = await this.chooseChildren(node.content);
@@ -529,6 +571,16 @@ export class IdentityTransformer {
       "mime-type": node["mime-type"] || "text/javascript",
       source: node.source,
     };
+    if (node.url) {result.url = node.url;}
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async style(node: StyleNode): Promise<Node | null> {
+    const result: StyleNode = {
+      type: "style",
+    };
+    if (node.source) {result.source = node.source;}
+    if (node.url) {result.url = node.url;}
     if (node.id != null) {result.id = node.id;}
     return result;
   }
@@ -941,6 +993,8 @@ export class IdentityTransformer {
           return await this.center(node);
         case "code":
           return await this.code(node);
+        case "code-group":
+          return await this.codeGroup(node);
         case "columns":
           return await this.columns(node);
         case "definition":
@@ -981,6 +1035,8 @@ export class IdentityTransformer {
           return await this.list(node);
         case "paragraph":
           return await this.paragraph(node);
+        case "pill":
+          return await this.pill(node);
         case "quote":
           return await this.quote(node);
         case "redacted":
@@ -991,6 +1047,8 @@ export class IdentityTransformer {
           return await this.script(node);
         case "secret":
           return await this.secret(node);
+        case "style":
+          return await this.style(node);
         case "smaller":
           return await this.smaller(node);
         case "sticker":
@@ -1091,6 +1149,9 @@ export class IdentityTransformer {
     }
     if (node.contentDigest) {
       result.contentDigest = node.contentDigest;
+    }
+    if (node.keywords) {
+      result.keywords = node.keywords;
     }
     return result;
   }
