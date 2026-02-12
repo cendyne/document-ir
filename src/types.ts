@@ -319,6 +319,13 @@ export interface DateTimeNode {
   content: Node[];
 }
 
+export interface TimeRangeNode {
+  type: "time-range";
+  notBefore?: string;
+  notAfter?: string;
+  content: Node[];
+}
+
 export interface TableOfContentsNode {
   type: "toc";
   date?: DateTimeNode | DateNode | TimeNode;
@@ -376,6 +383,7 @@ export type Node =
   | SuperTextNode
   | SubTextNode
   | TableOfContentsNode
+  | TimeRangeNode
   | WarningNode;
 
 export interface DocumentMeta {

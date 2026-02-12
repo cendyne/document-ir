@@ -361,6 +361,82 @@ describe('IdentityTransformer', () => {
     expect(Object.keys(imageNode).sort()).toEqual(["alt", "type", "url"]);
   });
 
+  test('preserves time-range with both bounds', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "time-range",
+          notBefore: "2024-06-01T00:00:00Z",
+          notAfter: "2024-12-31T23:59:59Z",
+          content: [{ type: "text", text: "Limited time" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves time-range with only notBefore', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "time-range",
+          notBefore: "2024-01-01T00:00:00Z",
+          content: [{ type: "text", text: "After date" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves time-range with only notAfter', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "time-range",
+          notAfter: "2025-12-31T23:59:59Z",
+          content: [{ type: "text", text: "Before date" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add undefined optional attributes to time-range', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "time-range",
+          notBefore: "2024-01-01T00:00:00Z",
+          content: [{ type: "text", text: "Only notBefore" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+
+    const node = result.content[0]!;
+    expect(node.type).toBe("time-range");
+    expect(Object.keys(node).sort()).toEqual(["content", "notBefore", "type"]);
+  });
+
   test('does not add undefined optional attributes to figure-image', async () => {
     const doc: DocumentNode = {
       type: "document",

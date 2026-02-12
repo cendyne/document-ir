@@ -677,6 +677,37 @@ export const ExampleDocument: DocumentNode = {
         },
       ],
     },
+    {
+      type: "time-range",
+      notBefore: "2024-01-01T00:00:00Z",
+      content: [
+        {
+          type: "text",
+          text: "Visible after January 1st 2024",
+        },
+      ],
+    },
+    {
+      type: "time-range",
+      notAfter: "2025-12-31T23:59:59Z",
+      content: [
+        {
+          type: "text",
+          text: "Visible until end of 2025",
+        },
+      ],
+    },
+    {
+      type: "time-range",
+      notBefore: "2024-06-01T00:00:00Z",
+      notAfter: "2024-12-31T23:59:59Z",
+      content: [
+        {
+          type: "text",
+          text: "Visible in the second half of 2024",
+        },
+      ],
+    },
   ],
   definitions: [{
     type: "definition",

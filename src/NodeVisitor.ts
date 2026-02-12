@@ -30,6 +30,7 @@ import type {
   ListNode,
   Node,
   NoteNode,
+  TimeRangeNode,
   ParagraphNode,
   QuoteNode,
   RedactedNode,
@@ -332,6 +333,11 @@ export class NodeVisitor {
     this.chooseChildren(node.children);
     this.afterBlock();
   }
+  protected timeRange(node: TimeRangeNode): void {
+    this.beforeBlock();
+    this.chooseChildren(node.content);
+    this.afterBlock();
+  }
   protected choose(node: Node): void {
     if (!node || !node.type) {
       throw new Error(`Unexpected node, no type: ${JSON.stringify(node)}`);
@@ -437,6 +443,8 @@ export class NodeVisitor {
           return this.superText(node);
         case "toc":
           return this.toc(node);
+        case "time-range":
+          return this.timeRange(node);
       }
     } catch (e) {
       console.log(

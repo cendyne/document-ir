@@ -35,6 +35,7 @@ import type {
   ListNode,
   Node,
   NoteNode,
+  TimeRangeNode,
   ParagraphNode,
   QuoteNode,
   RedactedNode,
@@ -793,6 +794,22 @@ export class IdentityTransformer {
     }
     return result;
   }
+  protected async timeRange(node: TimeRangeNode): Promise<Node | null> {
+    await this.beforeBlock();
+    const content = await this.chooseChildren(node.content);
+    await this.afterBlock();
+    const result: TimeRangeNode = {
+      type: "time-range",
+      content,
+    };
+    if (node.notBefore) {
+      result.notBefore = node.notBefore;
+    }
+    if (node.notAfter) {
+      result.notAfter = node.notAfter;
+    }
+    return result;
+  }
   protected async choose(node: Node): Promise<Node | null> {
     if (!node || !node.type) {
       throw new Error(`Unexpected node, no type: ${JSON.stringify(node)}`);
@@ -898,6 +915,8 @@ export class IdentityTransformer {
           return await this.subText(node);
         case "toc":
           return await this.toc(node);
+        case "time-range":
+          return await this.timeRange(node);
       }
     } catch (e) {
       console.log(
