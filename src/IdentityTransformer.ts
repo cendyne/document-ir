@@ -1,4 +1,6 @@
 import type {
+  AccordionGroupNode,
+  AccordionTabNode,
   ArrayNode,
   BlockNode,
   BlockQuoteNode,
@@ -12,6 +14,7 @@ import type {
   CardNode,
   CenterNode,
   CodeNode,
+  CodeBlockNode,
   CodeGroupNode,
   CodeGroupTabNode,
   ColumnsNode,
@@ -154,6 +157,49 @@ export class IdentityTransformer {
     const result: CodeNode = {
       type: "code",
       content,
+    };
+    if (node.diff != null) {result.diff = node.diff;}
+    if (node.lineNumbers != null) {result.lineNumbers = node.lineNumbers;}
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async codeBlock(node: CodeBlockNode): Promise<Node | null> {
+    const content = await this.code(node.content) as CodeNode;
+    const result: CodeBlockNode = {
+      type: "code-block",
+      content,
+      fileName: node.fileName,
+    };
+    if (node.copyable != null) {result.copyable = node.copyable;}
+    if (node.collapsable != null) {result.collapsable = node.collapsable;}
+    if (node.collapsed != null) {result.collapsed = node.collapsed;}
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async accordionTab(node: AccordionTabNode): Promise<AccordionTabNode> {
+    await this.beforeInline();
+    const header = await this.chooseChildren(node.header);
+    await this.afterInline();
+    await this.beforeBlock();
+    const content = await this.chooseChildren(node.content);
+    await this.afterBlock();
+    const result: AccordionTabNode = {
+      type: "accordion-tab",
+      header,
+      content,
+    };
+    if (node.open != null) {result.open = node.open;}
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async accordionGroup(node: AccordionGroupNode): Promise<Node | null> {
+    const tabs: AccordionTabNode[] = [];
+    for (const tab of node.tabs) {
+      tabs.push(await this.accordionTab(tab));
+    }
+    const result: AccordionGroupNode = {
+      type: "accordion-group",
+      tabs,
     };
     if (node.id != null) {result.id = node.id;}
     return result;
@@ -993,6 +1039,8 @@ export class IdentityTransformer {
           return await this.center(node);
         case "code":
           return await this.code(node);
+        case "code-block":
+          return await this.codeBlock(node);
         case "code-group":
           return await this.codeGroup(node);
         case "columns":
@@ -1027,6 +1075,8 @@ export class IdentityTransformer {
           return await this.italic(node);
         case "link":
           return await this.link(node);
+        case "accordion-group":
+          return await this.accordionGroup(node);
         case "array":
           return await this.array(node);
         case "note":

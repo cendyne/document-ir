@@ -33,6 +33,16 @@ export interface CenterNode extends NodeIdentity {
 export interface CodeNode extends NodeIdentity {
   type: "code";
   content: Node[];
+  diff?: boolean;
+  lineNumbers?: boolean;
+}
+export interface CodeBlockNode extends NodeIdentity {
+  type: "code-block";
+  content: CodeNode;
+  fileName: string;
+  copyable?: boolean;
+  collapsable?: boolean;
+  collapsed?: boolean;
 }
 export interface CodeGroupTabNode extends NodeIdentity {
   type: "code-group-tab";
@@ -43,6 +53,16 @@ export interface CodeGroupTabNode extends NodeIdentity {
 export interface CodeGroupNode extends NodeIdentity {
   type: "code-group";
   tabs: CodeGroupTabNode[];
+}
+export interface AccordionTabNode extends NodeIdentity {
+  type: "accordion-tab";
+  header: Node[];
+  content: Node[];
+  open?: boolean;
+}
+export interface AccordionGroupNode extends NodeIdentity {
+  type: "accordion-group";
+  tabs: AccordionTabNode[];
 }
 export interface ColumnsNode extends NodeIdentity {
   type: "columns";
@@ -370,6 +390,7 @@ export interface TableOfContentsNode extends NodeIdentity {
 }
 
 export type Node =
+  | AccordionGroupNode
   | ArrayNode
   | BlockNode
   | BlockQuoteNode
@@ -379,6 +400,7 @@ export type Node =
   | CardNode
   | CenterNode
   | CodeNode
+  | CodeBlockNode
   | CodeGroupNode
   | ColumnsNode
   | DefinitionNode
