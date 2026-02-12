@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.2.0...document-ir-v0.3.0) (2026-02-12)
+
+
+### Features
+
+* code block and accordion ([89a6c7f](https://github.com/cendyne/document-ir/commit/89a6c7f713790939c32ce96da4dae36a98c1c2ad))
+* Pill, Code Groups ([9198551](https://github.com/cendyne/document-ir/commit/9198551faf58ec3f9e1984f167e551b1d9dc63a4))
+
 ## [0.2.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.1.0...document-ir-v0.2.0) (2026-02-12)
 
 
