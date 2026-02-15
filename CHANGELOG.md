@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.0...document-ir-v0.4.1) (2026-02-15)
+
+
+### Bug Fixes
+
+* preserve whitespace in code nodes for WhitespaceTransformer and WhitespaceStretchingTransformer ([#22](https://github.com/cendyne/document-ir/issues/22)) ([c4d5782](https://github.com/cendyne/document-ir/commit/c4d578274bf80adcc4f0ac0450cb9914d76ae70e))
+
 ## [0.4.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.3.0...document-ir-v0.4.0) (2026-02-15)
 
 
