@@ -6,6 +6,11 @@ export interface ArrayNode extends NodeIdentity {
   type: "array";
   content: Node[];
 }
+export interface BadgeNode extends NodeIdentity {
+  type: "badge";
+  url: string;
+  alt: string;
+}
 export interface BlockNode extends NodeIdentity {
   type: "block";
   content: Node[];
@@ -399,6 +404,7 @@ export interface TableOfContentsNode extends NodeIdentity {
 export type Node =
   | AccordionGroupNode
   | ArrayNode
+  | BadgeNode
   | BlockNode
   | BlockQuoteNode
   | BoldNode

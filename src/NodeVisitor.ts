@@ -1,5 +1,6 @@
 import type {
   ArrayNode,
+  BadgeNode,
   BlockNode,
   BlockQuoteNode,
   BoldNode,
@@ -68,6 +69,8 @@ export class NodeVisitor {
     for (const child of nodes) {
       this.choose(child);
     }
+  }
+  protected badge(_node: BadgeNode): void {
   }
   protected block(node: BlockNode): void {
     this.beforeBlock();
@@ -359,6 +362,8 @@ export class NodeVisitor {
     }
     try {
       switch (node.type) {
+        case "badge":
+          return this.badge(node);
         case "block":
           return this.block(node);
         case "block-quote":

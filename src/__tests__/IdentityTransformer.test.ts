@@ -10,6 +10,63 @@ describe('IdentityTransformer', () => {
     ).toEqual(ExampleDocument);
   });
 
+  test('preserves badge node', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "badge",
+          url: "https://img.shields.io/github/actions/workflow/status/cendyne/document-ir/build.yaml",
+          alt: "Build Status",
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves badge node with id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "badge",
+          id: "badge1",
+          url: "https://img.shields.io/badge/license-MIT-blue",
+          alt: "License",
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add id to badge when source has no id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "badge",
+          url: "https://img.shields.io/badge/test-passing-green",
+          alt: "Test",
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("badge");
+    expect(Object.keys(node).sort()).toEqual(["alt", "type", "url"]);
+  });
+
   test('preserves all link attributes', async () => {
     const doc: DocumentNode = {
       type: "document",

@@ -2,6 +2,7 @@ import type {
   AccordionGroupNode,
   AccordionTabNode,
   ArrayNode,
+  BadgeNode,
   BlockNode,
   BlockQuoteNode,
   BoldNode,
@@ -86,6 +87,15 @@ export class IdentityTransformer {
       }
     }
     return children;
+  }
+  protected async badge(node: BadgeNode): Promise<Node | null> {
+    const result: BadgeNode = {
+      type: "badge",
+      url: node.url,
+      alt: node.alt,
+    };
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected async block(node: BlockNode): Promise<Node | null> {
     await this.beforeBlock();
@@ -1043,6 +1053,8 @@ export class IdentityTransformer {
     }
     try {
       switch (node.type) {
+        case "badge":
+          return await this.badge(node);
         case "block":
           return await this.block(node);
         case "block-quote":
