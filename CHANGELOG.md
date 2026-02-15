@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.3.0...document-ir-v0.4.0) (2026-02-15)
+
+
+### Features
+
+* add badge node support ([#20](https://github.com/cendyne/document-ir/issues/20)) ([efaf396](https://github.com/cendyne/document-ir/commit/efaf396289dc2e4720dae6fb7b13ea46edce8ef1))
+* add disableHeadingRequirement and disableToc options to document node ([#19](https://github.com/cendyne/document-ir/issues/19)) ([c59dae6](https://github.com/cendyne/document-ir/commit/c59dae6d0c19fd93357cbb42b8462166a3c64ff6))
+* add footnote and footnote-display node support ([#17](https://github.com/cendyne/document-ir/issues/17)) ([b45dd15](https://github.com/cendyne/document-ir/commit/b45dd15679880bf920bd76c099d6d6da23485b36))
+
 ## [0.3.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.2.0...document-ir-v0.3.0) (2026-02-12)
 
 
