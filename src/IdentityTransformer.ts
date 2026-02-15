@@ -29,6 +29,8 @@ import type {
   FigureCaptionNode,
   FigureImageNode,
   FigureNode,
+  FootnoteNode,
+  FootnoteDisplayNode,
   FormattedTextNode,
   HeaderNode,
   HighTechAlertNode,
@@ -373,6 +375,24 @@ export class IdentityTransformer {
     if (node.image) {
       result.image = node.image;
     }
+    return result;
+  }
+  protected async footnote(node: FootnoteNode): Promise<Node | null> {
+    await this.beforeInline();
+    const content = await this.chooseChildren(node.content);
+    await this.afterInline();
+    const result: FootnoteNode = {
+      type: "footnote",
+      content,
+    };
+    if (node.id != null) {result.id = node.id;}
+    return result;
+  }
+  protected async footnoteDisplay(node: FootnoteDisplayNode): Promise<Node | null> {
+    const result: FootnoteDisplayNode = {
+      type: "footnote-display",
+    };
+    if (node.id != null) {result.id = node.id;}
     return result;
   }
   protected async formattedText(node: FormattedTextNode): Promise<Node | null> {
@@ -1061,6 +1081,10 @@ export class IdentityTransformer {
           return await this.figureCaption(node);
         case "figure-image":
           return await this.figureImage(node);
+        case "footnote":
+          return await this.footnote(node);
+        case "footnote-display":
+          return await this.footnoteDisplay(node);
         case "formatted-text":
           return await this.formattedText(node);
         case "header":
