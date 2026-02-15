@@ -1,5 +1,5 @@
 import { IdentityTransformer } from "./IdentityTransformer.ts";
-import type { DocumentNode, Node, TextNode } from "./types.ts";
+import type { CodeNode, DocumentNode, Node, TextNode } from "./types.ts";
 
 class RemoveEmptyTextTransformer extends IdentityTransformer {
   protected override async text(node: TextNode): Promise<Node | null> {
@@ -50,6 +50,16 @@ export class WhitespaceTransformer extends IdentityTransformer {
       this.lastText = null;
     }
     this.stripWhitespace = true;
+  }
+  protected override async code(node: CodeNode): Promise<Node | null> {
+    const result: CodeNode = {
+      type: "code",
+      content: node.content,
+    };
+    if (node.diff != null) {result.diff = node.diff;}
+    if (node.lineNumbers != null) {result.lineNumbers = node.lineNumbers;}
+    if (node.id != null) {result.id = node.id;}
+    return result;
   }
   protected override async beforeBlock(): Promise<void> {
     this.stripLastText();

@@ -127,4 +127,57 @@ describe('WhitespaceStretchingTransformer', () => {
       await new WhitespaceStretchingTransformer().transform(ExpectedDocument),
     ).toEqual(ExpectedDocument);
   });
+
+  test('preserves whitespace in inline code', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "text",
+          text: "see",
+        },
+        {
+          type: "code",
+          content: [
+            {
+              type: "text",
+              text: "  foo  bar  ",
+            },
+          ],
+        },
+        {
+          type: "text",
+          text: "for details",
+        },
+      ],
+    };
+
+    const result = await new WhitespaceStretchingTransformer().transform(InputDocument);
+    const codeNode = result.content[1] as any;
+    expect(codeNode.content[0].text).toEqual("  foo  bar  ");
+  });
+
+  test('preserves whitespace in code block', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "code-block",
+          fileName: "test.js",
+          content: {
+            type: "code",
+            content: [
+              {
+                type: "text",
+                text: "function foo() {\n  return  bar;\n}",
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const result = await new WhitespaceStretchingTransformer().transform(InputDocument);
+    expect(result).toEqual(InputDocument);
+  });
 });
