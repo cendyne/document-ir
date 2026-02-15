@@ -1227,6 +1227,12 @@ export class IdentityTransformer {
     if (node.keywords) {
       result.keywords = node.keywords;
     }
+    if (node.disableHeadingRequirement != null) {
+      result.disableHeadingRequirement = node.disableHeadingRequirement;
+    }
+    if (node.disableToc != null) {
+      result.disableToc = node.disableToc;
+    }
     return result;
   }
   async transform(node: DocumentNode): Promise<DocumentNode> {

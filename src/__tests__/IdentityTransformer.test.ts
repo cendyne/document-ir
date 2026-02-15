@@ -282,6 +282,8 @@ describe('IdentityTransformer', () => {
       url: "/test",
       hidden: true,
       noindex: true,
+      disableHeadingRequirement: true,
+      disableToc: true,
       author: "Test Author",
       description: "A test document",
       image: "https://example.com/og.png",
@@ -311,6 +313,47 @@ describe('IdentityTransformer', () => {
 
     const result = await new IdentityTransformer().transform(doc);
     expect(result).toEqual(doc);
+  });
+
+  test('does not add disableHeadingRequirement or disableToc when not in source', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [{ type: "text", text: "Content" }],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect("disableHeadingRequirement" in result).toBe(false);
+    expect("disableToc" in result).toBe(false);
+  });
+
+  test('preserves disableHeadingRequirement independently', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      disableHeadingRequirement: true,
+      content: [{ type: "text", text: "Content" }],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result.disableHeadingRequirement).toBe(true);
+    expect("disableToc" in result).toBe(false);
+  });
+
+  test('preserves disableToc independently', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      disableToc: true,
+      content: [{ type: "text", text: "Content" }],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect("disableHeadingRequirement" in result).toBe(false);
+    expect(result.disableToc).toBe(true);
   });
 
   test('preserves embed with imagePreview', async () => {

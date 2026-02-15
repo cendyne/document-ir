@@ -458,6 +458,8 @@ export type Node =
 export interface DocumentMeta {
   hidden?: boolean;
   noindex?: boolean;
+  disableHeadingRequirement?: boolean;
+  disableToc?: boolean;
   title: string;
   author?: string;
   description?: string;
