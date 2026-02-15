@@ -532,6 +532,120 @@ describe('IdentityTransformer', () => {
     expect("id" in para).toBe(false);
   });
 
+  test('preserves footnote with content', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            { type: "text", text: "Some text" },
+            {
+              type: "footnote",
+              content: [{ type: "text", text: "This is a footnote" }],
+            },
+          ],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves footnote with id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "footnote",
+          id: "fn1",
+          content: [{ type: "text", text: "Footnote content" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add id to footnote when source has no id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "footnote",
+          content: [{ type: "text", text: "Footnote" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("footnote");
+    expect("id" in node).toBe(false);
+  });
+
+  test('preserves footnote-display', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            { type: "text", text: "Text with footnote" },
+            {
+              type: "footnote",
+              content: [{ type: "text", text: "A footnote" }],
+            },
+          ],
+        },
+        { type: "footnote-display" },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves footnote-display with id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        { type: "footnote-display", id: "fd1" },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add id to footnote-display when source has no id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        { type: "footnote-display" },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("footnote-display");
+    expect(Object.keys(node).sort()).toEqual(["type"]);
+  });
+
   test('does not add undefined optional attributes to figure-image', async () => {
     const doc: DocumentNode = {
       type: "document",

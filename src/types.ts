@@ -127,6 +127,13 @@ export interface FigureImageNode extends NodeIdentity {
   alt: string;
   hero?: true;
 }
+export interface FootnoteNode extends NodeIdentity {
+  type: "footnote";
+  content: Node[];
+}
+export interface FootnoteDisplayNode extends NodeIdentity {
+  type: "footnote-display";
+}
 export interface FormattedTextNode extends NodeIdentity {
   type: "formatted-text";
   language?: string;
@@ -411,6 +418,8 @@ export type Node =
   | FigureNode
   | FigureCaptionNode
   | FigureImageNode
+  | FootnoteNode
+  | FootnoteDisplayNode
   | FormattedTextNode
   | HeaderNode
   | HighTechAlertNode

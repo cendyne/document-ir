@@ -20,6 +20,8 @@ import type {
   FigureCaptionNode,
   FigureImageNode,
   FigureNode,
+  FootnoteNode,
+  FootnoteDisplayNode,
   FormattedTextNode,
   HeaderNode,
   HighTechAlertNode,
@@ -150,6 +152,13 @@ export class NodeVisitor {
     this.beforeBlock();
     this.chooseChildren(node.content);
     this.afterBlock();
+  }
+  protected footnote(node: FootnoteNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
+  }
+  protected footnoteDisplay(_node: FootnoteDisplayNode): void {
   }
   protected formattedText(_node: FormattedTextNode): void {
   }
@@ -384,6 +393,10 @@ export class NodeVisitor {
           return this.figureCaption(node);
         case "figure-image":
           return this.figureImage(node);
+        case "footnote":
+          return this.footnote(node);
+        case "footnote-display":
+          return this.footnoteDisplay(node);
         case "formatted-text":
           return this.formattedText(node);
         case "header":
