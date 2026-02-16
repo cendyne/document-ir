@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.2...document-ir-v0.4.3) (2026-02-16)
+
+
+### Bug Fixes
+
+* retain minimum whitespace around inline leaf nodes in WhitespaceTransformer ([#28](https://github.com/cendyne/document-ir/issues/28)) ([726990c](https://github.com/cendyne/document-ir/commit/726990c43590193e7f5bb39c6fd0a6677f60f895)), closes [#27](https://github.com/cendyne/document-ir/issues/27)
+
 ## [0.4.2](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.1...document-ir-v0.4.2) (2026-02-16)
 
 
