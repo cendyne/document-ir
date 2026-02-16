@@ -1,5 +1,5 @@
 import { IdentityTransformer } from "./IdentityTransformer.ts";
-import type { CodeNode, DocumentNode, Node, TextNode } from "./types.ts";
+import type { BadgeNode, CodeNode, DocumentNode, EmojiNode, Node, TextNode } from "./types.ts";
 
 class RemoveEmptyTextTransformer extends IdentityTransformer {
   protected override async text(node: TextNode): Promise<Node | null> {
@@ -51,7 +51,19 @@ export class WhitespaceTransformer extends IdentityTransformer {
     }
     this.stripWhitespace = true;
   }
+  protected override async emoji(node: EmojiNode): Promise<Node | null> {
+    this.lastText = null;
+    this.stripWhitespace = false;
+    return await super.emoji(node);
+  }
+  protected override async badge(node: BadgeNode): Promise<Node | null> {
+    this.lastText = null;
+    this.stripWhitespace = false;
+    return await super.badge(node);
+  }
   protected override async code(node: CodeNode): Promise<Node | null> {
+    this.lastText = null;
+    this.stripWhitespace = false;
     const result: CodeNode = {
       type: "code",
       content: node.content,
