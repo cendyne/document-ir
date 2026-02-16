@@ -113,6 +113,7 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
       type: "code",
       content: node.content,
     };
+    if (node.language != null) {result.language = node.language;}
     if (node.diff != null) {result.diff = node.diff;}
     if (node.lineNumbers != null) {result.lineNumbers = node.lineNumbers;}
     if (node.id != null) {result.id = node.id;}

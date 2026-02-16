@@ -170,6 +170,7 @@ export class IdentityTransformer {
       type: "code",
       content,
     };
+    if (node.language != null) {result.language = node.language;}
     if (node.diff != null) {result.diff = node.diff;}
     if (node.lineNumbers != null) {result.lineNumbers = node.lineNumbers;}
     if (node.id != null) {result.id = node.id;}
@@ -411,8 +412,8 @@ export class IdentityTransformer {
     const result: FormattedTextNode = {
       type: "formatted-text",
       text: node.text || "",
-      language: node.language,
     };
+    if (node.language != null) {result.language = node.language;}
     if (node.id != null) {result.id = node.id;}
     return result;
   }
@@ -600,9 +601,11 @@ export class IdentityTransformer {
       icon: node.icon,
       name: node.name,
       content,
-      url: node.url,
     };
     if (node.id != null) {result.id = node.id;}
+    if (node.url) {
+      result.url = node.url;
+    }
     if (node.orientation) {
       result.orientation = node.orientation;
     }
@@ -936,8 +939,8 @@ export class IdentityTransformer {
       attribution,
       header,
       media,
-      original: node.original,
     };
+    if (node.original) {result.original = node.original;}
     if (node.id != null) {result.id = node.id;}
     return result;
   }

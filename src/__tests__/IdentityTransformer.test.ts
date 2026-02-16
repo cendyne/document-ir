@@ -746,6 +746,127 @@ describe('IdentityTransformer', () => {
     expect(Object.keys(node).sort()).toEqual(["type"]);
   });
 
+  test('preserves code node with language', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "code",
+          language: "javascript",
+          content: [{ type: "text", text: "const x = 1;" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves code-block with language on inner code node', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "code-block",
+          fileName: "example.ts",
+          content: {
+            type: "code",
+            language: "typescript",
+            content: [{ type: "text", text: "const x: number = 1;" }],
+          },
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add language to code node when source has no language', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "code",
+          content: [{ type: "text", text: "x = 1" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("code");
+    expect("language" in node).toBe(false);
+  });
+
+  test('does not add language to formatted-text when source has no language', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "formatted-text",
+          text: "some code",
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("formatted-text");
+    expect("language" in node).toBe(false);
+  });
+
+  test('does not add url to quote when source has no url', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "quote",
+          name: "Author",
+          icon: "https://example.com/avatar.png",
+          content: [{ type: "text", text: "A quote" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("quote");
+    expect("url" in node).toBe(false);
+  });
+
+  test('does not add original to card when source has no original', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "card",
+          content: {
+            type: "card-content",
+            content: [{ type: "text", text: "Card body" }],
+          },
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("card");
+    expect("original" in node).toBe(false);
+  });
+
   test('does not add undefined optional attributes to figure-image', async () => {
     const doc: DocumentNode = {
       type: "document",
