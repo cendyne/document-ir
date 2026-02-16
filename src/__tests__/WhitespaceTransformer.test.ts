@@ -158,7 +158,7 @@ describe('WhitespaceTransformer', () => {
         },
         {
           type: "text",
-          text: "for details",
+          text: " for details",
         },
       ],
     };
@@ -220,5 +220,171 @@ describe('WhitespaceTransformer', () => {
     const result = await new WhitespaceTransformer().transform(InputDocument);
     const tab = (result.content[0] as any).tabs[0];
     expect(tab.content.content[0].text).toEqual("const  x\n\t= 1;");
+  });
+
+  test('preserves whitespace around emoji nodes', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "emoji",
+              url: "https://example.com/chrome.png",
+              alt: "chrome",
+            },
+            {
+              type: "text",
+              text: "  & ",
+            },
+            {
+              type: "emoji",
+              url: "https://example.com/safari.png",
+              alt: "safari",
+            },
+          ],
+        },
+      ],
+    };
+
+    const ExpectedDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "emoji",
+              url: "https://example.com/chrome.png",
+              alt: "chrome",
+            },
+            {
+              type: "text",
+              text: " & ",
+            },
+            {
+              type: "emoji",
+              url: "https://example.com/safari.png",
+              alt: "safari",
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      await new WhitespaceTransformer().transform(InputDocument),
+    ).toEqual(ExpectedDocument);
+  });
+
+  test('preserves whitespace around badge nodes', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "badge",
+              url: "https://example.com/badge1.svg",
+              alt: "badge1",
+            },
+            {
+              type: "text",
+              text: "  and  ",
+            },
+            {
+              type: "badge",
+              url: "https://example.com/badge2.svg",
+              alt: "badge2",
+            },
+          ],
+        },
+      ],
+    };
+
+    const ExpectedDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "badge",
+              url: "https://example.com/badge1.svg",
+              alt: "badge1",
+            },
+            {
+              type: "text",
+              text: " and ",
+            },
+            {
+              type: "badge",
+              url: "https://example.com/badge2.svg",
+              alt: "badge2",
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      await new WhitespaceTransformer().transform(InputDocument),
+    ).toEqual(ExpectedDocument);
+  });
+
+  test('preserves whitespace between text and emoji', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: " hello  ",
+            },
+            {
+              type: "emoji",
+              url: "https://example.com/wave.png",
+              alt: "wave",
+            },
+            {
+              type: "text",
+              text: "  world ",
+            },
+          ],
+        },
+      ],
+    };
+
+    const ExpectedDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: "hello ",
+            },
+            {
+              type: "emoji",
+              url: "https://example.com/wave.png",
+              alt: "wave",
+            },
+            {
+              type: "text",
+              text: " world",
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      await new WhitespaceTransformer().transform(InputDocument),
+    ).toEqual(ExpectedDocument);
   });
 });
