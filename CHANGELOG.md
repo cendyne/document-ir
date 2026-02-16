@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.1...document-ir-v0.4.2) (2026-02-16)
+
+
+### Bug Fixes
+
+* add language property to CodeNode and fix dropped optional attributes ([#25](https://github.com/cendyne/document-ir/issues/25)) ([db5cef6](https://github.com/cendyne/document-ir/commit/db5cef6a049b4867f11bc1be3b5fdf785832b1d3)), closes [#24](https://github.com/cendyne/document-ir/issues/24)
+
 ## [0.4.1](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.0...document-ir-v0.4.1) (2026-02-15)
 
 
