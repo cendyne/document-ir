@@ -38,6 +38,7 @@ export interface CenterNode extends NodeIdentity {
 export interface CodeNode extends NodeIdentity {
   type: "code";
   content: Node[];
+  language?: string;
   diff?: boolean;
   lineNumbers?: boolean;
 }
