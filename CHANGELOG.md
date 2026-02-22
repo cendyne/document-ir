@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.3...document-ir-v0.5.0) (2026-02-22)
+
+
+### Features
+
+* add bluesky as a social node type ([c5255e5](https://github.com/cendyne/document-ir/commit/c5255e5c48c9ce787f510d998edbd0f0aab3f2b0))
+
 ## [0.4.3](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.2...document-ir-v0.4.3) (2026-02-16)
 
 
