@@ -490,6 +490,10 @@ export const ExampleDocument: DocumentNode = {
       id: "109597685236238071",
     },
     {
+      type: "bluesky",
+      id: "3lcm6yvdlck26",
+    },
+    {
       type: "youtube",
       id: "AbSehcT19u0",
     },

@@ -305,6 +305,10 @@ export interface TootNode extends NodeIdentity {
   type: "toot";
   id: string;
 }
+export interface BlueskyNode extends NodeIdentity {
+  type: "bluesky";
+  id: string;
+}
 export interface VimeoNode extends NodeIdentity {
   type: "vimeo";
   id: string;
@@ -313,7 +317,7 @@ export interface YoutubeNode extends NodeIdentity {
   type: "youtube";
   id: string;
 }
-export type SocialNode = TweetNode | TootNode | VimeoNode | YoutubeNode;
+export type SocialNode = TweetNode | TootNode | BlueskyNode | VimeoNode | YoutubeNode;
 export interface CardHeader extends NodeIdentity {
   type: "card-header";
   imageUrl?: string;

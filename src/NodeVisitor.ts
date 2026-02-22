@@ -446,6 +446,7 @@ export class NodeVisitor {
           return this.table(node);
         case "text":
           return this.text(node);
+        case "bluesky":
         case "toot":
         case "tweet":
         case "vimeo":

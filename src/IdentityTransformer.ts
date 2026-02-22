@@ -1150,6 +1150,7 @@ export class IdentityTransformer {
           return await this.table(node);
         case "text":
           return await this.text(node);
+        case "bluesky":
         case "toot":
         case "tweet":
         case "vimeo":
