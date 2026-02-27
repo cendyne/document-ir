@@ -78,8 +78,9 @@ export class WordCounterTransformer extends IdentityTransformer {
           children: [],
           nodes: [],
         };
-        if (node.htmlId) {
-          h.headerId = node.htmlId;
+        const anchorId = node.htmlId || node.id;
+        if (anchorId) {
+          h.headerId = anchorId;
         }
         stack[stack.length - 1]!.children.push(h);
         stack.push(h);
