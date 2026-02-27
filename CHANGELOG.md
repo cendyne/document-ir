@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.0...document-ir-v0.5.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* fall back to node.id for headerId when htmlId is absent in WordCounterTransformer ([#31](https://github.com/cendyne/document-ir/issues/31)) ([000c69f](https://github.com/cendyne/document-ir/commit/000c69f1157d8272debf8516ed1ff11eea786ce1))
+
 ## [0.5.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.4.3...document-ir-v0.5.0) (2026-02-22)
 
 
