@@ -83,4 +83,44 @@ describe('WordCounterTransformer', () => {
       await new WordCounterTransformer().transform(ExpectedDocument),
     ).toEqual(ExpectedDocument);
   });
+
+  test('uses id as headerId fallback when htmlId is absent', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      definitions: [],
+      content: [
+        {
+          type: "header",
+          level: 1,
+          htmlId: "h-100",
+          content: [{ type: "text", text: "Title" }],
+        },
+        { type: "paragraph", content: [{ type: "text", text: "The words" }] },
+        {
+          type: "header",
+          level: 2,
+          id: "254d0516-0000-0000-0000-000000000001",
+          content: [{ type: "text", text: "Sub 1" }],
+        },
+        {
+          type: "paragraph",
+          content: [{ type: "text", text: "more words and such" }],
+        },
+        {
+          type: "header",
+          level: 2,
+          id: "254d0516-0000-0000-0000-000000000002",
+          content: [{ type: "text", text: "Sub 2" }],
+        },
+        {
+          type: "paragraph",
+          content: [{ type: "text", text: "Lots of words" }],
+        },
+      ],
+    };
+
+    const result = await new WordCounterTransformer().transform(InputDocument);
+    expect(result.hierarchy?.children[0]?.headerId).toBe("254d0516-0000-0000-0000-000000000001");
+    expect(result.hierarchy?.children[1]?.headerId).toBe("254d0516-0000-0000-0000-000000000002");
+  });
 });
