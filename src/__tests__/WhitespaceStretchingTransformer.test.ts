@@ -128,6 +128,39 @@ describe('WhitespaceStretchingTransformer', () => {
     ).toEqual(ExpectedDocument);
   });
 
+  test('does not migrate trailing space out of a link that ends with a void inline (emoji)', async () => {
+    // Regression: link["Ollama ", emoji, ""] + text[", more"] was incorrectly
+    // becoming link["Ollama"] + text[" , more"] after the transformer chain.
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "link",
+              url: "https://example.com/",
+              content: [
+                { type: "text", text: "Ollama " },
+                { type: "emoji", url: "https://example.com/e.png", alt: "ollama" },
+                { type: "text", text: "" },
+              ],
+            },
+            { type: "text", text: ", more text" },
+          ],
+        },
+      ],
+    };
+
+    const result = await new WhitespaceStretchingTransformer().transform(InputDocument);
+    const para = result.content[0] as any;
+    const link = para.content[0];
+    const textAfter = para.content[1];
+    // Space must stay inside the link (before the emoji), not migrate outside
+    expect(link.content[0].text).toEqual("Ollama ");
+    expect(textAfter.text).toEqual(", more text");
+  });
+
   test('preserves whitespace in inline code', async () => {
     const InputDocument: DocumentNode = {
       ...ExampleDocument,

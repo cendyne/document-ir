@@ -1,5 +1,5 @@
 import { IdentityTransformer } from "./IdentityTransformer.ts";
-import type { CodeNode, DocumentNode, Node, TextNode } from "./types.ts";
+import type { BadgeNode, CodeNode, DocumentNode, EmojiNode, Node, TextNode } from "./types.ts";
 
 interface BlockInfo {
   type: "_block";
@@ -107,6 +107,18 @@ export class WhitespaceStretchingTransformer extends IdentityTransformer {
         }
       }
     }
+  }
+  // Void inline elements (emoji, badge) don't call beforeInline/afterInline so they
+  // are invisible to the cursor by default. Push a _block sentinel so reviewBlock
+  // sees an opaque boundary at their position, preventing trailing spaces on
+  // adjacent text nodes from migrating across them.
+  protected override async emoji(node: EmojiNode): Promise<Node | null> {
+    this.cursor.content.push({ type: "_block", content: [], parent: this.cursor });
+    return super.emoji(node);
+  }
+  protected override async badge(node: BadgeNode): Promise<Node | null> {
+    this.cursor.content.push({ type: "_block", content: [], parent: this.cursor });
+    return super.badge(node);
   }
   protected override async code(node: CodeNode): Promise<Node | null> {
     const result: CodeNode = {
