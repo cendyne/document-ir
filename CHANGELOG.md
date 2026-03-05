@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.1...document-ir-v0.5.2) (2026-03-05)
+
+
+### Bug Fixes
+
+* prevent void inline elements from acting as invisible whitespace boundary gaps ([#33](https://github.com/cendyne/document-ir/issues/33)) ([4d18414](https://github.com/cendyne/document-ir/commit/4d1841431ca36159e64eaef3bb017a06f1103777))
+
 ## [0.5.1](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.0...document-ir-v0.5.1) (2026-02-27)
 
 
