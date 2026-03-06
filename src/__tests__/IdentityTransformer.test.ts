@@ -891,6 +891,27 @@ describe('IdentityTransformer', () => {
     expect("url" in node).toBe(false);
   });
 
+  test('does not add orientation to quote when source has no orientation', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "quote",
+          name: "Author",
+          icon: "https://example.com/avatar.png",
+          content: [{ type: "text", text: "A quote" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("quote");
+    expect("orientation" in node).toBe(false);
+  });
+
   test('does not add original to card when source has no original', async () => {
     const doc: DocumentNode = {
       type: "document",
