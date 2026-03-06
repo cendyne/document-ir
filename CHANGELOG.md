@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.3...document-ir-v0.5.4) (2026-03-06)
+
+
+### Bug Fixes
+
+* add code-block, code-group, accordion-group, pill, style to NodeVisitor ([#38](https://github.com/cendyne/document-ir/issues/38)) ([5ad1b6f](https://github.com/cendyne/document-ir/commit/5ad1b6f39cfa9602039cf9006e3ff46581116d43))
+
 ## [0.5.3](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.2...document-ir-v0.5.3) (2026-03-06)
 
 
