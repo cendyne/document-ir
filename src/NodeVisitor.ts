@@ -1,4 +1,6 @@
 import type {
+  AccordionGroupNode,
+  AccordionTabNode,
   ArrayNode,
   BadgeNode,
   BlockNode,
@@ -9,7 +11,12 @@ import type {
   CardNode,
   CenterNode,
   CodeNode,
+  CodeBlockNode,
+  CodeGroupNode,
+  CodeGroupTabNode,
   ColumnsNode,
+  PillNode,
+  StyleNode,
   DateNode,
   DateTimeNode,
   DefinitionListNode,
@@ -105,6 +112,40 @@ export class NodeVisitor {
     this.beforeInline();
     this.chooseChildren(node.content);
     this.afterInline();
+  }
+  protected codeBlock(node: CodeBlockNode): void {
+    this.code(node.content);
+  }
+  protected accordionTab(node: AccordionTabNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.header);
+    this.afterInline();
+    this.beforeBlock();
+    this.chooseChildren(node.content);
+    this.afterBlock();
+  }
+  protected accordionGroup(node: AccordionGroupNode): void {
+    for (const tab of node.tabs) {
+      this.accordionTab(tab);
+    }
+  }
+  protected codeGroupTab(node: CodeGroupTabNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.header);
+    this.afterInline();
+    this.code(node.content);
+  }
+  protected codeGroup(node: CodeGroupNode): void {
+    for (const tab of node.tabs) {
+      this.codeGroupTab(tab);
+    }
+  }
+  protected pill(node: PillNode): void {
+    this.beforeInline();
+    this.chooseChildren(node.content);
+    this.afterInline();
+  }
+  protected style(_node: StyleNode): void {
   }
   protected columns(node: ColumnsNode): void {
     for (const column of node.columns) {
@@ -380,6 +421,16 @@ export class NodeVisitor {
           return this.center(node);
         case "code":
           return this.code(node);
+        case "code-block":
+          return this.codeBlock(node);
+        case "code-group":
+          return this.codeGroup(node);
+        case "accordion-group":
+          return this.accordionGroup(node);
+        case "pill":
+          return this.pill(node);
+        case "style":
+          return this.style(node);
         case "columns":
           return this.columns(node);
         case "definition":
