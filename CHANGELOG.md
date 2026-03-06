@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.2...document-ir-v0.5.3) (2026-03-06)
+
+
+### Bug Fixes
+
+* add missing orientation no-spurious-key test for QuoteNode ([#36](https://github.com/cendyne/document-ir/issues/36)) ([09d375a](https://github.com/cendyne/document-ir/commit/09d375a836213dd43581666882188d247620830e))
+
 ## [0.5.2](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.1...document-ir-v0.5.2) (2026-03-05)
 
 
