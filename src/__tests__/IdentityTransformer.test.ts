@@ -220,6 +220,7 @@ describe('IdentityTransformer', () => {
           icon: "https://example.com/avatar.png",
           url: "https://example.com/source",
           orientation: "right",
+          author: "author-slug",
           content: [{ type: "text", text: "Quote text" }],
         },
       ],
@@ -227,6 +228,51 @@ describe('IdentityTransformer', () => {
 
     const result = await new IdentityTransformer().transform(doc);
     expect(result).toEqual(doc);
+  });
+
+  test('preserves author on quote node', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "quote",
+          name: "MacRumors",
+          icon: "https://example.com/avatar.png",
+          url: "https://example.com/article/full-path",
+          orientation: "left",
+          author: "mac-rumors",
+          content: [{ type: "paragraph", content: [{ type: "text", text: "Quote body" }] }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+    const node = result.content[0]! as { author?: string };
+    expect(node.author).toBe("mac-rumors");
+  });
+
+  test('does not add author to quote when source has no author', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "quote",
+          name: "Author",
+          icon: "https://example.com/avatar.png",
+          content: [{ type: "text", text: "A quote" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("quote");
+    expect("author" in node).toBe(false);
   });
 
   test('preserves all table-of-contents attributes', async () => {

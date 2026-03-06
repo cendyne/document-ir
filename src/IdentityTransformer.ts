@@ -609,6 +609,9 @@ export class IdentityTransformer {
     if (node.orientation) {
       result.orientation = node.orientation;
     }
+    if (node.author != null) {
+      result.author = node.author;
+    }
     return result;
   }
   protected async redacted(node: RedactedNode): Promise<Node | null> {

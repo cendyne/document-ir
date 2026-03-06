@@ -207,6 +207,7 @@ export interface QuoteNode extends NodeIdentity {
   icon: string;
   url?: string;
   orientation?: "left" | "right";
+  author?: string;
   content: Node[];
 }
 export interface RedactedNode extends NodeIdentity {
