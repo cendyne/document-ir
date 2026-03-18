@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/cendyne/document-ir/compare/document-ir-v0.6.0...document-ir-v0.6.1) (2026-03-18)
+
+
+### Bug Fixes
+
+* skip block whitespace stripping for inline admonitions ([#42](https://github.com/cendyne/document-ir/issues/42)) ([9da766e](https://github.com/cendyne/document-ir/commit/9da766ec26968c33aa09cb8e75742896b83b8e52))
+
 ## [0.6.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.4...document-ir-v0.6.0) (2026-03-18)
 
 
