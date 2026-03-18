@@ -387,4 +387,114 @@ describe('WhitespaceTransformer', () => {
       await new WhitespaceTransformer().transform(InputDocument),
     ).toEqual(ExpectedDocument);
   });
+
+  test('preserves whitespace around inline admonitions', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: " hello  ",
+            },
+            {
+              type: "admonition",
+              admonitionType: "note",
+              inline: true,
+              content: [{ type: "text", text: "a note" }],
+            },
+            {
+              type: "text",
+              text: "  world ",
+            },
+          ],
+        },
+      ],
+    };
+
+    const ExpectedDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: "hello ",
+            },
+            {
+              type: "admonition",
+              admonitionType: "note",
+              inline: true,
+              content: [{ type: "text", text: "a note" }],
+            },
+            {
+              type: "text",
+              text: " world",
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      await new WhitespaceTransformer().transform(InputDocument),
+    ).toEqual(ExpectedDocument);
+  });
+
+  test('strips whitespace around block admonitions', async () => {
+    const InputDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "text",
+          text: " hello ",
+        },
+        {
+          type: "admonition",
+          admonitionType: "warning",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: " be careful " }],
+            },
+          ],
+        },
+        {
+          type: "text",
+          text: " world ",
+        },
+      ],
+    };
+
+    const ExpectedDocument: DocumentNode = {
+      ...ExampleDocument,
+      content: [
+        {
+          type: "text",
+          text: "hello",
+        },
+        {
+          type: "admonition",
+          admonitionType: "warning",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "be careful" }],
+            },
+          ],
+        },
+        {
+          type: "text",
+          text: "world",
+        },
+      ],
+    };
+
+    expect(
+      await new WhitespaceTransformer().transform(InputDocument),
+    ).toEqual(ExpectedDocument);
+  });
 });
