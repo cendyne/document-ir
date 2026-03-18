@@ -1,5 +1,6 @@
 import { ArrayCollapseTransformer } from "./ArrayCollapseTransformer.ts";
 import type {
+  AdmonitionNode,
   BubbleNode,
   CardNode,
   ColumnsNode,
@@ -194,6 +195,23 @@ export class DocumentThinningTransformer extends ArrayCollapseTransformer {
     return null;
   }
 
+  protected override async admonition(node: AdmonitionNode): Promise<Node | null> {
+    if (node.content.length == 0) {
+      return null;
+    }
+    const content = await this.chooseChildren(node.content);
+    if (!content) {
+      return null;
+    }
+    const label = node.admonitionType.charAt(0).toUpperCase() + node.admonitionType.slice(1);
+    return {
+      type: "paragraph",
+      content: [
+        { type: "text", text: `${label}: ` },
+        ...content,
+      ],
+    };
+  }
   protected override async note(node: NoteNode): Promise<Node | null> {
     if (node.content.length == 0) {
       return null;

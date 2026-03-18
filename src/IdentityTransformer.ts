@@ -1,6 +1,7 @@
 import type {
   AccordionGroupNode,
   AccordionTabNode,
+  AdmonitionNode,
   ArrayNode,
   BadgeNode,
   BlockNode,
@@ -524,6 +525,26 @@ export class IdentityTransformer {
     if (node.noOpener) {
       result.noOpener = node.noOpener;
     }
+    return result;
+  }
+  protected async admonition(node: AdmonitionNode): Promise<Node | null> {
+    await this.beforeBlock();
+    const content = await this.chooseChildren(node.content);
+    let title: Node[] | undefined;
+    if (node.title) {
+      title = await this.chooseChildren(node.title);
+    }
+    await this.afterBlock();
+    const result: AdmonitionNode = {
+      type: "admonition",
+      admonitionType: node.admonitionType,
+      content,
+    };
+    if (title) {result.title = title;}
+    if (node.collapsable != null) {result.collapsable = node.collapsable;}
+    if (node.collapsed != null) {result.collapsed = node.collapsed;}
+    if (node.inline != null) {result.inline = node.inline;}
+    if (node.id != null) {result.id = node.id;}
     return result;
   }
   protected async array(node: ArrayNode): Promise<Node | null> {
@@ -1119,6 +1140,8 @@ export class IdentityTransformer {
           return await this.link(node);
         case "accordion-group":
           return await this.accordionGroup(node);
+        case "admonition":
+          return await this.admonition(node);
         case "array":
           return await this.array(node);
         case "note":

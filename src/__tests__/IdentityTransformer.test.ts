@@ -934,6 +934,107 @@ describe('IdentityTransformer', () => {
     expect("original" in node).toBe(false);
   });
 
+  test('preserves admonition with all attributes', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "admonition",
+          admonitionType: "tip",
+          title: [{ type: "text", text: "Pro Tip" }],
+          content: [{ type: "text", text: "A helpful tip" }],
+          collapsable: true,
+          collapsed: false,
+          inline: true,
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves admonition with only required attributes', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "admonition",
+          admonitionType: "danger",
+          content: [{ type: "text", text: "Dangerous!" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('does not add undefined optional attributes to admonition', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "admonition",
+          admonitionType: "info",
+          content: [{ type: "text", text: "Info" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    const node = result.content[0]!;
+    expect(node.type).toBe("admonition");
+    expect(Object.keys(node).sort()).toEqual(["admonitionType", "content", "type"]);
+  });
+
+  test('preserves admonition with id', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "admonition",
+          id: "adm1",
+          admonitionType: "warning",
+          content: [{ type: "text", text: "Watch out" }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
+  test('preserves admonition title content through transformation', async () => {
+    const doc: DocumentNode = {
+      type: "document",
+      title: "Test",
+      url: "/test",
+      content: [
+        {
+          type: "admonition",
+          admonitionType: "note",
+          title: [
+            { type: "bold", content: [{ type: "text", text: "Important" }] },
+            { type: "text", text: " Note" },
+          ],
+          content: [{ type: "paragraph", content: [{ type: "text", text: "Details here" }] }],
+        },
+      ],
+    };
+
+    const result = await new IdentityTransformer().transform(doc);
+    expect(result).toEqual(doc);
+  });
+
   test('does not add undefined optional attributes to figure-image', async () => {
     const doc: DocumentNode = {
       type: "document",
