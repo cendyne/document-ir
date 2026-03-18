@@ -2,6 +2,16 @@ export interface NodeIdentity {
   id?: string;
 }
 
+export type AdmonitionType = "note" | "tip" | "info" | "warning" | "danger";
+export interface AdmonitionNode extends NodeIdentity {
+  type: "admonition";
+  admonitionType: AdmonitionType;
+  content: Node[];
+  title?: Node[];
+  collapsable?: boolean;
+  collapsed?: boolean;
+  inline?: boolean;
+}
 export interface ArrayNode extends NodeIdentity {
   type: "array";
   content: Node[];
@@ -409,6 +419,7 @@ export interface TableOfContentsNode extends NodeIdentity {
 
 export type Node =
   | AccordionGroupNode
+  | AdmonitionNode
   | ArrayNode
   | BadgeNode
   | BlockNode

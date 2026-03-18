@@ -1,6 +1,7 @@
 import type {
   AccordionGroupNode,
   AccordionTabNode,
+  AdmonitionNode,
   ArrayNode,
   BadgeNode,
   BlockNode,
@@ -233,6 +234,14 @@ export class NodeVisitor {
     this.chooseChildren(node.content);
     this.afterInline();
   }
+  protected admonition(node: AdmonitionNode): void {
+    this.beforeBlock();
+    if (node.title) {
+      this.chooseChildren(node.title);
+    }
+    this.chooseChildren(node.content);
+    this.afterBlock();
+  }
   protected array(node: ArrayNode): void {
     this.chooseChildren(node.content);
   }
@@ -427,6 +436,8 @@ export class NodeVisitor {
           return this.codeGroup(node);
         case "accordion-group":
           return this.accordionGroup(node);
+        case "admonition":
+          return this.admonition(node);
         case "pill":
           return this.pill(node);
         case "style":

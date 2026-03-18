@@ -190,6 +190,24 @@ export const ExampleDocument: DocumentNode = {
       ],
     },
     {
+      type: "admonition",
+      admonitionType: "tip",
+      title: [
+        {
+          type: "text",
+          text: "Pro Tip",
+        },
+      ],
+      content: [
+        {
+          type: "text",
+          text: "An admonition message",
+        },
+      ],
+      collapsable: true,
+      collapsed: false,
+    },
+    {
       type: "bubble",
       orientation: "left",
       content: [
