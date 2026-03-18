@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.4...document-ir-v0.6.0) (2026-03-18)
+
+
+### Features
+
+* add AdmonitionNode type ([#40](https://github.com/cendyne/document-ir/issues/40)) ([ced2779](https://github.com/cendyne/document-ir/commit/ced27790cab2d3bf571dfc332b8f06b059a8d8b5))
+
 ## [0.5.4](https://github.com/cendyne/document-ir/compare/document-ir-v0.5.3...document-ir-v0.5.4) (2026-03-06)
 
 
