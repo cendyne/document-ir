@@ -528,13 +528,17 @@ export class IdentityTransformer {
     return result;
   }
   protected async admonition(node: AdmonitionNode): Promise<Node | null> {
-    await this.beforeBlock();
+    if (!node.inline) {
+      await this.beforeBlock();
+    }
     const content = await this.chooseChildren(node.content);
     let title: Node[] | undefined;
     if (node.title) {
       title = await this.chooseChildren(node.title);
     }
-    await this.afterBlock();
+    if (!node.inline) {
+      await this.afterBlock();
+    }
     const result: AdmonitionNode = {
       type: "admonition",
       admonitionType: node.admonitionType,

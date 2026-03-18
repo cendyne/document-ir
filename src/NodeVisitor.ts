@@ -235,12 +235,16 @@ export class NodeVisitor {
     this.afterInline();
   }
   protected admonition(node: AdmonitionNode): void {
-    this.beforeBlock();
+    if (!node.inline) {
+      this.beforeBlock();
+    }
     if (node.title) {
       this.chooseChildren(node.title);
     }
     this.chooseChildren(node.content);
-    this.afterBlock();
+    if (!node.inline) {
+      this.afterBlock();
+    }
   }
   protected array(node: ArrayNode): void {
     this.chooseChildren(node.content);
